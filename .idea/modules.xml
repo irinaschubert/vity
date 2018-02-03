@@ -3,7 +3,9 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://D:\ESA\vity\app\app.iml" filepath="D:\ESA\vity\app\app.iml" />
       <module fileurl="file://$PROJECT_DIR$/vity.iml" filepath="$PROJECT_DIR$/vity.iml" />
+      <module fileurl="file://D:\ESA\vity\vity.iml" filepath="D:\ESA\vity\vity.iml" />
     </modules>
   </component>
 </project>
