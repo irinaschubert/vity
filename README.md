@@ -13,7 +13,7 @@ Die App sollte möglichst intuitiv und einfach bedienbar sein.</br>
 ![alt text][menu]</br>
 4. Erstellen einer neuen Aktivität</br>
 ![alt text][activity_new]</br>
-5. Aktivitäten in der Nähe finden</br>
+5. Aktivitäten in der Nähe finden</br></br>
 ![alt text][activity_search]</br>
 6. Einstellungen</br>
 ![alt text][settings]</br>
