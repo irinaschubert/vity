@@ -5,18 +5,19 @@ Die Applikation bietet eine Plattform um Vorschläge für Freizeitaktivitäten a
 
 ### Handling | Darstellung
 Die App sollte möglichst intuitiv und einfach bedienbar sein.</br>
-![alt text][bootscreen]</br>
 1. Bootscreen</br>
-![alt text][map]</br>
+![alt text][bootscreen]</br>
 2. Map mit eingetragenen Freizeitaktivitäten</br>
-![alt text][menu]</br>
+![alt text][map]</br>
 3. Menu</br>
-![alt text][activity_new]</br>
+![alt text][menu]</br>
 4. Erstellen einer neuen Aktivität</br>
-![alt text][activity_search]</br>
+![alt text][activity_new]</br>
 5. Aktivitäten in der Nähe finden</br>
+![alt text][activity_search]</br>
+6. Einstellungen</br>
 ![alt text][settings]</br>
-5. Einstellungen</br>
+
 ### Technik
 ##### Speicher
 - In einen ersten Schritt sollen allen neu erstellen Aktivitäten lokal auf dem Gerät gespeichert werden. 
