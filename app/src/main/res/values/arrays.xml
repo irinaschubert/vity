@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <!-- Arrays für Kategorien -->
+    <string-array name="categories">
+        <item>Essen und Trinken</item> <!-- Ersetzen durch android:text="@string/category_food" aber wie?!-->
+        <item>Museum</item> <!-- Ersetzen durch android:text="@string/category_museum" aber wie?!-->
+        <item>Spaziergang</item> <!-- Ersetzen durch android:text="@string/category_walk" aber wie?!-->
+        <item>Laden</item> <!-- Ersetzen durch android:text="@string/category_store" aber wie?!-->
+    </string-array>
+
+    <string-array name="category_activity">
+        <item>Essen und Trinken</item> <!-- Ersetzen durch android:text="@string/category_food" aber wie?!-->
+        <item>Museum</item> <!-- Ersetzen durch android:text="@string/category_museum" aber wie?!-->
+        <item>Spaziergang</item> <!-- Ersetzen durch android:text="@string/category_walk" aber wie?!-->
+        <item>Laden</item> <!-- Ersetzen durch android:text="@string/category_store" aber wie?!-->
+    </string-array>
+
+    <!-- Arrays für Umkreis-Eingabe -->
+    <string-array name="radius">
+        <item>100 m</item>
+        <item>500 m</item>
+        <item>1 km</item>
+        <item>5 km</item>
+        <item>10 km</item>
+    </string-array>
+
+    <integer-array name="radius_activity">
+        <item>100</item>
+        <item>500</item>
+        <item>1000</item>
+        <item>5000</item>
+        <item>10000</item>
+    </integer-array>
+
+</resources>
