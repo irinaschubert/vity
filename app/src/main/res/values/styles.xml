@@ -8,4 +8,8 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="Vity_Theme_Bootscreen" parent="android:Theme.Light.NoTitleBar" />
+
+    <style name="Vity_Theme_Standard" parent="android:Theme.Holo.Light.DarkActionBar" />
+
 </resources>

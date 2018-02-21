@@ -13,4 +13,5 @@
     <!-- Menüeinträge -->
     <string name="mnu_exit">Beenden</string>
     <string name="mnu_search">Suchen</string>
+    <string name="vity">Vity</string>
 </resources>
