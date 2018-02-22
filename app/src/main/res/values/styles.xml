@@ -1,15 +1,13 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
+    <style name="Vity_Theme_Bootscreen" parent="android:Theme.DeviceDefault.Light.NoActionBar.Fullscreen" />
+
+    <style name="Vity_Theme_Standard" parent="Theme.AppCompat.DayNight.DarkActionBar" >
+        <item name="android:colorPrimaryDark">@color/holo_light_primary_dark</item>
+        <item name="android:colorPrimary">@color/holo_light_primary</item>
+        <item name="android:fontFamily">@font/vity20db</item>
+        <item name="android:statusBarColor">@color/common_google_signin_btn_text_dark_focused</item>
     </style>
-
-    <style name="Vity_Theme_Bootscreen" parent="android:Theme.Light.NoTitleBar" />
-
-    <style name="Vity_Theme_Standard" parent="android:Theme.Holo.Light.DarkActionBar" />
 
 </resources>

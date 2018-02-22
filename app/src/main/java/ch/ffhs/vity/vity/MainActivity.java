@@ -4,22 +4,39 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.widget.ProgressBar;
 
 public class MainActivity extends Activity {
+
+    private ProgressBar loadProgressbar;
+    private Handler progressHandler = new Handler();
+    private int statusProgressbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        int BOOTSCREEN_TIMEOUT = 3000;
-        new Handler().postDelayed(new Runnable() {
+
+        loadProgressbar = (ProgressBar) findViewById(R.id.progressBar);
+        final Intent intent = new Intent(this, HomeActivity.class);
+
+        new Thread(new Runnable() {
             @Override
             public void run() {
-                Intent home_intent = new Intent(MainActivity.this, HomeActivity.class);
-                startActivity(home_intent);
-                finish();
+                while (statusProgressbar < 100) {
+                    statusProgressbar++;
+                    android.os.SystemClock.sleep(20);
+                    progressHandler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            loadProgressbar.setProgress(statusProgressbar);
+                        }
+                    });
+                }
+                startActivity(intent);
             }
-        }, BOOTSCREEN_TIMEOUT);
+        }).start();
     }
+
 
 }
