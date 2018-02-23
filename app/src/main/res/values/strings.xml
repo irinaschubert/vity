@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">vity</string>
+    <string name="app_name">Vity</string>
     <string name="txt_create_new_activity">Neue Akvitität erstellen</string>
     <string name="txt_save">Speichern</string>
     <string name="category_food">Essen und Trinken</string>
@@ -14,4 +14,10 @@
     <string name="mnu_exit">Beenden</string>
     <string name="mnu_search">Suchen</string>
     <string name="vity">Vity</string>
+    <string name="map">Map</string>
+    <string name="new_activity">New Activity</string>
+    <string name="search_activity">Search Activity</string>
+    <string name="home_map">Home | Map</string>
+    <string name="search">Search</string>
+    <string name="settings">Settings</string>
 </resources>

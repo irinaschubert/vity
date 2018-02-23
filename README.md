@@ -1,10 +1,10 @@
 Vity
 -
 ### Beschreibung
-Die Applikation bietet eine Plattform um Vorschläge für Freizeitaktivitäten auszutauschen. Alle Nutzer haben die Möglichkeit Aktivitäten zu erstellten, online zur veröffentlichen und alle bereits erstellen Vorschläge einzusehen. Mittels dieser App können "Geheimtipps" geteilt und Inspiration für eine abwechslungsreiche Freizeitgestaltung geholt werden.</br>
+Die Applikation bietet eine Plattform um Vorschläge für Freizeitaktivitäten auszutauschen. Alle Nutzer haben die Möglichkeit Aktivitäten zu erstellten, online zur veröffentlichen und alle bereits erstellen Vorschläge einzusehen. Mittels dieser App können "Geheimtipps" geteilt und Inspiration für eine abwechslungsreiche Freizeitgestaltung geholt werden. Ziel ist es auch, die eigenen aktuellen Positionsdaten der Gruppe zu Verfügungn zu stellen. So können Mitglieder in der Nähe gesehen werden und man kann spontan etwas zusammen unternehmen.</br>
 
 ### Handling | Darstellung
-Die App sollte möglichst intuitiv und einfach bedienbar sein.<br/>
+Die App sollte möglichst intuitiv und einfach bedienbar sein.<br/><br/>
 1. Bootscreen<br/>
 ![alt text][bootscreen]<br/>
 2. Map mit eingetragenen Freizeitaktivitäten<br/>

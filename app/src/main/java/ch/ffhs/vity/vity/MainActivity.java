@@ -14,7 +14,7 @@ public class MainActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+        super.onCreate(null);
         setContentView(R.layout.activity_main);
 
         loadProgressbar = (ProgressBar) findViewById(R.id.progressBar);
@@ -33,6 +33,7 @@ public class MainActivity extends Activity {
                         }
                     });
                 }
+                android.os.SystemClock.sleep(500);
                 startActivity(intent);
             }
         }).start();

@@ -9,18 +9,19 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Vity_Theme_Standard">
+        android:fullBackupContent="true">
         <activity
             android:name=".MainActivity"
             android:theme="@style/Vity_Theme_Standard">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".CreateNewActivityActivity" />
+        <activity android:name=".NewActivity" />
         <activity android:name=".HomeActivity" />
+        <activity android:name=".SettingsActivity" />
+        <activity android:name=".SearchActivity"/>
     </application>
 
 </manifest>

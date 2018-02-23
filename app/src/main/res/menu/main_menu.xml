@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:title="@string/map"
+        android:id="@+id/map_id"
+        android:onClick="goToHomeActivity"/>
+    <item android:title="@string/new_activity"
+        android:id="@+id/new_id"
+        android:onClick="goToNewActivity"/>
+    <item android:title="@string/search_activity"
+        android:id="@+id/search_id"
+        android:onClick="goToSearchActivity"/>
+    <item android:title="@string/settings"
+        android:id="@+id/settings_id"
+        android:onClick="goToSettingsActivity"/>
+
+</menu>

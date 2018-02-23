@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:theme="@style/Vity_Theme_Bootscreen"
-    tools:context=".MainActivity" android:orientation="horizontal">
+    tools:context=".MainActivity" android:orientation="vertical">
 
     <TextView
         android:layout_width="match_parent"

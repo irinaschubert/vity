@@ -6,4 +6,5 @@
     <color name="holo_light_primary_dark">#ffdda7</color>
     <color name="holo_light_primary">#ffdfa7</color>
     <color name="primary_material_dark">#ffe0b1</color>
+    <color name="primary_device_default_light">#f5f5f5</color>
 </resources>
