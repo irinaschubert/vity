@@ -10,14 +10,49 @@
     <string name="add_picture">Bild hinzufügen</string>
     <string name="add_location">Ort hinzufügen</string>
 
+
+    <!-- Platzhaltertexte -->
+    <string name="text_search">Search</string>
+    <string name="text_settings">Settings</string>
+
+    <!-- Allgemein -->
+    <string name="titel_bootscreen">Vity</string>
+
+
+    <!-- Buttons -->
+    <string name="btn_image">Image</string>
+    <string name="btn_save">Save</string>
+    <string name="btn_cancel">Cancel</string>
+    <string name="btn_search">Search</string>
+
+    <!-- Titel Seiten -->
+    <string name="titel_new">New Activity</string>
+    <string name="titel_settings">Settings</string>
+
+    <!-- Neue Atkivität -->
+    <string name="form_titel">Title</string>
+    <string name="form_description">Description</string>
+    <string name="form_category">Category</string>
+    <string name="form_link">Link</string>
+
+    <!-- Atkivität finden -->
+    <string name="form_search">Suchen</string>
+    <string name="form_category2">Category</string>
+    <string name="form_perimeter">Perimeter</string>
+
+
     <!-- Menüeinträge -->
-    <string name="mnu_exit">Beenden</string>
-    <string name="mnu_search">Suchen</string>
-    <string name="vity">Vity</string>
-    <string name="map">Map</string>
-    <string name="new_activity">New Activity</string>
-    <string name="search_activity">Search Activity</string>
-    <string name="home_map">Home | Map</string>
-    <string name="search">Search</string>
-    <string name="settings">Settings</string>
+    <string name="men_map">Map</string>
+    <string name="men_settings">Settings</string>
+    <string name="men_new">New</string>
+    <string name="men_search">Search</string>
+    <string name="men_exit">Exit</string>
+
+    <!-- Menüeinträge Ids -->
+    <string name="opt_map">opt_map</string>
+    <string name="opt_settings">opt_setings</string>
+    <string name="opt_new">opt_new</string>
+    <string name="opt_search">opt_search</string>
+    <string name="opt_exit">opt_exit</string>
+
 </resources>

@@ -5,16 +5,18 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".NewActivity">
+    tools:context=".ActivityNew">
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/txt_create_new_activity" />
+        android:text="@string/titel_new" />
 
-    <EditText android:id="@+id/name_activity"
+    <EditText
+        android:id="@+id/name_activity"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:hint="@string/form_titel"
         android:inputType="text" />
 
     <Spinner android:id="@+id/category"
@@ -24,11 +26,12 @@
         android:entries="@array/categories"
         android:entryValues="@array/category_activity"/>
 
-    <Button android:layout_width="match_parent"
+    <Button
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/add_picture"
         android:layout_gravity="center"
-        android:onClick="onClickAddPicture"/>
+        android:onClick="onClickAddPicture"
+        android:text="@string/btn_image" />
 
     <Button android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -41,6 +44,6 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:onClick="onClickSaveNewActivity"
-        android:text="@string/txt_save" />
+        android:text="@string/btn_save" />
 
 </LinearLayout>

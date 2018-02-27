@@ -6,7 +6,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.widget.ProgressBar;
 
-public class MainActivity extends Activity {
+public class ActivityMain extends Activity {
 
     private ProgressBar loadProgressbar;
     private Handler progressHandler = new Handler();
@@ -18,7 +18,7 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
 
         loadProgressbar = (ProgressBar) findViewById(R.id.progressBar);
-        final Intent intent = new Intent(this, HomeActivity.class);
+        final Intent intent = new Intent(this, ActivityMap.class);
 
         new Thread(new Runnable() {
             @Override
@@ -39,5 +39,9 @@ public class MainActivity extends Activity {
         }).start();
     }
 
-
+    @Override
+    protected void onPause() {
+        super.onPause();
+        finish();
+    }
 }
