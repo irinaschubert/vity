@@ -4,45 +4,57 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:theme="@style/Vity_Theme_Standard"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".ActivityNew">
 
     <TextView
+        style="@style/title_complete"
+        android:text="@string/titel_new"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/titel_new" />
+        android:layout_height="wrap_content"/>
 
     <EditText
-        android:id="@+id/name_activity"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        style="@style/form_text_complete"
+        android:id="@+id/new_name"
         android:hint="@string/form_titel"
-        android:inputType="text" />
-
-    <Spinner android:id="@+id/category"
+        android:inputType="text"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <Spinner
+        style="@style/spinner_complete"
+        android:id="@+id/new_category"
         android:drawSelectorOnTop="true"
         android:entries="@array/categories"
-        android:entryValues="@array/category_activity"/>
+        android:entryValues="@array/category_values"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
 
     <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
+        style="@style/btn_standard_complete"
+        android:id="@+id/new_btn_image"
+        android:text="@string/btn_image"
         android:onClick="onClickAddPicture"
-        android:text="@string/btn_image" />
+        android:layout_gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
 
-    <Button android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+    <Button
+        style="@style/btn_standard_complete"
+        android:id="@+id/new_btn_location"
         android:text="@string/add_location"
         android:layout_gravity="center"
-        android:onClick="onClickAddLocation"/>
+        android:onClick="onClickAddLocation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
 
     <Button
+        android:id="@+id/new_btn_save"
+        style="@style/btn_standard_complete"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
+        android:layout_gravity="bottom"
         android:onClick="onClickSaveNewActivity"
         android:text="@string/btn_save" />
 

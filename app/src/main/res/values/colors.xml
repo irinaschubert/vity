@@ -1,10 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#FF4081</color>
-    <color name="holo_light_primary_dark">#ffdda7</color>
-    <color name="holo_light_primary">#ffdfa7</color>
-    <color name="primary_material_dark">#ffe0b1</color>
-    <color name="primary_device_default_light">#f5f5f5</color>
+
+    <!-- Theme -->
+    <color name="vity_background">#a9ea8b</color>
+    <color name="vity_bar">#ff6236</color>
+    <color name="vity_status_bar">#3bffff</color>
+    <color name="vity_navigation_bar">#ffce4a</color>
+    <color name="vity_bar_text">#ff1ef0</color>
+
+
+    <!-- Text -->
+    <color name="text_color">#000000</color>
+    <color name="text_color_hints">#888888</color>
+    <color name="text_color_buttons">#eeeeee</color>
+
+    <!-- Button -->
+    <color name="btn_color">#949494</color>
+    <color name="btn_boarder_color">#000000</color>
+    <color name="primary_dark_material_dark">#000000</color>
+    <color name="foreground_material_light">#000000</color>
+    <color name="background_material_light">#ffffff</color>
+    <color name="accent_material_light">#ffe9b7</color>
+
 </resources>

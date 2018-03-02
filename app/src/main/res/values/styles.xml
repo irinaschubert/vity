@@ -1,18 +1,79 @@
 <resources>
 
-    <!-- Base application theme. -->
+    <!-- Themes -->
     <style name="Vity_Theme_Bootscreen" parent="android:Theme.DeviceDefault.Light.NoActionBar.Fullscreen" >
-        <item name="android:colorPrimary">@color/primary_device_default_light</item>
     </style>
 
-    <style name="Vity_Theme_Standard" parent="Theme.AppCompat.DayNight.DarkActionBar" >
-        <item name="android:colorPrimaryDark">@color/holo_light_primary_dark</item>
-        <item name="android:colorPrimary">@color/holo_light_primary</item>
-        <item name="android:statusBarColor">@color/common_google_signin_btn_text_dark_focused</item>
+    <style name="Vity_Theme_Standard" parent="android:Theme.Material.Light" >
+        <item name="android:colorPrimary">@color/vity_bar</item>
+        <item name="android:colorPrimaryDark">@color/vity_status_bar</item>
+        <item name="android:textColorPrimary">@color/vity_bar_text</item>
+        <item name="android:windowBackground">@color/vity_background</item>
+        <item name="android:navigationBarColor">@color/vity_navigation_bar</item>
     </style>
 
-    <style name="Vity_Theme_Standard2" parent="android:Theme.Light" >
 
+    <!-- SCHRIFTEN -->
+    <!-- Title Vity -->
+    <style name="vity_gross">
+        <item name="android:fontFamily">@font/vity20db</item>
+        <item name="android:textSize">80sp</item>
+    </style>
+    <!-- General -->
+    <style name="text_normal">
+        <item name="android:fontFamily">@font/anonymous_pro</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:color">@color/text_color</item>
+    </style>
+    <!-- Titles -->
+    <style name="text_title" parent="text_normal">
+        <item name="android:textSize">30sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+    <!-- Hints -->
+    <style name="text_hints" parent="text_normal">
+        <item name="android:color">@color/text_color_hints</item>
+        <item name="android:textStyle">italic</item>
+    </style>
+    <!-- Buttons -->
+    <style name="text_buttons" parent="text_normal">
+        <item name="android:color">@color/text_color_buttons</item>
+        <item name="android:textAlignment">center</item>
+    </style>
+
+
+    <!-- ELEMENTE / ATTRIBUTE -->
+    <!-- Buttons -->
+    <style name="btn_standard" parent="text_buttons">
+        <item name="android:background">@drawable/btn_style</item>
+    </style>
+
+
+    <!-- LAYOUT -->
+    <!-- Title -->
+    <style name="title_complete" parent="text_title">
+        <item name="android:layout_marginLeft">10sp</item>
+        <item name="android:layout_marginRight">10sp</item>
+        <item name="android:layout_marginBottom">20sp</item>
+        <item name="android:layout_marginTop">20sp</item>
+    </style>
+    <!-- Button -->
+    <style name="btn_standard_complete" parent="btn_standard">
+        <item name="android:layout_marginLeft">10sp</item>
+        <item name="android:layout_marginRight">10sp</item>
+        <item name="android:layout_marginBottom">20sp</item>
+    </style>
+    <!-- Spinner -->
+    <style name="spinner_complete" parent="text_normal">
+        <item name="android:layout_marginLeft">10sp</item>
+        <item name="android:layout_marginRight">10sp</item>
+        <item name="android:layout_marginBottom">20sp</item>
+    </style>
+    <!-- Form Text Input -->
+    <style name="form_text_complete" parent="text_hints">
+        <item name="android:layout_marginLeft">10sp</item>
+        <item name="android:layout_marginRight">10sp</item>
+        <item name="android:layout_marginBottom">20sp</item>
     </style>
 
 </resources>

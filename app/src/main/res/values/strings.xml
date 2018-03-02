@@ -27,6 +27,7 @@
 
     <!-- Titel Seiten -->
     <string name="titel_new">New Activity</string>
+    <string name="titel_search">Search Activity</string>
     <string name="titel_settings">Settings</string>
 
     <!-- Neue Atkivität -->

@@ -1,17 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="ch.ffhs.vity.vity.ActivitySearch">
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".ActivitySearch">
+
 
     <TextView
+        style="@style/title_complete"
+        android:text="@string/titel_search"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_centerVertical="true"
-        android:text="@string/text_search"
-        android:textAlignment="center"
-        android:textSize="18sp" />
-</RelativeLayout>
+        android:layout_height="wrap_content"/>
+
+    <EditText
+        style="@style/form_text_complete"
+        android:id="@+id/search_name"
+        android:hint="@string/form_search"
+        android:inputType="text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <Spinner
+        style="@style/spinner_complete"
+        android:id="@+id/search_category"
+        android:drawSelectorOnTop="true"
+        android:entries="@array/categories"
+        android:entryValues="@array/category_values"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <Spinner
+        style="@style/spinner_complete"
+        android:id="@+id/search_radius"
+        android:drawSelectorOnTop="true"
+        android:entries="@array/radius"
+        android:entryValues="@array/radius_values"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <Button
+        style="@style/btn_standard_complete"
+        android:id="@+id/btn_search"
+        android:text="@string/btn_search"
+        android:onClick="onClickSearch"
+        android:layout_gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+</LinearLayout>
