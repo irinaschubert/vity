@@ -13,7 +13,7 @@
         <item>Laden</item> <!-- Ersetzen durch android:text="@string/category_store" aber wie?!-->
     </string-array>
 
-    <string-array name="category_activity">
+    <string-array name="category_values">
         <item>Essen und Trinken</item> <!-- Ersetzen durch android:text="@string/category_food" aber wie?!-->
         <item>Museum</item> <!-- Ersetzen durch android:text="@string/category_museum" aber wie?!-->
         <item>Spaziergang</item> <!-- Ersetzen durch android:text="@string/category_walk" aber wie?!-->
@@ -29,7 +29,7 @@
         <item>10 km</item>
     </string-array>
 
-    <integer-array name="radius_activity">
+    <integer-array name="radius_values">
         <item>100</item>
         <item>500</item>
         <item>1000</item>

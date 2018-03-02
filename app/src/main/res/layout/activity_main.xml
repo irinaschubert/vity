@@ -5,20 +5,19 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:theme="@style/Vity_Theme_Bootscreen"
-    tools:context=".ActivityMain" android:orientation="vertical">
+    tools:context=".ActivityMain"
+    android:orientation="vertical">
 
     <TextView
+        style="@style/vity_gross"
+        android:text="@string/titel_bootscreen"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_above="@+id/progressBar"
         android:layout_alignParentStart="true"
         android:layout_centerInParent="true"
-        android:fontFamily="@font/vity20db"
         android:gravity="center_vertical"
-        android:text="@string/titel_bootscreen"
-        android:textAlignment="center"
-        android:textSize="90sp" />
-
+        android:textAlignment="center"/>
 
     <ProgressBar
         android:id="@+id/progressBar"
