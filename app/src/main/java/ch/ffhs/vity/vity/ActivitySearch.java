@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Toast;
 
 public class ActivitySearch extends Activity {
 
@@ -33,7 +35,7 @@ public class ActivitySearch extends Activity {
                 startActivity(new Intent(this, ActivityNew.class));
                 return true;
             case R.id.opt_search:
-                startActivity(new Intent(this, ActivitySearch.class));
+                // Already there
                 return true;
             case R.id.opt_settings:
                 startActivity(new Intent(this, ActivitySettings.class));
@@ -44,5 +46,10 @@ public class ActivitySearch extends Activity {
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    // onClickFunctions
+    public void onClickSearchActivity(View button) {
+        Toast.makeText(getApplicationContext(), "searchActivity", Toast.LENGTH_LONG).show();
     }
 }

@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".ActivitySearch"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".ActivitySearch">
+    android:layout_height="match_parent">
 
 
     <TextView
@@ -40,13 +40,20 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 
-    <Button
-        style="@style/btn_standard_complete"
-        android:id="@+id/btn_search"
-        android:text="@string/btn_search"
-        android:onClick="onClickSearch"
-        android:layout_gravity="center"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent">
+
+        <Button
+            android:id="@+id/btn_search"
+            style="@style/btn_standard_complete"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:onClick="onClickSearchActivity"
+            android:text="@string/btn_search" />
+
+    </RelativeLayout>
+
 
 </LinearLayout>

@@ -4,7 +4,10 @@
     <style name="Vity_Theme_Bootscreen" parent="android:Theme.DeviceDefault.Light.NoActionBar.Fullscreen" >
     </style>
 
-    <style name="Vity_Theme_Standard" parent="android:Theme.Material.Light" >
+    <style name="Vity_Theme_Standard" parent="android:Theme.Holo.Light" >
+        <item name="android:popupMenuStyle">@style/overflow</item>
+        <item name="android:actionBarStyle">@style/actionBar</item>
+        <item name="android:actionOverflowButtonStyle">@style/overflowButton</item>
         <item name="android:colorPrimary">@color/vity_bar</item>
         <item name="android:colorPrimaryDark">@color/vity_status_bar</item>
         <item name="android:textColorPrimary">@color/vity_bar_text</item>
@@ -12,11 +15,20 @@
         <item name="android:navigationBarColor">@color/vity_navigation_bar</item>
     </style>
 
+    <style name="overflowButton" parent="android:Widget.Holo.Light.ActionButton.Overflow">
+        <item name="android:src">@drawable/ic_menu_black_24dp</item>
+    </style>
+    <style name="overflow" parent="android:Widget.Holo.Light.PopupWindow">
+        <item name="android:popupBackground">@color/vity_background</item>
+    </style>
+    <style name="actionBar" parent="android:Widget.Holo.Light.ActionBar">
+        <item name="android:background">@color/vity_bar</item>
+    </style>
 
     <!-- SCHRIFTEN -->
     <!-- Title Vity -->
     <style name="vity_gross">
-        <item name="android:fontFamily">@font/vity20db</item>
+        <!--item name="android:fontFamily">@font/vity20db</item-->
         <item name="android:textSize">80sp</item>
     </style>
     <!-- General -->
@@ -37,7 +49,7 @@
     </style>
     <!-- Buttons -->
     <style name="text_buttons" parent="text_normal">
-        <item name="android:color">@color/text_color_buttons</item>
+        <item name="android:textColor">@color/text_color_buttons</item>
         <item name="android:textAlignment">center</item>
     </style>
 
@@ -47,7 +59,11 @@
     <style name="btn_standard" parent="text_buttons">
         <item name="android:background">@drawable/btn_style</item>
     </style>
+    <style name="btn_round" parent="text_buttons">
+        <item name="android:background">@drawable/btn_style_round</item>
+        <item name="android:drawableTint">@drawable/ic_add_black_24dp</item>
 
+    </style>
 
     <!-- LAYOUT -->
     <!-- Title -->
@@ -61,6 +77,10 @@
     <style name="btn_standard_complete" parent="btn_standard">
         <item name="android:layout_marginLeft">10sp</item>
         <item name="android:layout_marginRight">10sp</item>
+        <item name="android:layout_marginBottom">20sp</item>
+    </style>
+    <style name="btn_map_complete" parent="btn_round">
+        <item name="android:layout_marginRight">20sp</item>
         <item name="android:layout_marginBottom">20sp</item>
     </style>
     <!-- Spinner -->

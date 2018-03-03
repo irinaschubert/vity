@@ -37,7 +37,7 @@ public class ActivitySettings extends Activity {
                 startActivity(new Intent(this, ActivitySearch.class));
                 return true;
             case R.id.opt_settings:
-                startActivity(new Intent(this, ActivitySettings.class));
+                // Already there
                 return true;
             case R.id.opt_exit:
                 ActivityRegistry.finishAll();
