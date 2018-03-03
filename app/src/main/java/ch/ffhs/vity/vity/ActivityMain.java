@@ -2,9 +2,13 @@ package ch.ffhs.vity.vity;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
 import android.widget.ProgressBar;
+import android.widget.TextView;
+
+import java.lang.reflect.Type;
 
 public class ActivityMain extends Activity {
 
@@ -17,6 +21,12 @@ public class ActivityMain extends Activity {
         super.onCreate(null);
         setContentView(R.layout.activity_main);
 
+        // Set 20db font
+        Typeface tf = Typeface.createFromAsset(getAssets(), "vity20db.otf");
+        TextView tw = (TextView) findViewById(R.id.vity_bootscreen);
+        tw.setTypeface(tf);
+
+        // ProgressBar
         loadProgressbar = (ProgressBar) findViewById(R.id.progressBar);
         final Intent intent = new Intent(this, ActivityMap.class);
 

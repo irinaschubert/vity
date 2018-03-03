@@ -1,61 +1,66 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:theme="@style/Vity_Theme_Standard"
-    xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".ActivityNew">
+    android:orientation="vertical"
+    tools:context=".ActivityMap">
 
     <TextView
         style="@style/title_complete"
-        android:text="@string/titel_new"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:text="@string/titel_new" />
 
     <EditText
-        style="@style/form_text_complete"
         android:id="@+id/new_name"
-        android:hint="@string/form_titel"
-        android:inputType="text"
+        style="@style/form_text_complete"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:hint="@string/form_titel"
+        android:inputType="text" />
 
     <Spinner
-        style="@style/spinner_complete"
         android:id="@+id/new_category"
+        style="@style/spinner_complete"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:drawSelectorOnTop="true"
         android:entries="@array/categories"
-        android:entryValues="@array/category_values"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:entryValues="@array/category_values" />
 
     <Button
-        style="@style/btn_standard_complete"
         android:id="@+id/new_btn_image"
-        android:text="@string/btn_image"
-        android:onClick="onClickAddPicture"
-        android:layout_gravity="center"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
-
-    <Button
-        style="@style/btn_standard_complete"
-        android:id="@+id/new_btn_location"
-        android:text="@string/add_location"
-        android:layout_gravity="center"
-        android:onClick="onClickAddLocation"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
-
-    <Button
-        android:id="@+id/new_btn_save"
         style="@style/btn_standard_complete"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        android:onClick="onClickSaveNewActivity"
-        android:text="@string/btn_save" />
+        android:layout_gravity="center"
+        android:onClick="onClickAddPicture"
+        android:text="@string/btn_image" />
+
+    <Button
+        android:id="@+id/new_btn_location"
+        style="@style/btn_standard_complete"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:onClick="onClickAddLocation"
+        android:text="@string/add_location" />
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent">
+
+        <Button
+            android:id="@+id/new_btn_save"
+            style="@style/btn_standard_complete"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:onClick="onClickSaveNewActivity"
+            android:text="@string/btn_save" />
+
+    </RelativeLayout>
+
 
 </LinearLayout>

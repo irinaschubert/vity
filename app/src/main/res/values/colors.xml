@@ -2,24 +2,21 @@
 <resources>
 
     <!-- Theme -->
-    <color name="vity_background">#a9ea8b</color>
-    <color name="vity_bar">#ff6236</color>
-    <color name="vity_status_bar">#3bffff</color>
-    <color name="vity_navigation_bar">#ffce4a</color>
-    <color name="vity_bar_text">#ff1ef0</color>
+    <color name="vity_background">#fffbf1</color>
+    <color name="vity_bar">#ffeec4</color>
+    <color name="vity_status_bar">#000000</color>
+    <color name="vity_navigation_bar">#000000</color>
+    <color name="vity_bar_text">#000000</color>
 
 
     <!-- Text -->
     <color name="text_color">#000000</color>
     <color name="text_color_hints">#888888</color>
-    <color name="text_color_buttons">#eeeeee</color>
+    <color name="text_color_buttons">#ffffff</color>
 
     <!-- Button -->
-    <color name="btn_color">#949494</color>
+    <color name="btn_color">#706f6f</color>
     <color name="btn_boarder_color">#000000</color>
-    <color name="primary_dark_material_dark">#000000</color>
-    <color name="foreground_material_light">#000000</color>
-    <color name="background_material_light">#ffffff</color>
-    <color name="accent_material_light">#ffe9b7</color>
+
 
 </resources>

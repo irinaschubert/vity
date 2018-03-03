@@ -6,6 +6,8 @@ import android.app.Activity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Toast;
 
 /**
  * Created by irina on 10.02.2018.
@@ -34,7 +36,7 @@ public class ActivityNew extends Activity {
                 startActivity(new Intent(this, ActivityMap.class));
                 return true;
             case R.id.opt_new:
-                startActivity(new Intent(this, ActivityNew.class));
+                // Already there
                 return true;
             case R.id.opt_search:
                 startActivity(new Intent(this, ActivitySearch.class));
@@ -57,15 +59,16 @@ public class ActivityNew extends Activity {
     /** Schlüssel für die Kategorie der neuen Aktivität. */
     public static final String CATEGORY = "cat";
 
-    /**public void onClickAddPicture(View button) {
+    // onClickFunctions
+    public void onClickAddPicture(View button) {
+        Toast.makeText(getApplicationContext(), "addPicture", Toast.LENGTH_LONG).show();
+    }
 
-     }**/
+    public void onClickAddLocation(View button) {
+        Toast.makeText(getApplicationContext(), "addLocation", Toast.LENGTH_LONG).show();
+     }
 
-    /**public void onClickAddLocation(View button) {
-
-     }**/
-
-    /**public void onClickSaveNewActivity(View button) {
-
-     }**/
+    public void onClickSaveNewActivity(View button) {
+        Toast.makeText(getApplicationContext(), "saveNewActivity", Toast.LENGTH_LONG).show();
+     }
 }

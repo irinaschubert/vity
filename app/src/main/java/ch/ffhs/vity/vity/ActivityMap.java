@@ -9,6 +9,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -47,7 +48,7 @@ public class ActivityMap extends FragmentActivity implements OnMapReadyCallback 
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
             case R.id.opt_map:
-                startActivity(new Intent(this, ActivityMap.class));
+                // Already there
                 return true;
             case R.id.opt_new:
                 startActivity(new Intent(this, ActivityNew.class));
@@ -99,6 +100,10 @@ public class ActivityMap extends FragmentActivity implements OnMapReadyCallback 
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(bern, zoomLevel));
     }
 
+    // Functions
+    public void goToNewActivity(View button){
+        startActivity(new Intent(this, ActivityNew.class));
+    }
 
     // Zeige Android LifeCycle
     /*
