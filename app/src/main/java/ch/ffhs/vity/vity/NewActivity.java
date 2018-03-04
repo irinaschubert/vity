@@ -51,23 +51,23 @@ public class NewActivity extends Activity {
     /** Schlüssel für die Kategorie der neuen Aktivität. */
     public static final String CATEGORY = "cat";
 
-    /**public void onClickAddPicture(View button) {
-        Intent intent = new Intent(this, PictureActivity.class);
+    public void onClickAddPicture(View button) {
+        Intent intent = new Intent(this, HomeActivity.class);
         startActivity(intent);
-     }**/
+     }
 
-    /**public void onClickAddLocation(View button) {
-        Intent intent = new Intent(this, LocationActivity.class);
+    public void onClickAddLocation(View button) {
+        Intent intent = new Intent(this, HomeActivity.class);
         startActivity(intent);
-     }**/
+     }
 
-    /**public void onClickSaveNewActivity(View button) {
-        Intent intent = new Intent(this, SaveActivity.class);
+    public void onClickSaveNewActivity(View button) {
+        Intent intent = new Intent(this, HomeActivity.class);
         startActivity(intent);
-     }**/
+     }
 
     public void onClickCancelNewActivity(View button) {
       Intent intent = new Intent(this, HomeActivity.class);
       startActivity(intent);
-     }
+    }
 }

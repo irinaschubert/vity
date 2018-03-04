@@ -7,7 +7,7 @@
     <string name="app_name">Vity</string>
     <string name="create_new_activity">Neue Akvitität erstellen</string>
     <string name="name_activity">Name der Aktivität</string>
-    <string name="description_activity">Beschreibung der Aktivität</string>
+    <string name="description">Beschreibung</string>
     <string name="add_picture">Bild hinzufügen</string>
     <string name="add_location">Ort hinzufügen</string>
     <string name="save">Speichern</string>
@@ -17,6 +17,7 @@
     <string name="search">Aktivität suchen</string>
 
     <!-- activity_settings -->
+    <string name="username">Username</string>
 
     <!-- Menüeinträge -->
     <string name="mnu_exit">Beenden</string>

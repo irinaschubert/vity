@@ -43,7 +43,7 @@ public class SearchActivity extends Activity {
         startActivity(intent);
     }
 
-    public void onClickCancelNewActivity(View button) {
+    public void onClickCancelSearchActivity(View button) {
         Intent intent = new Intent(this, HomeActivity.class);
         startActivity(intent);
     }

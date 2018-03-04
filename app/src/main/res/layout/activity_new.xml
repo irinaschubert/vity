@@ -23,7 +23,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:inputType="text"
-        android:hint="@string/description_activity"/>
+        android:hint="@string/description"/>
 
     <Spinner android:id="@+id/category"
         android:layout_width="match_parent"

@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 
 public class SettingsActivity extends Activity {
 
@@ -42,4 +43,18 @@ public class SettingsActivity extends Activity {
         startActivity(intent);
     }
 
+    public void onClickAddPicture(){
+        Intent intent = new Intent(this, HomeActivity.class);
+        startActivity(intent);
+    }
+
+    public void onClickSaveSettingsActivity(View button) {
+        Intent intent = new Intent(this, HomeActivity.class);
+        startActivity(intent);
+    }
+
+    public void onClickCancelSettingsActivity(View button) {
+        Intent intent = new Intent(this, HomeActivity.class);
+        startActivity(intent);
+    }
 }
