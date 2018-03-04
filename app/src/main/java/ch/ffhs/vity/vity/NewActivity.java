@@ -6,10 +6,8 @@ import android.app.Activity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 
-/**
- * Created by irina on 10.02.2018.
- */
 
 public class NewActivity extends Activity {
     @Override
@@ -44,22 +42,32 @@ public class NewActivity extends Activity {
         startActivity(intent);
     }
 
-
     /** Schlüssel für den Namen der neuen Aktivität. */
     public static final String NAME_ACTIVITY = "name";
+
+    /** Schlüssel für die Beschreibung der neuen Aktivität. */
+    public static final String DESCRIPTION_ACTIVITY = "desc";
 
     /** Schlüssel für die Kategorie der neuen Aktivität. */
     public static final String CATEGORY = "cat";
 
     /**public void onClickAddPicture(View button) {
-
+        Intent intent = new Intent(this, PictureActivity.class);
+        startActivity(intent);
      }**/
 
     /**public void onClickAddLocation(View button) {
-
+        Intent intent = new Intent(this, LocationActivity.class);
+        startActivity(intent);
      }**/
 
     /**public void onClickSaveNewActivity(View button) {
-
+        Intent intent = new Intent(this, SaveActivity.class);
+        startActivity(intent);
      }**/
+
+    public void onClickCancelNewActivity(View button) {
+      Intent intent = new Intent(this, HomeActivity.class);
+      startActivity(intent);
+     }
 }

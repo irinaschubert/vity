@@ -1,23 +1,38 @@
 <resources>
+    <!-- activity_home -->
+
+    <!-- activity_main -->
+
+    <!-- activity_new -->
     <string name="app_name">Vity</string>
-    <string name="txt_create_new_activity">Neue Akvitität erstellen</string>
-    <string name="txt_save">Speichern</string>
+    <string name="create_new_activity">Neue Akvitität erstellen</string>
+    <string name="name_activity">Name der Aktivität</string>
+    <string name="description_activity">Beschreibung der Aktivität</string>
+    <string name="add_picture">Bild hinzufügen</string>
+    <string name="add_location">Ort hinzufügen</string>
+    <string name="save">Speichern</string>
+    <string name="cancel">Abbrechen</string>
+
     <string name="category_food">Essen und Trinken</string>
     <string name="category_museum">Museum</string>
     <string name="category_walk">Spaziergang</string>
-    <string name="category_store">Laden</string>
-    <string name="create_new_activity">Neu</string>
-    <string name="add_picture">Bild hinzufügen</string>
-    <string name="add_location">Ort hinzufügen</string>
+    <string name="category_shopping">Einkaufen</string>
+
+
+
+
+    <!-- activity_search -->
+    <string name="search">Suchen</string>
+
+    <!-- activity_settings -->
 
     <!-- Menüeinträge -->
     <string name="mnu_exit">Beenden</string>
     <string name="mnu_search">Suchen</string>
     <string name="vity">Vity</string>
-    <string name="map">Map</string>
-    <string name="new_activity">New Activity</string>
-    <string name="search_activity">Search Activity</string>
-    <string name="home_map">Home | Map</string>
-    <string name="search">Search</string>
-    <string name="settings">Settings</string>
+    <string name="map">Karte</string>
+    <string name="new_activity">Neue Aktivität erstellen</string>
+    <string name="search_activity">Aktivität suchen</string>
+    <string name="home_map">Home | Karte</string>
+    <string name="settings">Einstellungen</string>
 </resources>
