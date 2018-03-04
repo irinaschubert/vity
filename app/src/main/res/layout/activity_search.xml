@@ -1,18 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context="ch.ffhs.vity.vity.SearchActivity">
 
     <TextView
-        android:id="@+id/tmpText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_centerVertical="true"
+        android:text="@string/search" />
+
+    <EditText android:id="@+id/description_activity"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="text"
+        android:hint="@string/description_activity"/>
+
+    <Spinner android:id="@+id/category"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:drawSelectorOnTop="true"
+        android:entries="@array/categories"
+        android:entryValues="@array/category_activity"/>
+
+    <Spinner android:id="@+id/radius"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:drawSelectorOnTop="true"
+        android:entries="@array/radius"
+        android:entryValues="@array/radius_activity"/>
+
+    <Button android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:text="@string/search"
-        android:textAlignment="center"
-        android:textSize="18sp" />
-</RelativeLayout>
+        android:layout_gravity="center"
+        android:onClick="onClickSearchActivity"/>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_gravity="center"
+        android:layout_weight="1">
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:onClick="onClickCancelNewActivity"
+            android:text="@string/cancel" />
+
+    </LinearLayout>
+
+</LinearLayout>

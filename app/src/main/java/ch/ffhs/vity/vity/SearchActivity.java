@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 
 public class SearchActivity extends Activity {
 
@@ -39,6 +40,11 @@ public class SearchActivity extends Activity {
     }
     public void goToSearchActivity(MenuItem item){
         Intent intent = new Intent(this, SearchActivity.class);
+        startActivity(intent);
+    }
+
+    public void onClickCancelNewActivity(View button) {
+        Intent intent = new Intent(this, HomeActivity.class);
         startActivity(intent);
     }
 

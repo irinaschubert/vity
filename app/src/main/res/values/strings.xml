@@ -13,16 +13,8 @@
     <string name="save">Speichern</string>
     <string name="cancel">Abbrechen</string>
 
-    <string name="category_food">Essen und Trinken</string>
-    <string name="category_museum">Museum</string>
-    <string name="category_walk">Spaziergang</string>
-    <string name="category_shopping">Einkaufen</string>
-
-
-
-
     <!-- activity_search -->
-    <string name="search">Suchen</string>
+    <string name="search">Aktivität suchen</string>
 
     <!-- activity_settings -->
 
