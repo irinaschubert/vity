@@ -1,13 +1,15 @@
-package ch.ffhs.vity.vity;
+package ch.ffhs.vity.vity.Activity;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.app.Activity;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
+
+import ch.ffhs.vity.vity.Helper.ActivityRegistry;
+import ch.ffhs.vity.vity.R;
 
 /**
  * Created by irina on 10.02.2018.
@@ -32,7 +34,7 @@ public class ActivityNew extends Activity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
-            case R.id.opt_map:
+            /*case R.id.opt_map:
                 startActivity(new Intent(this, ActivityMap.class));
                 return true;
             case R.id.opt_new:
@@ -40,7 +42,7 @@ public class ActivityNew extends Activity {
                 return true;
             case R.id.opt_search:
                 startActivity(new Intent(this, ActivitySearch.class));
-                return true;
+                return true;*/
             case R.id.opt_settings:
                 startActivity(new Intent(this, ActivitySettings.class));
                 return true;
@@ -71,4 +73,10 @@ public class ActivityNew extends Activity {
     public void onClickSaveNewActivity(View button) {
         Toast.makeText(getApplicationContext(), "saveNewActivity", Toast.LENGTH_LONG).show();
      }
+
+    public void onClickCancel(View button) {
+        Intent home = new Intent(this, ActivityMap.class);
+        finish();
+        startActivity(home);
+    }
 }

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ActivityMap">
+    tools:context=".Activity.ActivityMap">
 
     <fragment xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:map="http://schemas.android.com/apk/res-auto"
@@ -13,19 +13,37 @@
         android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context="ch.ffhs.vity.vity.ActivityMap" />
-
+        tools:context=".Activity.ActivityMap" />
 
     <ImageButton
-        android:id="@+id/new_btn_save"
-        style="@style/btn_map_complete"
-        android:layout_width="70dp"
-        android:layout_height="70dp"
+        android:id="@+id/btn_map_new"
+        style="@style/btn_map_new_complete"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
         android:src="@drawable/ic_add_black_24dp"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
         android:onClick="goToNewActivity"/>
 
+    <ImageButton
+        android:id="@+id/btn_map_search"
+        style="@style/btn_map_search_complete"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:src="@drawable/ic_search_black_24dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:onClick="goToSearchActivity"/>
+
+    <ImageButton
+        android:id="@+id/btn_map_navigate"
+        style="@style/btn_map_navigate_complete"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:src="@drawable/ic_navigation_black_24dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:onClick="goNavigate"/>
 </RelativeLayout>
 
 

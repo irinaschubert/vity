@@ -1,0 +1,38 @@
+package ch.ffhs.vity.vity.Mock;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import ch.ffhs.vity.vity.Helper.ActivityItem;
+
+/**
+ * Created by hamme on 10.03.2018.
+ */
+
+public class Activities_Mock {
+
+    List<ActivityItem> liste;
+
+    public Activities_Mock(){
+
+        liste = new ArrayList<>();
+
+        for(int i = 0; i < 30; i++){
+
+            ActivityItem a1 = new ActivityItem();
+            a1.setTitle("Puchini Belp" + i);
+            a1.setDescription("Puchini ist ein super italienisches Restaurant in Belp. Abends meist relativ gut ausgebucht - Reservation! Tipp: Pizza Puchini");
+            a1.setCategory("Essen und Trinken");
+            a1.setLink("www.puchinibelp.ch");
+            //a1.setDate(Instant.now());
+            a1.setOwner("Michael");
+            a1.setLink_image("Image_05.jpg");
+
+            liste.add(a1);
+        }
+    }
+
+    public List<ActivityItem> getActivities(){
+        return liste;
+    }
+}

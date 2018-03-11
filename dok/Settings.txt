@@ -1,0 +1,8 @@
+KeyStore
+Alias: VityKey
+pw: vityvity
+
+Google API / Firebase
+mail: ffhs.vity@gmail.com
+pw: vity2018
+API-Schlüssel:  AIzaSyCJ94JUyooTy75ZkiCbEqfp0hJTq-4d_rk

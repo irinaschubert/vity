@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".Activity.ActivityMap"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".ActivityMap">
+    android:orientation="vertical">
 
     <TextView
         style="@style/title_complete"
@@ -13,8 +14,8 @@
         android:text="@string/titel_new" />
 
     <EditText
-        android:id="@+id/new_name"
         style="@style/form_text_complete"
+        android:id="@+id/new_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/form_titel"
@@ -27,7 +28,7 @@
         android:layout_height="wrap_content"
         android:drawSelectorOnTop="true"
         android:entries="@array/categories"
-        android:entryValues="@array/category_values" />
+        android:entryValues="@array/category_values"/>
 
     <Button
         android:id="@+id/new_btn_image"
@@ -51,15 +52,31 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent">
 
-        <Button
-            android:id="@+id/new_btn_save"
-            style="@style/btn_standard_complete"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:onClick="onClickSaveNewActivity"
-            android:text="@string/btn_save" />
+        <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal">
 
+            <Button
+                android:id="@+id/new_btn_save"
+                style="@style/btn_standard_complete"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.45"
+                android:onClick="onClickSaveNewActivity"
+                android:text="@string/btn_save" />
+
+            <Button
+                android:id="@+id/new_btn_cancel"
+                style="@style/btn_standard_complete"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.45"
+                android:onClick="onClickCancel"
+                android:text="@string/btn_cancel" />
+
+        </LinearLayout>
     </RelativeLayout>
 
 

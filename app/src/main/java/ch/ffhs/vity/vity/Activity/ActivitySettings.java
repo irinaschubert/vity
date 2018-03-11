@@ -1,19 +1,30 @@
-package ch.ffhs.vity.vity;
+package ch.ffhs.vity.vity.Activity;
 
-import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
+import android.preference.PreferenceActivity;
+import android.preference.PreferenceFragment;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 
-public class ActivitySettings extends Activity {
+import ch.ffhs.vity.vity.Helper.ActivityRegistry;
+import ch.ffhs.vity.vity.R;
+
+public class ActivitySettings extends PreferenceActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_settings);
+        getFragmentManager().beginTransaction().replace(android.R.id.content, new preferenceFrament()).commit();
+        //setContentView(R.layout.activity_settings);
         ActivityRegistry.register(this);
+    }
+
+    public static class preferenceFrament extends PreferenceFragment{
+        @Override
+        public void onCreate( Bundle savedInstanceState) {
+            super.onCreate(savedInstanceState);
+            addPreferencesFromResource(R.xml.settings);
+        }
     }
 
     // Menu
@@ -27,7 +38,7 @@ public class ActivitySettings extends Activity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
-            case R.id.opt_map:
+            /*case R.id.opt_map:
                 startActivity(new Intent(this, ActivityMap.class));
                 return true;
             case R.id.opt_new:
@@ -35,7 +46,7 @@ public class ActivitySettings extends Activity {
                 return true;
             case R.id.opt_search:
                 startActivity(new Intent(this, ActivitySearch.class));
-                return true;
+                return true;*/
             case R.id.opt_settings:
                 // Already there
                 return true;

@@ -1,4 +1,4 @@
-package ch.ffhs.vity.vity;
+package ch.ffhs.vity.vity.Activity;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -8,7 +8,7 @@ import android.os.Handler;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import java.lang.reflect.Type;
+import ch.ffhs.vity.vity.R;
 
 public class ActivityMain extends Activity {
 
