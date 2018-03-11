@@ -2,22 +2,25 @@
 <resources xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools">
+    android:layout_height="match_parent">
 
     <!-- Arrays für Kategorien -->
     <string-array name="categories">
-        <item>Essen und Trinken</item> <!-- Ersetzen durch android:text="@string/category_food" aber wie?!-->
-        <item>Museum</item> <!-- Ersetzen durch android:text="@string/category_museum" aber wie?!-->
-        <item>Spaziergang</item> <!-- Ersetzen durch android:text="@string/category_walk" aber wie?!-->
-        <item>Laden</item> <!-- Ersetzen durch android:text="@string/category_store" aber wie?!-->
+        <item>@string/cat_food</item>
+        <item>@string/cat_shop</item>
+        <item>@string/cat_stay</item>
+        <item>@string/cat_museum</item>
+        <item>@string/cat_walk</item>
+        <item>@string/cat_other</item>
     </string-array>
 
     <string-array name="category_values">
-        <item>Essen und Trinken</item> <!-- Ersetzen durch android:text="@string/category_food" aber wie?!-->
-        <item>Museum</item> <!-- Ersetzen durch android:text="@string/category_museum" aber wie?!-->
-        <item>Spaziergang</item> <!-- Ersetzen durch android:text="@string/category_walk" aber wie?!-->
-        <item>Laden</item> <!-- Ersetzen durch android:text="@string/category_store" aber wie?!-->
+        <item>@string/cat_food</item>
+        <item>@string/cat_shop</item>
+        <item>@string/cat_stay</item>
+        <item>@string/cat_museum</item>
+        <item>@string/cat_walk</item>
+        <item>@string/cat_other</item>
     </string-array>
 
     <!-- Arrays für Umkreis-Eingabe -->

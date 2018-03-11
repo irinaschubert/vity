@@ -1,15 +1,5 @@
 <resources>
     <string name="app_name">Vity</string>
-    <string name="txt_create_new_activity">Neue Akvitität erstellen</string>
-    <string name="txt_save">Speichern</string>
-    <string name="category_food">Essen und Trinken</string>
-    <string name="category_museum">Museum</string>
-    <string name="category_walk">Spaziergang</string>
-    <string name="category_store">Laden</string>
-    <string name="create_new_activity">Neu</string>
-    <string name="add_picture">Bild hinzufügen</string>
-    <string name="add_location">Ort hinzufügen</string>
-
 
     <!-- Platzhaltertexte -->
     <string name="text_search">Search</string>
@@ -19,10 +9,11 @@
     <string name="titel_bootscreen">Vity</string>
 
     <!-- Buttons -->
-    <string name="btn_image">Image..</string>
+    <string name="btn_image">Image…</string>
     <string name="btn_save">Save</string>
     <string name="btn_cancel">Cancel</string>
     <string name="btn_search">Search</string>
+    <string name="btn_location">Location…</string>
 
     <!-- Titel Seiten -->
     <string name="titel_new">New Activity</string>
@@ -36,10 +27,17 @@
     <string name="form_link">Link</string>
 
     <!-- Atkivität finden -->
-    <string name="form_search">Suchen</string>
+    <string name="form_search">Search</string>
     <string name="form_category2">Category</string>
     <string name="form_perimeter">Perimeter</string>
 
+    <!-- Kategorien für Aktivitäten -->
+    <string name="cat_food">Food and drinks</string>
+    <string name="cat_shop">Shopping</string>
+    <string name="cat_stay">Place to stay</string>
+    <string name="cat_museum">Museum</string>
+    <string name="cat_walk">Walk</string>
+    <string name="cat_other">Other</string>
 
     <!-- Menüeinträge -->
     <string name="men_map">Map</string>
