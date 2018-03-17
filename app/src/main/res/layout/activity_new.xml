@@ -2,51 +2,68 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".Activity.ActivityMap"
+    tools:context=".Activity.ActivityNew"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:padding="10sp"
     android:orientation="vertical">
 
     <TextView
-        style="@style/title_complete"
+        style="@style/text_title"
+        android:text="@string/titel_new"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/titel_new" />
+        android:layout_marginBottom="20sp"
+        android:layout_marginTop="20sp" />
 
     <EditText
-        style="@style/form_text_complete"
+        style="@style/text_hints"
         android:id="@+id/new_name"
+        android:hint="@string/form_titel"
+        android:inputType="text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/form_titel"
-        android:inputType="text" />
+        android:layout_marginBottom="20sp" />
+
+    <EditText
+        style="@style/text_hints"
+        android:id="@+id/new_description"
+        android:hint="@string/form_description"
+        android:inputType="textMultiLine"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20sp" />
 
     <Spinner
         android:id="@+id/new_category"
-        style="@style/spinner_complete"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        style="@style/text_normal"
         android:drawSelectorOnTop="true"
         android:entries="@array/categories"
-        android:entryValues="@array/category_values"/>
+        android:entryValues="@array/category_values"
+        android:popupBackground="@drawable/spinner_style"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20sp" />
 
     <Button
         android:id="@+id/new_btn_image"
-        style="@style/btn_standard_complete"
+        style="@style/btn_standard"
+        android:onClick="onClickAddPicture"
+        android:text="@string/btn_image"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:onClick="onClickAddPicture"
-        android:text="@string/btn_image" />
+        android:layout_marginBottom="20sp"
+        android:layout_gravity="center" />
 
     <Button
+        style="@style/btn_standard"
         android:id="@+id/new_btn_location"
-        style="@style/btn_standard_complete"
+        android:onClick="onClickAddLocation"
+        android:text="@string/btn_location"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:onClick="onClickAddLocation"
-        android:text="@string/btn_location" />
+        android:layout_marginBottom="20sp"
+        android:layout_gravity="center" />
 
     <RelativeLayout
         android:layout_width="wrap_content"
@@ -59,22 +76,24 @@
         android:orientation="horizontal">
 
             <Button
-                android:id="@+id/new_btn_save"
-                style="@style/btn_standard_complete"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:id="@+id/btn_search"
+                style="@style/btn_standard"
                 android:layout_weight="0.45"
                 android:onClick="onClickSaveNewActivity"
-                android:text="@string/btn_save" />
-
-            <Button
-                android:id="@+id/new_btn_cancel"
-                style="@style/btn_standard_complete"
+                android:text="@string/btn_search"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="10sp"/>
+
+            <Button
+                android:id="@+id/search_btn_cancel"
+                style="@style/btn_standard"
                 android:layout_weight="0.45"
                 android:onClick="onClickCancel"
-                android:text="@string/btn_cancel" />
+                android:text="@string/btn_cancel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10sp"/>
 
         </LinearLayout>
     </RelativeLayout>

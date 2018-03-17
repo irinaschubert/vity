@@ -70,15 +70,6 @@ public class ActivityMap extends FragmentActivity implements OnMapReadyCallback 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
-            /*case R.id.opt_map:
-                // Already there
-                return true;
-            case R.id.opt_new:
-                startActivity(new Intent(this, ActivityNew.class));
-                return true;
-            case R.id.opt_search:
-                startActivity(new Intent(this, ActivitySearch.class));
-                return true; */
             case R.id.opt_settings:
                 startActivity(new Intent(this, ActivitySettings.class));
                 return true;

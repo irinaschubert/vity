@@ -34,15 +34,6 @@ public class ActivityNew extends Activity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
-            /*case R.id.opt_map:
-                startActivity(new Intent(this, ActivityMap.class));
-                return true;
-            case R.id.opt_new:
-                // Already there
-                return true;
-            case R.id.opt_search:
-                startActivity(new Intent(this, ActivitySearch.class));
-                return true;*/
             case R.id.opt_settings:
                 startActivity(new Intent(this, ActivitySettings.class));
                 return true;
@@ -75,8 +66,6 @@ public class ActivityNew extends Activity {
      }
 
     public void onClickCancel(View button) {
-        Intent home = new Intent(this, ActivityMap.class);
         finish();
-        startActivity(home);
     }
 }

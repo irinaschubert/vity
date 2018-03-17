@@ -38,15 +38,6 @@ public class ActivitySettings extends PreferenceActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
-            /*case R.id.opt_map:
-                startActivity(new Intent(this, ActivityMap.class));
-                return true;
-            case R.id.opt_new:
-                startActivity(new Intent(this, ActivityNew.class));
-                return true;
-            case R.id.opt_search:
-                startActivity(new Intent(this, ActivitySearch.class));
-                return true;*/
             case R.id.opt_settings:
                 // Already there
                 return true;
