@@ -27,10 +27,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Activity.ActivityNew" />
+        <activity android:name=".Activity.ActivityNew" android:windowSoftInputMode="stateAlwaysHidden" />
         <activity android:name=".Activity.ActivityMap" />
         <activity android:name=".Activity.ActivitySettings" />
-        <activity android:name=".Activity.ActivitySearch" />
+        <activity android:name=".Activity.ActivitySearch" android:windowSoftInputMode="stateAlwaysHidden" />
+        <activity android:name=".Activity.ActivityDetail"/>
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").

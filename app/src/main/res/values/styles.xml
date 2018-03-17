@@ -37,6 +37,10 @@
         <item name="android:textSize">15sp</item>
         <item name="android:color">@color/text_color</item>
     </style>
+    <!-- General - bold -->
+    <style name="text_normal_bold" parent="text_normal">
+        <item name="android:textStyle">bold</item>
+    </style>
     <!-- Titles -->
     <style name="text_title" parent="text_normal">
         <item name="android:textSize">30sp</item>
@@ -61,46 +65,6 @@
     </style>
     <style name="btn_round" parent="text_buttons">
         <item name="android:background">@drawable/btn_style_round</item>
-    </style>
-
-    <!-- LAYOUT -->
-    <!-- Title -->
-    <style name="title_complete" parent="text_title">
-        <item name="android:layout_marginLeft">10sp</item>
-        <item name="android:layout_marginRight">10sp</item>
-        <item name="android:layout_marginBottom">20sp</item>
-        <item name="android:layout_marginTop">20sp</item>
-    </style>
-    <!-- Button -->
-    <style name="btn_standard_complete" parent="btn_standard">
-        <item name="android:layout_marginLeft">10sp</item>
-        <item name="android:layout_marginRight">10sp</item>
-        <item name="android:layout_marginBottom">20sp</item>
-    </style>
-    <style name="btn_map_new_complete" parent="btn_round">
-        <item name="android:layout_marginRight">20dp</item>
-        <item name="android:layout_marginBottom">20dp</item>
-    </style>
-    <style name="btn_map_search_complete" parent="btn_round">
-        <item name="android:layout_marginRight">20dp</item>
-        <item name="android:layout_marginBottom">100dp</item>
-    </style>
-    <style name="btn_map_navigate_complete" parent="btn_round">
-        <item name="android:layout_marginRight">20dp</item>
-        <item name="android:layout_marginBottom">180dp</item>
-    </style>
-    <!-- Spinner -->
-    <style name="spinner_complete" parent="text_normal">
-        <item name="android:layout_marginLeft">10sp</item>
-        <item name="android:layout_marginRight">10sp</item>
-        <item name="android:layout_marginBottom">20sp</item>
-        <item name="android:popupBackground">@drawable/spinner_style</item>
-    </style>
-    <!-- Form Text Input -->
-    <style name="form_text_complete" parent="text_hints">
-        <item name="android:layout_marginLeft">10sp</item>
-        <item name="android:layout_marginRight">10sp</item>
-        <item name="android:layout_marginBottom">20sp</item>
     </style>
 
     <!-- List Item -->

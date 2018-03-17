@@ -11,7 +11,7 @@ import ch.ffhs.vity.vity.Helper.ActivityItem;
 
 public class Activities_Mock {
 
-    List<ActivityItem> liste;
+    private static List<ActivityItem> liste;
 
     public Activities_Mock(){
 
@@ -34,5 +34,9 @@ public class Activities_Mock {
 
     public List<ActivityItem> getActivities(){
         return liste;
+    }
+
+    public ActivityItem getActivity(int id){
+        return liste.get(id);
     }
 }

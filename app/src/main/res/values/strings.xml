@@ -13,6 +13,7 @@
     <string name="btn_save">Save</string>
     <string name="btn_cancel">Cancel</string>
     <string name="btn_search">Search</string>
+    <string name="btn_show">Show on Map</string>
     <string name="btn_location">Location…</string>
 
     <!-- Titel Seiten -->
@@ -52,5 +53,14 @@
     <string name="opt_new">opt_new</string>
     <string name="opt_search">opt_search</string>
     <string name="opt_exit">opt_exit</string>
+
+    <!-- Detail Seite -->
+    <string name="detail_category">Category</string>
+    <string name="detail_link">Link</string>
+    <string name="detail_date">Date</string>
+    <string name="detail_owner">Creater</string>
+    <string name="detail_description">Description</string>
+    <string name="activity_title_image">Activity_Title_Image</string>
+
 
 </resources>
