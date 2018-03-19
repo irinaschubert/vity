@@ -123,21 +123,21 @@
             android:layout_marginEnd="10sp"/>
 
         <Button
-            android:id="@+id/detail_btn_cancel"
-            style="@style/btn_standard"
-            android:layout_weight="0.45"
-            android:onClick="onClickCancel"
-            android:text="@string/btn_cancel"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10sp"/>
-
-        <Button
             android:id="@+id/detail_btn_edit"
             style="@style/btn_standard"
             android:layout_weight="0.45"
             android:onClick="onClickEdit"
             android:text="@string/btn_edit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10sp"/>
+
+        <Button
+            android:id="@+id/detail_btn_cancel"
+            style="@style/btn_standard"
+            android:layout_weight="0.45"
+            android:onClick="onClickCancel"
+            android:text="@string/btn_cancel"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="10sp"/>
