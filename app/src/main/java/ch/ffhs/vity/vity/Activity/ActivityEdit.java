@@ -22,7 +22,7 @@ import ch.ffhs.vity.vity.R;
  * Created by irina on 18.03.2018.
  */
 
-public class ActivityEdit extends ListActivity {
+public class ActivityEdit extends Activity {
 
     private String title;
     private String category;
@@ -72,6 +72,7 @@ public class ActivityEdit extends ListActivity {
     }
 
     private void loadActivity(int id){
+        this.id = id;
         mockData = new Activities_Mock();
         activity = mockData.getActivity(id);
 
