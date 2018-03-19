@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".Activity.ActivityEdit"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="10sp"
+    android:orientation="vertical">
+
+    <TextView
+        style="@style/text_title"
+        android:text="@string/titel_edit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20sp"
+        android:layout_marginTop="20sp" />
+
+    <EditText
+        style="@style/text_hints"
+        android:id="@+id/new_name"
+        android:hint="@string/form_titel"
+        android:inputType="text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20sp" />
+
+    <EditText
+        style="@style/text_hints"
+        android:id="@+id/new_description"
+        android:hint="@string/form_description"
+        android:inputType="textMultiLine"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20sp" />
+
+    <Spinner
+        android:id="@+id/new_category"
+        style="@style/text_normal"
+        android:drawSelectorOnTop="true"
+        android:entries="@array/categories"
+        android:entryValues="@array/category_values"
+        android:popupBackground="@drawable/spinner_style"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20sp" />
+
+    <Button
+        android:id="@+id/new_btn_image"
+        style="@style/btn_standard"
+        android:onClick="onClickAddPicture"
+        android:text="@string/btn_image"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20sp"
+        android:layout_gravity="center" />
+
+    <Button
+        style="@style/btn_standard"
+        android:id="@+id/new_btn_location"
+        android:onClick="onClickAddLocation"
+        android:text="@string/btn_location"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20sp"
+        android:layout_gravity="center" />
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btn_update"
+                style="@style/btn_standard"
+                android:layout_weight="0.45"
+                android:onClick="onClickUpdateActivity"
+                android:text="@string/btn_update"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10sp"/>
+
+            <Button
+                android:id="@+id/search_btn_cancel"
+                style="@style/btn_standard"
+                android:layout_weight="0.45"
+                android:onClick="onClickCancel"
+                android:text="@string/btn_cancel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10sp"/>
+
+        </LinearLayout>
+    </RelativeLayout>
+
+
+</LinearLayout>

@@ -28,6 +28,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".Activity.ActivityNew" android:windowSoftInputMode="stateAlwaysHidden" />
+        <activity android:name=".Activity.ActivityEdit" android:windowSoftInputMode="stateAlwaysHidden" />
         <activity android:name=".Activity.ActivityMap" />
         <activity android:name=".Activity.ActivitySettings" />
         <activity android:name=".Activity.ActivitySearch" android:windowSoftInputMode="stateAlwaysHidden" />

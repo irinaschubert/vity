@@ -29,6 +29,8 @@ public class ActivityDetail extends Activity {
     private TextView descritpion;
 
     private Activities_Mock mockData;
+    private ActivityItem activity;
+    private int id;
 
     private Image image;
 
@@ -45,14 +47,14 @@ public class ActivityDetail extends Activity {
         owner = (TextView)findViewById(R.id.detail_owner);
         descritpion = (TextView)findViewById(R.id.detail_description);
 
-        int id = getIntent().getIntExtra("id", 0);
+        id = getIntent().getIntExtra("id", 0);
 
         loadMessage(id);
     }
 
     private void loadMessage(int id){
         mockData = new Activities_Mock();
-        ActivityItem activity = mockData.getActivity(id);
+        activity = mockData.getActivity(id);
 
         title.setText(activity.getTitle());
         category.setText(activity.getCategory());
@@ -85,7 +87,6 @@ public class ActivityDetail extends Activity {
         }
     }
 
-
     // onClickFunctions
     public void onClickShowOnMap(View button) {
         Toast.makeText(getApplicationContext(), "showOnMap", Toast.LENGTH_LONG).show();
@@ -93,5 +94,11 @@ public class ActivityDetail extends Activity {
 
     public void onClickCancel(View button) {
         finish();
+    }
+
+    public void onClickEdit(View button){
+        Intent intentActivityEdit = new Intent(this, ActivityEdit.class);
+        intentActivityEdit.putExtra("id", id);
+        startActivity(intentActivityEdit);
     }
 }

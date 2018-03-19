@@ -11,13 +11,16 @@
     <!-- Buttons -->
     <string name="btn_image">Image…</string>
     <string name="btn_save">Save</string>
+    <string name="btn_update">Update</string>
     <string name="btn_cancel">Cancel</string>
     <string name="btn_search">Search</string>
     <string name="btn_show">Show on Map</string>
+    <string name="btn_edit">Edit...</string>
     <string name="btn_location">Location…</string>
 
     <!-- Titel Seiten -->
     <string name="titel_new">New Activity</string>
+    <string name="titel_edit">Edit Activity</string>
     <string name="titel_search">Search Activity</string>
     <string name="titel_settings">Settings</string>
 
