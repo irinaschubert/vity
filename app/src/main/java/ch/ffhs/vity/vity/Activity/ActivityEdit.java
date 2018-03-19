@@ -34,6 +34,8 @@ public class ActivityEdit extends Activity {
     private Activities_Mock mockData;
     private ActivityItem activity;
 
+    ArrayAdapter<String> categoryAdapter;
+
     private int id;
 
     @Override
@@ -82,6 +84,21 @@ public class ActivityEdit extends Activity {
 
         EditText link = findViewById(R.id.new_link);
         link.setText(activity.getLink(), TextView.BufferType.EDITABLE);
+
+        // sets category value to category spinner
+        String category = activity.getCategory();
+        Spinner categorySpinner = findViewById(R.id.new_category);
+        categorySpinner.setSelection(getIndex(categorySpinner, category));
+    }
+
+    private int getIndex(Spinner spinner, String string){
+        int index = 0;
+        for (int i=0;i<spinner.getCount();i++){
+            if (spinner.getItemAtPosition(i).equals(string)){
+                index = i;
+            }
+        }
+        return index;
     }
 
     // onClickFunctions
