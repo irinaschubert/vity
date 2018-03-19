@@ -34,8 +34,6 @@ public class ActivityEdit extends Activity {
     private Activities_Mock mockData;
     private ActivityItem activity;
 
-    ArrayAdapter<String> categoryAdapter;
-
     private int id;
 
     @Override
@@ -82,6 +80,8 @@ public class ActivityEdit extends Activity {
         EditText description = findViewById(R.id.new_description);
         description.setText(activity.getDescription(), TextView.BufferType.EDITABLE);
 
+        EditText link = findViewById(R.id.new_link);
+        link.setText(activity.getLink(), TextView.BufferType.EDITABLE);
     }
 
     // onClickFunctions
