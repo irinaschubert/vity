@@ -40,4 +40,9 @@
         <item>10000</item>
     </integer-array>
 
+    <string-array name="img_choice">
+        <item>@string/img_from_gallery</item>
+        <item>@string/img_from_camera</item>
+    </string-array>
+
 </resources>

@@ -29,6 +29,8 @@
     <string name="form_description">Description</string>
     <string name="form_category">Category</string>
     <string name="form_link">Link</string>
+    <string name="img_from_gallery">Open existing image</string>
+    <string name="img_from_camera">Take a new photo</string>
 
     <!-- Atkivität finden -->
     <string name="form_search">Search</string>
@@ -65,5 +67,7 @@
     <string name="detail_description">Description</string>
     <string name="activity_title_image">Activity_Title_Image</string>
 
+    <!-- Security -->
+    <string name="explanation_permission_location_request">We are requesting the location permission as it is necessary for the app to perform search functionality properly.\nPlease select \"Grant Permission\" to try again and \"Cancel \" to deny permission.</string>
 
 </resources>
