@@ -30,7 +30,7 @@ public class ActivityNew extends Activity {
     private static final int REQUEST_IMAGE_PICK = 3;
     private static final int REQUEST_IMAGE_CAPTURE = 4;
 
-    ImageView newImage;
+    private ImageView newImage;
 
     @Override
     protected void onCreate(Bundle icicle) {
