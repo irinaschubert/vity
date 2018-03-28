@@ -1,6 +1,5 @@
-package ch.ffhs.vity.vity.Activity;
+package ch.ffhs.vity.vity.activity;
 
-import android.app.ListActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.app.Activity;
@@ -13,9 +12,9 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import ch.ffhs.vity.vity.Helper.ActivityItem;
-import ch.ffhs.vity.vity.Helper.ActivityRegistry;
-import ch.ffhs.vity.vity.Mock.Activities_Mock;
+import ch.ffhs.vity.vity.helper.ActivityItem;
+import ch.ffhs.vity.vity.helper.ActivityRegistry;
+import ch.ffhs.vity.vity.mock.Activities_Mock;
 import ch.ffhs.vity.vity.R;
 
 /**

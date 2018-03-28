@@ -1,25 +1,22 @@
-package ch.ffhs.vity.vity.Activity;
+package ch.ffhs.vity.vity.activity;
 
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.IBinder;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
-import java.util.List;
 
-import ch.ffhs.vity.vity.Helper.ActivityItem;
-import ch.ffhs.vity.vity.Helper.ActivityListAdapter;
-import ch.ffhs.vity.vity.Helper.ActivityRegistry;
-import ch.ffhs.vity.vity.Mock.Activities_Mock;
+import ch.ffhs.vity.vity.helper.ActivityItem;
+import ch.ffhs.vity.vity.helper.ActivityListAdapter;
+import ch.ffhs.vity.vity.helper.ActivityRegistry;
+import ch.ffhs.vity.vity.mock.Activities_Mock;
 import ch.ffhs.vity.vity.R;
 
 public class ActivitySearch extends Activity {

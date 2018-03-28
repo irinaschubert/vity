@@ -1,8 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:fillViewport="true">
+
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".Activity.ActivityNew"
+    tools:context=".activity.ActivityNew"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="10sp"
@@ -56,7 +61,7 @@
 
     <ImageView
         android:id="@+id/new_detail_image"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="20sp"
         android:adjustViewBounds="true"
@@ -118,3 +123,4 @@
 
 
 </LinearLayout>
+</ScrollView>

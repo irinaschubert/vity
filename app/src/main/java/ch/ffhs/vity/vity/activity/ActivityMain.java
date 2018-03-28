@@ -1,4 +1,4 @@
-package ch.ffhs.vity.vity.Activity;
+package ch.ffhs.vity.vity.activity;
 
 import android.app.Activity;
 import android.content.Intent;

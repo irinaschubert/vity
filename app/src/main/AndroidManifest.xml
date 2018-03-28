@@ -25,20 +25,19 @@
         android:supportsRtl="true"
         android:theme="@style/Vity_Theme_Standard">
         <activity
-            android:name=".Activity.ActivityMain"
+            android:name=".activity.ActivityMain"
             android:theme="@style/Vity_Theme_Bootscreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Activity.ActivityNew" android:windowSoftInputMode="stateAlwaysHidden" />
-        <activity android:name=".Activity.ActivityEdit" android:windowSoftInputMode="stateAlwaysHidden" />
-        <activity android:name=".Activity.ActivityMap" />
-        <activity android:name=".Activity.ActivitySettings" />
-        <activity android:name=".Activity.ActivitySearch" android:windowSoftInputMode="stateAlwaysHidden" />
-        <activity android:name=".Activity.ActivityDetail"/>
+        <activity android:name=".activity.ActivityNew" android:windowSoftInputMode="stateAlwaysHidden"/>
+        <activity android:name=".activity.ActivityEdit" android:windowSoftInputMode="stateAlwaysHidden" />
+        <activity android:name=".activity.ActivityMap" />
+        <activity android:name=".activity.ActivitySettings" />
+        <activity android:name=".activity.ActivitySearch" android:windowSoftInputMode="stateAlwaysHidden" />
+        <activity android:name=".activity.ActivityDetail"/>
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").

@@ -1,9 +1,9 @@
-package ch.ffhs.vity.vity.Mock;
+package ch.ffhs.vity.vity.mock;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import ch.ffhs.vity.vity.Helper.ActivityItem;
+import ch.ffhs.vity.vity.helper.ActivityItem;
 
 /**
  * Created by hamme on 10.03.2018.

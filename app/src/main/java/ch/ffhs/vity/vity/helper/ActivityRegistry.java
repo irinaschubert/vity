@@ -1,4 +1,4 @@
-package ch.ffhs.vity.vity.Helper;
+package ch.ffhs.vity.vity.helper;
 
 import android.app.Activity;
 

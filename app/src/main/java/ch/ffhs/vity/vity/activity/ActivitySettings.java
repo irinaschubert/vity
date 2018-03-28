@@ -1,4 +1,4 @@
-package ch.ffhs.vity.vity.Activity;
+package ch.ffhs.vity.vity.activity;
 
 import android.os.Bundle;
 import android.preference.PreferenceActivity;
@@ -6,7 +6,7 @@ import android.preference.PreferenceFragment;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import ch.ffhs.vity.vity.Helper.ActivityRegistry;
+import ch.ffhs.vity.vity.helper.ActivityRegistry;
 import ch.ffhs.vity.vity.R;
 
 public class ActivitySettings extends PreferenceActivity {
