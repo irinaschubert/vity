@@ -7,10 +7,14 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.squareup.picasso.Picasso;
+
 import java.lang.reflect.Array;
+import java.net.URI;
 import java.util.ArrayList;
 
 import ch.ffhs.vity.vity.Helper.ActivityItem;
@@ -30,7 +34,7 @@ public class ActivityDetail extends Activity {
 
     private Activities_Mock mockData;
 
-    private Image image;
+    private ImageView image;
 
     @Override
     protected void onCreate(Bundle icicle) {
@@ -44,6 +48,7 @@ public class ActivityDetail extends Activity {
         date = (TextView)findViewById(R.id.detail_date);
         owner = (TextView)findViewById(R.id.detail_owner);
         descritpion = (TextView)findViewById(R.id.detail_description);
+        image = (ImageView) findViewById(R.id.detail_image);
 
         int id = getIntent().getIntExtra("id", 0);
 
@@ -54,13 +59,17 @@ public class ActivityDetail extends Activity {
         mockData = new Activities_Mock();
         ActivityItem activity = mockData.getActivity(id);
 
+        // Load Data
         title.setText(activity.getTitle());
         category.setText(activity.getCategory());
         link.setText(activity.getLink());
-        // date.setText(activity.getDate());
+        date.setText(activity.getDate());
         owner.setText(activity.getOwner());
         descritpion.setText(activity.getDescription());
         descritpion.setText(activity.getDescription());
+
+        // Load Image
+        Picasso.get().load(activity.getLink_image()).into(image);
     }
 
     // Menu

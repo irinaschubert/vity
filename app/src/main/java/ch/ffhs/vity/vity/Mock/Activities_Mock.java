@@ -1,13 +1,13 @@
 package ch.ffhs.vity.vity.Mock;
 
+import java.text.SimpleDateFormat;
+import java.time.Instant;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import ch.ffhs.vity.vity.Helper.ActivityItem;
-
-/**
- * Created by hamme on 10.03.2018.
- */
 
 public class Activities_Mock {
 
@@ -17,6 +17,9 @@ public class Activities_Mock {
 
         liste = new ArrayList<>();
 
+        SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy | HH:mm");
+        String currentDateandTime = sdf.format(new Date());
+
         for(int i = 0; i < 30; i++){
 
             ActivityItem a1 = new ActivityItem();
@@ -24,9 +27,9 @@ public class Activities_Mock {
             a1.setDescription("Puchini ist ein super italienisches Restaurant in Belp. Abends meist relativ gut ausgebucht - Reservation! Tipp: Pizza Puchini");
             a1.setCategory("Essen und Trinken");
             a1.setLink("www.puchinibelp.ch");
-            //a1.setDate(Instant.now());
+            a1.setDate(currentDateandTime);
             a1.setOwner("Michael");
-            a1.setLink_image("Image_05.jpg");
+            a1.setLink_image("https://www.puccinibelp.ch/images/slider/_MG_3534.jpg");
 
             liste.add(a1);
         }

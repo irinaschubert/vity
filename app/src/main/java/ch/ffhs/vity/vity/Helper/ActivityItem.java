@@ -12,7 +12,7 @@ public class ActivityItem {
 
     private String id;
     private String owner;
-    private Instant date;
+    private String date;
     private String title;
     private String description;
     private String category;
@@ -25,7 +25,7 @@ public class ActivityItem {
     }
 
     // Complete Constructor
-    public ActivityItem(String owner, Instant date, String title, String description, String category, String link, String link_image, Location location) {
+    public ActivityItem(String owner, String date, String title, String description, String category, String link, String link_image, Location location) {
         this.owner = owner;
         this.date = date;
         this.title = title;
@@ -101,11 +101,11 @@ public class ActivityItem {
         this.owner = owner;
     }
 
-    public Instant getDate() {
+    public String getDate() {
         return date;
     }
 
-    public void setDate(Instant date) {
+    public void setDate(String date) {
         this.date = date;
     }
 }

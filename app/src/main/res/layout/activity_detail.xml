@@ -29,8 +29,7 @@
             android:layout_marginBottom="20sp"
             android:adjustViewBounds="true"
             android:contentDescription="@string/activity_title_image"
-            android:scaleType="fitCenter"
-            android:src="@drawable/mock_pucchini" />
+            android:scaleType="fitCenter" />
 
         <TableLayout
             android:id="@+id/detail_table"
