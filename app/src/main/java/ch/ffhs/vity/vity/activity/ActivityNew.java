@@ -84,14 +84,6 @@ public class ActivityNew extends Activity {
                             takePicture();
                         }
                         break;
-                    case 2:
-                        //checks permission on runtime and asks if not set
-                        if (checkSelfPermission(Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
-                            requestPermissions(new String[]{Manifest.permission.CAMERA}, REQUEST_CODE_CAMERA);
-                        }else{
-                            takePicture();
-                        }
-                        break;
                     default:
                         finish();
                 }

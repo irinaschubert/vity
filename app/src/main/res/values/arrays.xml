@@ -44,7 +44,6 @@
     <string-array name="img_choice">
         <item>@string/img_from_gallery</item>
         <item>@string/img_from_camera</item>
-        <item>@string/img_from_camera</item>
     </string-array>
 
 </resources>
