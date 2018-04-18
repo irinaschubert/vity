@@ -29,7 +29,6 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MapStyleOptions;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-import ch.ffhs.vity.vity.helper.ActivityRegistry;
 import ch.ffhs.vity.vity.R;
 
 

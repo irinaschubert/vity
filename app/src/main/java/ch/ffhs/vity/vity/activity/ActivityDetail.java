@@ -10,8 +10,6 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import ch.ffhs.vity.vity.helper.ActivityItem;
-import ch.ffhs.vity.vity.helper.ActivityRegistry;
 import ch.ffhs.vity.vity.mock.Activities_Mock;
 import ch.ffhs.vity.vity.R;
 

@@ -3,7 +3,7 @@ package ch.ffhs.vity.vity.mock;
 import java.util.ArrayList;
 import java.util.List;
 
-import ch.ffhs.vity.vity.helper.ActivityItem;
+import ch.ffhs.vity.vity.activity.ActivityItem;
 
 /**
  * Created by hamme on 10.03.2018.

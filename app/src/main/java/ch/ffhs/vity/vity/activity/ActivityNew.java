@@ -5,9 +5,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.database.Cursor;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.app.Activity;
@@ -21,7 +19,6 @@ import android.widget.Toast;
 
 import java.io.IOException;
 
-import ch.ffhs.vity.vity.helper.ActivityRegistry;
 import ch.ffhs.vity.vity.R;
 
 public class ActivityNew extends Activity {

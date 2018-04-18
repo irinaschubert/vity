@@ -6,7 +6,6 @@ import android.preference.PreferenceFragment;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import ch.ffhs.vity.vity.helper.ActivityRegistry;
 import ch.ffhs.vity.vity.R;
 
 public class ActivitySettings extends PreferenceActivity {

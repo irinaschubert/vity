@@ -1,4 +1,4 @@
-package ch.ffhs.vity.vity.helper;
+package ch.ffhs.vity.vity.activity;
 
 
 import android.location.Location;
