@@ -2,6 +2,7 @@ package ch.ffhs.vity.vity.activity;
 
 import android.Manifest;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -23,8 +24,8 @@ import android.widget.Toast;
 
 import java.io.IOException;
 
-import ch.ffhs.vity.vity.mock.Activities_Mock;
 import ch.ffhs.vity.vity.R;
+import ch.ffhs.vity.vity.database.AppDatabase;
 
 /**
  * Created by irina on 18.03.2018.
@@ -43,14 +44,12 @@ public class ActivityEdit extends Activity {
     private String link;
     private String date;
     private String owner;
-    private String descritpion;
-
-    private Activities_Mock mockData;
-    private VityItem activity;
-
+    private String description;
     ArrayAdapter<String> categoryAdapter;
-
     private int id;
+    private Context context;
+    private AppDatabase mDb;
+    private VityItem item;
 
     @Override
     protected void onCreate(Bundle icicle) {
@@ -88,20 +87,20 @@ public class ActivityEdit extends Activity {
 
     private void loadActivity(int id){
         this.id = id;
-        mockData = new Activities_Mock();
-        activity = mockData.getActivity(id);
+        mDb = AppDatabase.getInMemoryDatabase(getApplicationContext());
+        item = mDb.itemModel().loadItemById(id);
 
         EditText title = findViewById(R.id.new_name);
-        title.setText(activity.getTitle(), TextView.BufferType.EDITABLE);
+        title.setText(item.getTitle(), TextView.BufferType.EDITABLE);
 
         EditText description = findViewById(R.id.new_description);
-        description.setText(activity.getDescription(), TextView.BufferType.EDITABLE);
+        description.setText(item.getDescription(), TextView.BufferType.EDITABLE);
 
         EditText link = findViewById(R.id.new_link);
-        link.setText(activity.getLink(), TextView.BufferType.EDITABLE);
+        link.setText(item.getLink(), TextView.BufferType.EDITABLE);
 
         // sets category value to category spinner
-        String category = activity.getCategory();
+        String category = item.getCategory();
         Spinner categorySpinner = findViewById(R.id.new_category);
         categorySpinner.setSelection(getIndex(categorySpinner, category));
     }
@@ -186,19 +185,6 @@ public class ActivityEdit extends Activity {
             case REQUEST_IMAGE_PICK:
                 if(resultCode == RESULT_OK) {
                     Uri selectedImage = data.getData();
-
- /*                   String[] filePathColumn = {MediaStore.Images.Media.DATA};
-
-                    Cursor cursor = getContentResolver().query(selectedImage, filePathColumn, null, null, null);
-                    cursor.moveToFirst();
-
-                    int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
-                    String filePath = cursor.getString(columnIndex);
-                    cursor.close();
-
-                    Bitmap img = BitmapFactory.decodeFile(filePath);
-
-                    newImage.setImageBitmap(img);*/
                     try {
                         newImage.setImageBitmap(MediaStore.Images.Media.getBitmap(this.getContentResolver(), selectedImage));
                     } catch (IOException e) {

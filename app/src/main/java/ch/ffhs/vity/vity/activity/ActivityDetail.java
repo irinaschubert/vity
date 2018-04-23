@@ -10,7 +10,7 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import ch.ffhs.vity.vity.mock.Activities_Mock;
+import ch.ffhs.vity.vity.database.AppDatabase;
 import ch.ffhs.vity.vity.R;
 
 
@@ -21,10 +21,10 @@ public class ActivityDetail extends Activity {
     private TextView link;
     private TextView date;
     private TextView owner;
-    private TextView descritpion;
+    private TextView description;
 
-    private Activities_Mock mockData;
-    private VityItem activity;
+    private AppDatabase mDb;
+    private VityItem item;
     private int id;
 
     private Image image;
@@ -40,7 +40,7 @@ public class ActivityDetail extends Activity {
         link = (TextView)findViewById(R.id.detail_link);
         date = (TextView)findViewById(R.id.detail_date);
         owner = (TextView)findViewById(R.id.detail_owner);
-        descritpion = (TextView)findViewById(R.id.detail_description);
+        description = (TextView)findViewById(R.id.detail_description);
 
         id = getIntent().getIntExtra("id", 0);
 
@@ -48,16 +48,15 @@ public class ActivityDetail extends Activity {
     }
 
     private void loadMessage(int id){
-        mockData = new Activities_Mock();
-        activity = mockData.getActivity(id);
+        mDb = AppDatabase.getInMemoryDatabase(getApplicationContext());
+        item = mDb.itemModel().loadItemById(id);
 
-        title.setText(activity.getTitle());
-        category.setText(activity.getCategory());
-        link.setText(activity.getLink());
-        // date.setText(activity.getDate());
-        owner.setText(activity.getOwner());
-        descritpion.setText(activity.getDescription());
-        descritpion.setText(activity.getDescription());
+        title.setText(item.getTitle());
+        category.setText(item.getCategory());
+        link.setText(item.getLink());
+        // date.setText(item.getDate());
+        owner.setText(item.getOwner());
+        description.setText(item.getDescription());
     }
 
     // Menu

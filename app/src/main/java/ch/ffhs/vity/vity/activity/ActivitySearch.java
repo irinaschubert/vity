@@ -16,9 +16,9 @@ import java.util.List;
 import java.util.Locale;
 
 import ch.ffhs.vity.vity.database.AppDatabase;
-import ch.ffhs.vity.vity.mock.Activities_Mock;
 import ch.ffhs.vity.vity.R;
 import ch.ffhs.vity.vity.mock.DatabaseInitializer;
+
 
 public class ActivitySearch extends Activity {
 
@@ -72,16 +72,9 @@ public class ActivitySearch extends Activity {
 
     // Load list
     private void loadResults(){
-
-
-
         mDb = AppDatabase.getInMemoryDatabase(getApplicationContext());
         populateDb();
         fetchData();
-        /*
-        Activities_Mock mockData = new Activities_Mock();
-        ArrayList liste = new ArrayList<VityItem>();
-        liste.addAll(mockData.getActivities());*/
     }
 
     private void populateDb() {
