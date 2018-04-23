@@ -24,7 +24,7 @@ public class ActivityDetail extends Activity {
     private TextView descritpion;
 
     private Activities_Mock mockData;
-    private ActivityItem activity;
+    private VityItem activity;
     private int id;
 
     private Image image;

@@ -16,15 +16,15 @@ import ch.ffhs.vity.vity.R;
 
 public class ActivityListAdapter extends BaseAdapter {
 
-    private List<ActivityItem> listActivities;
+    private List<VityItem> listActivities;
     private Context mContext;
 
-    public ActivityListAdapter(List<ActivityItem> listActivities, Context mContext) {
+    public ActivityListAdapter(List<VityItem> listActivities, Context mContext) {
         this.listActivities = listActivities;
         this.mContext = mContext;
     }
 
-    public void addListItemToAdapter (List<ActivityItem> list){
+    public void addListItemToAdapter (List<VityItem> list){
 
         // Add new list
         listActivities.addAll(list);

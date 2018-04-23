@@ -3,7 +3,7 @@ package ch.ffhs.vity.vity.mock;
 import java.util.ArrayList;
 import java.util.List;
 
-import ch.ffhs.vity.vity.activity.ActivityItem;
+import ch.ffhs.vity.vity.activity.VityItem;
 
 /**
  * Created by hamme on 10.03.2018.
@@ -11,7 +11,7 @@ import ch.ffhs.vity.vity.activity.ActivityItem;
 
 public class Activities_Mock {
 
-    private static List<ActivityItem> liste;
+    private static List<VityItem> liste;
 
     public Activities_Mock(){
 
@@ -19,7 +19,7 @@ public class Activities_Mock {
 
         for(int i = 0; i < 30; i++){
 
-            ActivityItem a1 = new ActivityItem();
+            VityItem a1 = new VityItem();
             a1.setTitle("Puchini Belp" + i);
             a1.setDescription("Puchini ist ein super italienisches Restaurant in Belp. Abends meist relativ gut ausgebucht - Reservation! Tipp: Pizza Puchini");
             a1.setCategory("Food and drinks");
@@ -32,11 +32,11 @@ public class Activities_Mock {
         }
     }
 
-    public List<ActivityItem> getActivities(){
+    public List<VityItem> getActivities(){
         return liste;
     }
 
-    public ActivityItem getActivity(int id){
+    public VityItem getActivity(int id){
         return liste.get(id);
     }
 }

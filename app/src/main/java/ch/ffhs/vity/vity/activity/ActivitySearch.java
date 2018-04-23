@@ -12,13 +12,18 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
 
+import ch.ffhs.vity.vity.database.AppDatabase;
 import ch.ffhs.vity.vity.mock.Activities_Mock;
 import ch.ffhs.vity.vity.R;
+import ch.ffhs.vity.vity.mock.DatabaseInitializer;
 
 public class ActivitySearch extends Activity {
 
     private Context context;
+    private AppDatabase mDb;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,12 +73,25 @@ public class ActivitySearch extends Activity {
     // Load list
     private void loadResults(){
 
-        ListView listView = (ListView) findViewById(R.id.list_activities);
 
+
+        mDb = AppDatabase.getInMemoryDatabase(getApplicationContext());
+        populateDb();
+        fetchData();
+        /*
         Activities_Mock mockData = new Activities_Mock();
-        ArrayList liste = new ArrayList<ActivityItem>();
-        liste.addAll(mockData.getActivities());
+        ArrayList liste = new ArrayList<VityItem>();
+        liste.addAll(mockData.getActivities());*/
+    }
 
+    private void populateDb() {
+        DatabaseInitializer.populateSync(mDb);
+    }
+
+    private void fetchData() {
+        ListView listView = (ListView) findViewById(R.id.list_activities);
+        ArrayList liste = new ArrayList<VityItem>();
+        liste.addAll(mDb.itemModel().findAllItems());
         ActivityListAdapter listAdapter = new ActivityListAdapter(liste, getApplicationContext());
         listView.setAdapter(listAdapter);
 
@@ -86,5 +104,11 @@ public class ActivitySearch extends Activity {
                 startActivity(activity);
             }
         });
+    }
+
+    @Override
+    protected void onDestroy() {
+        AppDatabase.destroyInstance();
+        super.onDestroy();
     }
 }

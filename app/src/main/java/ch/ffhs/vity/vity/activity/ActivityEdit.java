@@ -46,7 +46,7 @@ public class ActivityEdit extends Activity {
     private String descritpion;
 
     private Activities_Mock mockData;
-    private ActivityItem activity;
+    private VityItem activity;
 
     ArrayAdapter<String> categoryAdapter;
 
