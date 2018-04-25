@@ -7,7 +7,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Spinner;
+
 import java.util.ArrayList;
 import ch.ffhs.vity.vity.database.AppDatabase;
 import ch.ffhs.vity.vity.R;
@@ -62,8 +65,10 @@ public class ActivitySearch extends Activity {
 
     private void fetchData() {
         ListView listView = findViewById(R.id.list_activities);
+        Spinner categorySpinner = findViewById(R.id.new_category);
+        String category = categorySpinner.getSelectedItem().toString();
         ArrayList liste = new ArrayList<VityItem>();
-        liste.addAll(mDb.itemModel().getAllItems());
+        liste.addAll(mDb.itemModel().findItemByCategory(category));
         final ActivityListAdapter listAdapter = new ActivityListAdapter(liste, getApplicationContext());
         listView.setAdapter(listAdapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -76,6 +81,17 @@ public class ActivitySearch extends Activity {
                 startActivity(activity);
             }
         });
+    }
+
+    //to get actual selection of spinner
+    private int getIndex(Spinner spinner, String string){
+        int index = 0;
+        for (int i=0;i<spinner.getCount();i++){
+            if (spinner.getItemAtPosition(i).equals(string)){
+                index = i;
+            }
+        }
+        return index;
     }
 
     @Override

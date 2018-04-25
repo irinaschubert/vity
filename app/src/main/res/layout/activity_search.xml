@@ -16,15 +16,6 @@
         android:layout_marginTop="20sp"
         android:layout_marginBottom="20sp"/>
 
-    <EditText
-        style="@style/text_hints"
-        android:id="@+id/search_name"
-        android:hint="@string/form_search"
-        android:inputType="text"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="20sp"/>
-
     <Spinner
         android:id="@+id/new_category"
         style="@style/text_normal"
