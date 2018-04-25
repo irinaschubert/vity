@@ -67,4 +67,7 @@
     <string name="detail_description">Description</string>
     <string name="activity_title_image">Activity_Title_Image</string>
 
+    <!-- Warnungen -->
+    <string name="warning_missing_title">Please fill in a title for your new activity.</string>
+
 </resources>

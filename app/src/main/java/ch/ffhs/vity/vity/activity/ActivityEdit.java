@@ -27,23 +27,17 @@ import java.io.IOException;
 import ch.ffhs.vity.vity.R;
 import ch.ffhs.vity.vity.database.AppDatabase;
 
-/**
- * Created by irina on 18.03.2018.
- */
-
 public class ActivityEdit extends Activity {
     private static final int REQUEST_CODE_STORAGE = 1;
     private static final int REQUEST_CODE_CAMERA = 2;
     private static final int REQUEST_IMAGE_PICK = 3;
     private static final int REQUEST_IMAGE_CAPTURE = 4;
-    ArrayAdapter<String> categoryAdapter;
     private ImageView newImage;
     EditText title;
     EditText description;
     EditText link;
     String category;
     Spinner categorySpinner;
-    private int id;
     private AppDatabase mDb;
     private VityItem item;
 
@@ -52,8 +46,8 @@ public class ActivityEdit extends Activity {
         super.onCreate(icicle);
         setContentView(R.layout.activity_edit);
         ActivityRegistry.register(this);
-        newImage = (ImageView) findViewById(R.id.new_detail_image);
-        this.id = getIntent().getIntExtra("id", 0);
+        newImage = findViewById(R.id.new_detail_image);
+        int id = getIntent().getIntExtra("id", 0);
         loadActivity(id);
     }
 

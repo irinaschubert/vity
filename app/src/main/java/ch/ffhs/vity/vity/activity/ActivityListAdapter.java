@@ -10,10 +10,6 @@ import java.util.List;
 
 import ch.ffhs.vity.vity.R;
 
-/**
- * Created by hamme on 10.03.2018.
- */
-
 public class ActivityListAdapter extends BaseAdapter {
 
     private List<VityItem> listActivities;
@@ -22,14 +18,6 @@ public class ActivityListAdapter extends BaseAdapter {
     public ActivityListAdapter(List<VityItem> listActivities, Context mContext) {
         this.listActivities = listActivities;
         this.mContext = mContext;
-    }
-
-    public void addListItemToAdapter (List<VityItem> list){
-
-        // Add new list
-        listActivities.addAll(list);
-        // Notify UI
-        this.notifyDataSetChanged();
     }
 
     @Override
@@ -49,15 +37,13 @@ public class ActivityListAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        View view = View.inflate(mContext, R.layout.list_item_activity, null);
-        TextView viewTitle = (TextView) view.findViewById(R.id.list_activity_title);
-        TextView viewDistance = (TextView) view.findViewById(R.id.list_activity_distance);
+        View view = View.inflate(mContext, R.layout.activity_search_list_items, null);
+        TextView viewTitle = view.findViewById(R.id.list_activity_title);
+        TextView viewDistance = view.findViewById(R.id.list_activity_distance);
 
         // Set data
         viewTitle.setText(listActivities.get(position).getTitle());
         viewDistance.setText("Distance");
-
-        //
 
         return view;
     }

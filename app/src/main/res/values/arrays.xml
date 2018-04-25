@@ -6,21 +6,21 @@
 
     <!-- Arrays für Kategorien -->
     <string-array name="categories">
+        <item>@string/cat_other</item>
         <item>@string/cat_food</item>
-        <item>@string/cat_shop</item>
         <item>@string/cat_stay</item>
         <item>@string/cat_museum</item>
         <item>@string/cat_walk</item>
-        <item>@string/cat_other</item>
+        <item>@string/cat_shop</item>
     </string-array>
 
     <string-array name="category_values">
+        <item>@string/cat_other</item>
         <item>@string/cat_food</item>
-        <item>@string/cat_shop</item>
         <item>@string/cat_stay</item>
         <item>@string/cat_museum</item>
         <item>@string/cat_walk</item>
-        <item>@string/cat_other</item>
+        <item>@string/cat_shop</item>
     </string-array>
 
     <!-- Arrays für Umkreis-Eingabe -->

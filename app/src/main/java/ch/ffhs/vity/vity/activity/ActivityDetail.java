@@ -24,7 +24,8 @@ public class ActivityDetail extends Activity {
     private TextView description;
     private AppDatabase mDb;
     private VityItem item;
-    private int id;
+    private int position;
+    private long id;
 
     @Override
     protected void onCreate(Bundle icicle) {
@@ -39,11 +40,12 @@ public class ActivityDetail extends Activity {
         owner = (TextView)findViewById(R.id.detail_owner);
         description = (TextView)findViewById(R.id.detail_description);
 
-        id = getIntent().getIntExtra("id", 0);
+        id = getIntent().getLongExtra("itemId", 0);
+
         loadMessage(id);
     }
 
-    private void loadMessage(int id){
+    private void loadMessage(long id){
         mDb = AppDatabase.getDatabase(this.getApplication());
         item = mDb.itemModel().loadItemById(id);
 

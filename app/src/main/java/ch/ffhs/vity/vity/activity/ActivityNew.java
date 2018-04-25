@@ -2,13 +2,16 @@ package ch.ffhs.vity.vity.activity;
 
 import android.Manifest;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.app.Activity;
+import android.preference.PreferenceManager;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.view.Menu;
@@ -34,9 +37,8 @@ public class ActivityNew extends Activity {
     EditText title;
     EditText description;
     EditText link;
-    String category;
     Spinner categorySpinner;
-
+    String username;
     private AppDatabase mDb;
     private VityItem item;
 
@@ -176,13 +178,20 @@ public class ActivityNew extends Activity {
         item.setTitle(title.getText().toString());
         item.setDescription(description.getText().toString());
         item.setLink(link.getText().toString());
+        item.setCategory(categorySpinner.getSelectedItem().toString());
 
-        //item.setCategory(category);
-        //item.setOwner();
+        username = PreferenceManager.getDefaultSharedPreferences(this).getString("username", "");
+        item.setOwner(username);
         //item.setDate();
         //item.setLocation();
-        mDb.itemModel().insertNewItem(item);
-        finish();
+
+        //new activity should at least have a title
+        if(title.getText().toString().equals("")){
+            Toast.makeText(this, getString(R.string.warning_missing_title), Toast.LENGTH_SHORT).show();
+        }else{
+            mDb.itemModel().insertNewItem(item);
+            finish();
+        }
      }
 
     public void onClickCancel(View button) {
@@ -194,5 +203,4 @@ public class ActivityNew extends Activity {
         AppDatabase.destroyInstance();
         super.onDestroy();
     }
-
 }

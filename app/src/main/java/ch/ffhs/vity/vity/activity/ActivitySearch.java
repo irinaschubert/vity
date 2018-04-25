@@ -61,16 +61,18 @@ public class ActivitySearch extends Activity {
     }
 
     private void fetchData() {
-        ListView listView = (ListView) findViewById(R.id.list_activities);
+        ListView listView = findViewById(R.id.list_activities);
         ArrayList liste = new ArrayList<VityItem>();
         liste.addAll(mDb.itemModel().getAllItems());
-        ActivityListAdapter listAdapter = new ActivityListAdapter(liste, getApplicationContext());
+        final ActivityListAdapter listAdapter = new ActivityListAdapter(liste, getApplicationContext());
         listView.setAdapter(listAdapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                VityItem selectedItem = (VityItem)listAdapter.getItem(position);
+                long itemId = selectedItem.getId();
                 Intent activity = new Intent(view.getContext(), ActivityDetail.class);
-                activity.putExtra("id", position);
+                activity.putExtra("itemId", itemId);
                 startActivity(activity);
             }
         });
@@ -80,6 +82,12 @@ public class ActivitySearch extends Activity {
     protected void onDestroy() {
         AppDatabase.destroyInstance();
         super.onDestroy();
+    }
+
+    @Override
+    protected void onResume(){
+        super.onResume();
+        loadResults();
     }
 
 
