@@ -37,14 +37,12 @@ public class ActivityEdit extends Activity {
     private static final int REQUEST_IMAGE_PICK = 3;
     private static final int REQUEST_IMAGE_CAPTURE = 4;
     ArrayAdapter<String> categoryAdapter;
-
     private ImageView newImage;
     EditText title;
     EditText description;
     EditText link;
     String category;
     Spinner categorySpinner;
-
     private int id;
     private AppDatabase mDb;
     private VityItem item;
@@ -54,9 +52,7 @@ public class ActivityEdit extends Activity {
         super.onCreate(icicle);
         setContentView(R.layout.activity_edit);
         ActivityRegistry.register(this);
-
         newImage = (ImageView) findViewById(R.id.new_detail_image);
-
         this.id = getIntent().getIntExtra("id", 0);
         loadActivity(id);
     }
@@ -83,7 +79,7 @@ public class ActivityEdit extends Activity {
         }
     }
 
-    private VityItem loadActivity(int id){
+    private void loadActivity(int id){
         mDb = AppDatabase.getDatabase(this.getApplication());
         item = mDb.itemModel().loadItemById(id);
 
@@ -100,8 +96,6 @@ public class ActivityEdit extends Activity {
         category = item.getCategory();
         categorySpinner = findViewById(R.id.new_category);
         categorySpinner.setSelection(getIndex(categorySpinner, category));
-
-        return item;
     }
 
     private int getIndex(Spinner spinner, String string){

@@ -14,7 +14,9 @@ import android.support.annotation.NonNull;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import java.io.IOException;
@@ -29,13 +31,25 @@ public class ActivityNew extends Activity {
     private static final int REQUEST_IMAGE_CAPTURE = 4;
 
     private ImageView newImage;
+    EditText title;
+    EditText description;
+    EditText link;
+    String category;
+    Spinner categorySpinner;
+
+    private AppDatabase mDb;
+    private VityItem item;
 
     @Override
     protected void onCreate(Bundle icicle) {
         super.onCreate(icicle);
         setContentView(R.layout.activity_new);
         ActivityRegistry.register(this);
-        newImage = (ImageView) findViewById(R.id.new_detail_image);
+        newImage = findViewById(R.id.new_detail_image);
+        title = findViewById(R.id.new_name);
+        description = findViewById(R.id.new_description);
+        link = findViewById(R.id.new_link);
+        categorySpinner = findViewById(R.id.new_category);
     }
 
     // Menu
@@ -152,19 +166,23 @@ public class ActivityNew extends Activity {
         }
     }
 
-/*    @Override
-    protected void onStart(){
-        super.onStart();
-    }*/
-
     public void onClickAddLocation(View button) {
         Toast.makeText(getApplicationContext(), "addLocation", Toast.LENGTH_LONG).show();
      }
 
     public void onClickSaveNewActivity(View button) {
-        Toast.makeText(getApplicationContext(), "saveNewActivity", Toast.LENGTH_LONG).show();
+        mDb = AppDatabase.getDatabase(this.getApplication());
+        item = new VityItem();
+        item.setTitle(title.getText().toString());
+        item.setDescription(description.getText().toString());
+        item.setLink(link.getText().toString());
 
-
+        //item.setCategory(category);
+        //item.setOwner();
+        //item.setDate();
+        //item.setLocation();
+        mDb.itemModel().insertNewItem(item);
+        finish();
      }
 
     public void onClickCancel(View button) {
