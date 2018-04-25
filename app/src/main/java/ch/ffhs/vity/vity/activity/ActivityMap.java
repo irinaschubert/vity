@@ -31,13 +31,11 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 import ch.ffhs.vity.vity.R;
 
-
 public class ActivityMap extends FragmentActivity implements OnMapReadyCallback {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        // Toast.makeText(getApplicationContext(),"onCreate", Toast.LENGTH_LONG).show();
         setContentView(R.layout.activity_map);
         ActivityRegistry.register(this);
 
@@ -56,7 +54,6 @@ public class ActivityMap extends FragmentActivity implements OnMapReadyCallback 
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
     }
-
 
     // Menu
     @Override
@@ -80,19 +77,17 @@ public class ActivityMap extends FragmentActivity implements OnMapReadyCallback 
         }
     }
 
-    private GoogleMap mMap;
-
     @Override
     public void onMapReady(GoogleMap googleMap) {
-        mMap = googleMap;
+        GoogleMap mMap = googleMap;
 
         try {
             boolean success = mMap.setMapStyle(MapStyleOptions.loadRawResourceStyle(this, R.raw.map_style));
             if (!success) {
-                Toast.makeText(getApplicationContext(), "Konnte Map Style nicht laden!!", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "Could not load map style!", Toast.LENGTH_LONG).show();
             }
         } catch (Resources.NotFoundException e) {
-            Toast.makeText(getApplicationContext(), "Konnte Map Style nicht finden!!", Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), "Could not find map style!", Toast.LENGTH_LONG).show();
         }
 
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -108,9 +103,7 @@ public class ActivityMap extends FragmentActivity implements OnMapReadyCallback 
             e.printStackTrace();
         }
 
-
         mMap.setMyLocationEnabled(true);
-
         LatLng bern = new LatLng(46.948393, 7.436325);
         mMap.addMarker(new MarkerOptions().position(bern).title("Welle 7"));
         float zoomLevel = 16.0f;
@@ -118,7 +111,7 @@ public class ActivityMap extends FragmentActivity implements OnMapReadyCallback 
 
     }
 
-    // Überprüft die geforderten Permissions
+    // Check if GPS permission is granted
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
@@ -151,7 +144,6 @@ public class ActivityMap extends FragmentActivity implements OnMapReadyCallback 
                     .setMessage("To use the App with your current Location, you have to turn on gps!")
                     .setPositiveButton("Yes",new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog,int id) {
-
                             dialog.cancel();
                             Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
                             startActivity(intent);
@@ -223,39 +215,5 @@ public class ActivityMap extends FragmentActivity implements OnMapReadyCallback 
     public void goNavigate(View button){
         Toast.makeText(getApplicationContext(), "Navigate..", Toast.LENGTH_LONG).show();
     }
-
-    // Zeige Android LifeCycle
-    /*
-    @Override
-    protected void onStart() {
-        super.onStart();
-        Toast.makeText(getApplicationContext(), "onStart", Toast.LENGTH_LONG).show();
-    }
-    @Override
-    protected void onResume() {
-        super.onResume();
-        Toast.makeText(getApplicationContext(), "onResume", Toast.LENGTH_LONG).show();
-    }
-    @Override
-    protected void onPause() {
-        super.onPause();
-        Toast.makeText(getApplicationContext(), "onPause", Toast.LENGTH_LONG).show();
-    }
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        Toast.makeText(getApplicationContext(), "onDestroy", Toast.LENGTH_LONG).show();
-    }
-    @Override
-    protected void onStop() {
-        super.onStop();
-        Toast.makeText(getApplicationContext(), "onStop", Toast.LENGTH_LONG).show();
-    }
-    @Override
-    protected void onRestart() {
-        super.onRestart();
-        Toast.makeText(getApplicationContext(), "onRestart", Toast.LENGTH_LONG).show();
-    }
-    */
 
 }

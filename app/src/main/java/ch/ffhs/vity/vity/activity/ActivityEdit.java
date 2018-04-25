@@ -36,16 +36,14 @@ public class ActivityEdit extends Activity {
     private static final int REQUEST_CODE_CAMERA = 2;
     private static final int REQUEST_IMAGE_PICK = 3;
     private static final int REQUEST_IMAGE_CAPTURE = 4;
-
+    ArrayAdapter<String> categoryAdapter;
     private ImageView newImage;
-
     private String title;
     private String category;
     private String link;
     private String date;
     private String owner;
     private String description;
-    ArrayAdapter<String> categoryAdapter;
     private int id;
     private Context context;
     private AppDatabase mDb;
@@ -58,8 +56,9 @@ public class ActivityEdit extends Activity {
         ActivityRegistry.register(this);
 
         newImage = (ImageView) findViewById(R.id.new_detail_image);
-        id = getIntent().getIntExtra("id", 0);
 
+
+        id = getIntent().getIntExtra("id", 0);
         loadActivity(id);
     }
 
@@ -212,10 +211,16 @@ public class ActivityEdit extends Activity {
     }
 
     public void onClickUpdateActivity(View button) {
-        Toast.makeText(getApplicationContext(), "updateActivity", Toast.LENGTH_LONG).show();
+        mDb.itemModel().updateItem(item);
     }
 
     public void onClickCancel(View button) {
         finish();
+    }
+
+    @Override
+    protected void onDestroy() {
+        AppDatabase.destroyInstance();
+        super.onDestroy();
     }
 }

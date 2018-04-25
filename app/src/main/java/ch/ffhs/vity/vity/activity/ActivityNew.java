@@ -20,6 +20,7 @@ import android.widget.Toast;
 import java.io.IOException;
 
 import ch.ffhs.vity.vity.R;
+import ch.ffhs.vity.vity.database.AppDatabase;
 
 public class ActivityNew extends Activity {
     private static final int REQUEST_CODE_STORAGE = 1;
@@ -175,10 +176,17 @@ public class ActivityNew extends Activity {
 
     public void onClickSaveNewActivity(View button) {
         Toast.makeText(getApplicationContext(), "saveNewActivity", Toast.LENGTH_LONG).show();
+
      }
 
     public void onClickCancel(View button) {
         finish();
+    }
+
+    @Override
+    protected void onDestroy() {
+        AppDatabase.destroyInstance();
+        super.onDestroy();
     }
 
 }

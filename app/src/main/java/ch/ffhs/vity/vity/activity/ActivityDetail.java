@@ -22,12 +22,9 @@ public class ActivityDetail extends Activity {
     private TextView date;
     private TextView owner;
     private TextView description;
-
     private AppDatabase mDb;
     private VityItem item;
     private int id;
-
-    private Image image;
 
     @Override
     protected void onCreate(Bundle icicle) {
@@ -43,7 +40,6 @@ public class ActivityDetail extends Activity {
         description = (TextView)findViewById(R.id.detail_description);
 
         id = getIntent().getIntExtra("id", 0);
-
         loadMessage(id);
     }
 

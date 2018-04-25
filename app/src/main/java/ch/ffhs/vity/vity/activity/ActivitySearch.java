@@ -7,22 +7,15 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ListView;
-
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
-
 import ch.ffhs.vity.vity.database.AppDatabase;
 import ch.ffhs.vity.vity.R;
 import ch.ffhs.vity.vity.mock.DatabaseInitializer;
 
 
 public class ActivitySearch extends Activity {
-
-    private Context context;
     private AppDatabase mDb;
 
     @Override
@@ -56,42 +49,28 @@ public class ActivitySearch extends Activity {
 
     // onClickFunctions
     public void onClickSearchActivity(View button) {
-        // Toast.makeText(getApplicationContext(), "searchActivity", Toast.LENGTH_LONG).show();
         loadResults();
-
-        // Hide Keyboard
-        InputMethodManager inputMethodManager =(InputMethodManager)getSystemService(Activity.INPUT_METHOD_SERVICE);
-        if (inputMethodManager != null){
-            inputMethodManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
-        }
     }
 
     public void onClickCancel(View button) {
         finish();
     }
 
-    // Load list
+    // Load mock data
     private void loadResults(){
         mDb = AppDatabase.getInMemoryDatabase(getApplicationContext());
-        populateDb();
         fetchData();
-    }
-
-    private void populateDb() {
-        DatabaseInitializer.populateSync(mDb);
     }
 
     private void fetchData() {
         ListView listView = (ListView) findViewById(R.id.list_activities);
         ArrayList liste = new ArrayList<VityItem>();
-        liste.addAll(mDb.itemModel().findAllItems());
+        liste.addAll(mDb.itemModel().getAllItems());
         ActivityListAdapter listAdapter = new ActivityListAdapter(liste, getApplicationContext());
         listView.setAdapter(listAdapter);
-
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
                 Intent activity = new Intent(view.getContext(), ActivityDetail.class);
                 activity.putExtra("id", position);
                 startActivity(activity);
