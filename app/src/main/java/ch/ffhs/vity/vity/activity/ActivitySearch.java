@@ -1,7 +1,6 @@
 package ch.ffhs.vity.vity.activity;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -12,7 +11,6 @@ import android.widget.ListView;
 import java.util.ArrayList;
 import ch.ffhs.vity.vity.database.AppDatabase;
 import ch.ffhs.vity.vity.R;
-import ch.ffhs.vity.vity.mock.DatabaseInitializer;
 
 
 public class ActivitySearch extends Activity {
@@ -58,7 +56,7 @@ public class ActivitySearch extends Activity {
 
     // Load mock data
     private void loadResults(){
-        mDb = AppDatabase.getInMemoryDatabase(getApplicationContext());
+        mDb = AppDatabase.getDatabase(this.getApplication());
         fetchData();
     }
 
@@ -83,4 +81,6 @@ public class ActivitySearch extends Activity {
         AppDatabase.destroyInstance();
         super.onDestroy();
     }
+
+
 }

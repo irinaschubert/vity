@@ -131,19 +131,6 @@ public class ActivityNew extends Activity {
             case REQUEST_IMAGE_PICK:
                 if(resultCode == RESULT_OK) {
                     Uri selectedImage = data.getData();
-
- /*                   String[] filePathColumn = {MediaStore.Images.Media.DATA};
-
-                    Cursor cursor = getContentResolver().query(selectedImage, filePathColumn, null, null, null);
-                    cursor.moveToFirst();
-
-                    int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
-                    String filePath = cursor.getString(columnIndex);
-                    cursor.close();
-
-                    Bitmap img = BitmapFactory.decodeFile(filePath);
-
-                    newImage.setImageBitmap(img);*/
                     try {
                         newImage.setImageBitmap(MediaStore.Images.Media.getBitmap(this.getContentResolver(), selectedImage));
                     } catch (IOException e) {
@@ -176,6 +163,7 @@ public class ActivityNew extends Activity {
 
     public void onClickSaveNewActivity(View button) {
         Toast.makeText(getApplicationContext(), "saveNewActivity", Toast.LENGTH_LONG).show();
+
 
      }
 

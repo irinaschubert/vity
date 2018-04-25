@@ -44,7 +44,7 @@ public class ActivityDetail extends Activity {
     }
 
     private void loadMessage(int id){
-        mDb = AppDatabase.getInMemoryDatabase(getApplicationContext());
+        mDb = AppDatabase.getDatabase(this.getApplication());
         item = mDb.itemModel().loadItemById(id);
 
         title.setText(item.getTitle());

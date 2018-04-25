@@ -37,15 +37,15 @@ public class ActivityEdit extends Activity {
     private static final int REQUEST_IMAGE_PICK = 3;
     private static final int REQUEST_IMAGE_CAPTURE = 4;
     ArrayAdapter<String> categoryAdapter;
+
     private ImageView newImage;
-    private String title;
-    private String category;
-    private String link;
-    private String date;
-    private String owner;
-    private String description;
+    EditText title;
+    EditText description;
+    EditText link;
+    String category;
+    Spinner categorySpinner;
+
     private int id;
-    private Context context;
     private AppDatabase mDb;
     private VityItem item;
 
@@ -57,8 +57,7 @@ public class ActivityEdit extends Activity {
 
         newImage = (ImageView) findViewById(R.id.new_detail_image);
 
-
-        id = getIntent().getIntExtra("id", 0);
+        this.id = getIntent().getIntExtra("id", 0);
         loadActivity(id);
     }
 
@@ -84,24 +83,25 @@ public class ActivityEdit extends Activity {
         }
     }
 
-    private void loadActivity(int id){
-        this.id = id;
-        mDb = AppDatabase.getInMemoryDatabase(getApplicationContext());
+    private VityItem loadActivity(int id){
+        mDb = AppDatabase.getDatabase(this.getApplication());
         item = mDb.itemModel().loadItemById(id);
 
-        EditText title = findViewById(R.id.new_name);
+        title = findViewById(R.id.new_name);
         title.setText(item.getTitle(), TextView.BufferType.EDITABLE);
 
-        EditText description = findViewById(R.id.new_description);
+        description = findViewById(R.id.new_description);
         description.setText(item.getDescription(), TextView.BufferType.EDITABLE);
 
-        EditText link = findViewById(R.id.new_link);
+        link = findViewById(R.id.new_link);
         link.setText(item.getLink(), TextView.BufferType.EDITABLE);
 
         // sets category value to category spinner
-        String category = item.getCategory();
-        Spinner categorySpinner = findViewById(R.id.new_category);
+        category = item.getCategory();
+        categorySpinner = findViewById(R.id.new_category);
         categorySpinner.setSelection(getIndex(categorySpinner, category));
+
+        return item;
     }
 
     private int getIndex(Spinner spinner, String string){
@@ -211,6 +211,11 @@ public class ActivityEdit extends Activity {
     }
 
     public void onClickUpdateActivity(View button) {
+        item.setTitle(title.getText().toString());
+        item.setDescription(description.getText().toString());
+        item.setLink(link.getText().toString());
+        item.setCategory(category);
+        //item.setDate();
         mDb.itemModel().updateItem(item);
     }
 
