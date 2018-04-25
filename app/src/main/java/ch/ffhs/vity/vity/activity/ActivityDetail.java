@@ -19,7 +19,6 @@ import ch.ffhs.vity.vity.R;
 
 
 public class ActivityDetail extends Activity {
-
     private TextView title;
     private TextView category;
     private TextView link;
