@@ -10,6 +10,7 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.app.Activity;
+import android.preference.PreferenceManager;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.view.Menu;
@@ -23,6 +24,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 
 import ch.ffhs.vity.vity.R;
 import ch.ffhs.vity.vity.database.AppDatabase;
@@ -36,8 +40,10 @@ public class ActivityEdit extends Activity {
     EditText title;
     EditText description;
     EditText link;
-    String category;
+    private String category;
     Spinner categorySpinner;
+    private String username;
+    private long currentDate;
     private AppDatabase mDb;
     private VityItem item;
 
@@ -47,7 +53,7 @@ public class ActivityEdit extends Activity {
         setContentView(R.layout.activity_edit);
         ActivityRegistry.register(this);
         newImage = findViewById(R.id.new_detail_image);
-        int id = getIntent().getIntExtra("id", 0);
+        long id = getIntent().getLongExtra("itemId", 0);
         loadActivity(id);
     }
 
@@ -73,7 +79,7 @@ public class ActivityEdit extends Activity {
         }
     }
 
-    private void loadActivity(int id){
+    private void loadActivity(long id){
         mDb = AppDatabase.getDatabase(this.getApplication());
         item = mDb.itemModel().loadItemById(id);
 
@@ -202,8 +208,13 @@ public class ActivityEdit extends Activity {
         item.setTitle(title.getText().toString());
         item.setDescription(description.getText().toString());
         item.setLink(link.getText().toString());
-        item.setCategory(category);
-        //item.setDate();
+        item.setCategory(categorySpinner.getSelectedItem().toString());
+        username = PreferenceManager.getDefaultSharedPreferences(this).getString("username", "");
+        currentDate = System.currentTimeMillis();
+        SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
+        String currentDateString = sdf.format(currentDate);
+        item.setOwner(username);
+        item.setDate(currentDateString);
         mDb.itemModel().updateItem(item);
         finish();
     }

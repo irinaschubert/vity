@@ -62,8 +62,8 @@
     <!-- Detail Seite -->
     <string name="detail_category">Category</string>
     <string name="detail_link">Link</string>
-    <string name="detail_date">Date</string>
-    <string name="detail_owner">Creater</string>
+    <string name="detail_date">Creation/modification date</string>
+    <string name="detail_owner">Created/modified by</string>
     <string name="detail_description">Description</string>
     <string name="activity_title_image">Activity_Title_Image</string>
 

@@ -23,6 +23,7 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 
 import ch.ffhs.vity.vity.R;
 import ch.ffhs.vity.vity.database.AppDatabase;
@@ -38,9 +39,10 @@ public class ActivityNew extends Activity {
     EditText description;
     EditText link;
     Spinner categorySpinner;
-    String username;
+    private String username;
     private AppDatabase mDb;
     private VityItem item;
+    private long currentDate;
 
     @Override
     protected void onCreate(Bundle icicle) {
@@ -174,15 +176,17 @@ public class ActivityNew extends Activity {
 
     public void onClickSaveNewActivity(View button) {
         mDb = AppDatabase.getDatabase(this.getApplication());
+        currentDate = System.currentTimeMillis();
+        SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
+        String currentDateString = sdf.format(currentDate);
         item = new VityItem();
         item.setTitle(title.getText().toString());
         item.setDescription(description.getText().toString());
         item.setLink(link.getText().toString());
         item.setCategory(categorySpinner.getSelectedItem().toString());
-
         username = PreferenceManager.getDefaultSharedPreferences(this).getString("username", "");
         item.setOwner(username);
-        //item.setDate();
+        item.setDate(currentDateString);
         //item.setLocation();
 
         //new activity should at least have a title

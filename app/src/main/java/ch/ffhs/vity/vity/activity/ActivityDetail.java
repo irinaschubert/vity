@@ -10,6 +10,10 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import ch.ffhs.vity.vity.database.AppDatabase;
 import ch.ffhs.vity.vity.R;
 
@@ -24,7 +28,6 @@ public class ActivityDetail extends Activity {
     private TextView description;
     private AppDatabase mDb;
     private VityItem item;
-    private int position;
     private long id;
 
     @Override
@@ -32,13 +35,12 @@ public class ActivityDetail extends Activity {
         super.onCreate(icicle);
         setContentView(R.layout.activity_detail);
         ActivityRegistry.register(this);
-
-        title = (TextView)findViewById(R.id.detail_title);
-        category = (TextView)findViewById(R.id.detail_cateogry);
-        link = (TextView)findViewById(R.id.detail_link);
-        date = (TextView)findViewById(R.id.detail_date);
-        owner = (TextView)findViewById(R.id.detail_owner);
-        description = (TextView)findViewById(R.id.detail_description);
+        title = findViewById(R.id.detail_title);
+        category = findViewById(R.id.detail_cateogry);
+        link = findViewById(R.id.detail_link);
+        date = findViewById(R.id.detail_date);
+        owner = findViewById(R.id.detail_owner);
+        description = findViewById(R.id.detail_description);
 
         id = getIntent().getLongExtra("itemId", 0);
 
@@ -48,11 +50,10 @@ public class ActivityDetail extends Activity {
     private void loadMessage(long id){
         mDb = AppDatabase.getDatabase(this.getApplication());
         item = mDb.itemModel().loadItemById(id);
-
         title.setText(item.getTitle());
         category.setText(item.getCategory());
         link.setText(item.getLink());
-        // date.setText(item.getDate());
+        date.setText(item.getDate());
         owner.setText(item.getOwner());
         description.setText(item.getDescription());
     }
@@ -90,7 +91,7 @@ public class ActivityDetail extends Activity {
 
     public void onClickEdit(View button){
         Intent intentActivityEdit = new Intent(this, ActivityEdit.class);
-        intentActivityEdit.putExtra("id", id);
+        intentActivityEdit.putExtra("itemId", id);
         startActivity(intentActivityEdit);
     }
 
