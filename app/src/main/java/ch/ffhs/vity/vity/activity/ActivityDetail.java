@@ -91,4 +91,11 @@ public class ActivityDetail extends Activity {
         intentActivityEdit.putExtra("id", id);
         startActivity(intentActivityEdit);
     }
+
+    @Override
+    protected void onResume(){
+        super.onResume();
+        loadMessage(id);
+    }
+
 }

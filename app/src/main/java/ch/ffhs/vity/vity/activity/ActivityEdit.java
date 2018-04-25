@@ -217,6 +217,7 @@ public class ActivityEdit extends Activity {
         item.setCategory(category);
         //item.setDate();
         mDb.itemModel().updateItem(item);
+        finish();
     }
 
     public void onClickCancel(View button) {
