@@ -4,123 +4,95 @@
     android:layout_height="fill_parent"
     android:fillViewport="true">
 
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".activity.ActivityNew"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:padding="10sp"
-    android:orientation="vertical">
-
-    <TextView
-        style="@style/text_title"
-        android:text="@string/titel_new"
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="20sp"
-        android:layout_marginTop="20sp" />
+        android:orientation="vertical"
+        android:padding="10sp"
+        tools:context=".activity.ActivityNew">
 
-    <EditText
-        style="@style/text_hints"
-        android:id="@+id/new_name"
-        android:hint="@string/form_titel"
-        android:inputType="text"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="20sp" />
+        <TextView
+            style="@style/text_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20sp"
+            android:layout_marginTop="20sp"
+            android:text="@string/titel_new" />
 
-    <EditText
-        style="@style/text_hints"
-        android:id="@+id/new_description"
-        android:hint="@string/form_description"
-        android:inputType="textMultiLine"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="20sp" />
+        <EditText
+            android:id="@+id/new_name"
+            style="@style/text_hints"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20sp"
+            android:hint="@string/form_titel"
+            android:inputType="text" />
 
-    <EditText
-        style="@style/text_hints"
-        android:id="@+id/new_link"
-        android:hint="@string/form_link"
-        android:inputType="textUri"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="20sp" />
+        <EditText
+            android:id="@+id/new_description"
+            style="@style/text_hints"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20sp"
+            android:hint="@string/form_description"
+            android:inputType="textMultiLine" />
 
-    <Spinner
-        android:id="@+id/new_category"
-        style="@style/text_normal"
-        android:drawSelectorOnTop="true"
-        android:entries="@array/categories"
-        android:entryValues="@array/category_values"
-        android:popupBackground="@drawable/spinner_style"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="20sp" />
+        <EditText
+            android:id="@+id/new_link"
+            style="@style/text_hints"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20sp"
+            android:hint="@string/form_link"
+            android:inputType="textUri" />
 
-    <ImageView
-        android:id="@+id/new_detail_image"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="20sp"
-        android:adjustViewBounds="true"
-        android:contentDescription="@string/activity_title_image"
-        android:scaleType="fitCenter" />
+        <Spinner
+            android:id="@+id/new_category"
+            style="@style/text_normal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20sp"
+            android:drawSelectorOnTop="true"
+            android:entries="@array/categories"
+            android:entryValues="@array/category_values"
+            android:popupBackground="@drawable/spinner_style" />
 
-    <Button
-        android:id="@+id/new_btn_image"
-        style="@style/btn_standard"
-        android:onClick="onClickAddPicture"
-        android:text="@string/btn_image"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="20sp"
-        android:layout_gravity="center" />
+        <ImageView
+            android:id="@+id/new_detail_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20sp"
+            android:adjustViewBounds="true"
+            android:contentDescription="@string/activity_title_image"
+            android:scaleType="fitCenter" />
 
-    <Button
-        style="@style/btn_standard"
-        android:id="@+id/new_btn_location"
-        android:onClick="onClickAddLocation"
-        android:text="@string/btn_location"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="20sp"
-        android:layout_gravity="center" />
+        <Button
+            android:id="@+id/new_btn_image"
+            style="@style/btn_standard"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="20sp"
+            android:onClick="onClickAddPicture"
+            android:text="@string/btn_image" />
 
-    <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent">
+        <Button
+            android:id="@+id/new_btn_location"
+            style="@style/btn_standard"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="20sp"
+            android:onClick="onClickAddLocation"
+            android:text="@string/btn_location" />
 
-        <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:orientation="horizontal">
-
-            <Button
-                android:id="@+id/new_btn_save"
-                style="@style/btn_standard"
-                android:layout_weight="0.45"
-                android:onClick="onClickSaveNewActivity"
-                android:text="@string/btn_save"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="10sp"/>
-
-            <Button
-                android:id="@+id/new_btn_cancel"
-                style="@style/btn_standard"
-                android:layout_weight="0.45"
-                android:onClick="onClickCancel"
-                android:text="@string/btn_cancel"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10sp"/>
-
-        </LinearLayout>
-    </RelativeLayout>
-
-
-</LinearLayout>
+        <Button
+            android:id="@+id/new_btn_save"
+            style="@style/btn_standard"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="onClickSaveNewActivity"
+            android:text="@string/btn_save" />
+    </LinearLayout>
 </ScrollView>
