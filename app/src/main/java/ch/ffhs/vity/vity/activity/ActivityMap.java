@@ -41,7 +41,7 @@ public class ActivityMap extends FragmentActivity implements OnMapReadyCallback 
 
         // Check if username is set already
         SharedPreferences username = PreferenceManager.getDefaultSharedPreferences(this);
-        if(username.getString("username", "0").equals("0")){
+        if(username.getString("username", "").equals("")){
             try {
                 editUsername(username);
             } catch (InterruptedException e) {

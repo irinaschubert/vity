@@ -219,8 +219,10 @@ public class ActivityEdit extends Activity {
         finish();
     }
 
-    public void onClickCancel(View button) {
-        finish();
+    public void onClickDelete(View button) {
+        mDb.itemModel().deleteItem(item);
+        Intent activity = new Intent(this, ActivitySearch.class);
+        startActivity(activity);
     }
 
     @Override

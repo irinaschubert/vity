@@ -17,6 +17,7 @@
     <string name="btn_show">Show on Map</string>
     <string name="btn_edit">Edit…</string>
     <string name="btn_location">Location…</string>
+    <string name="btn_delete">Delete</string>
 
     <!-- Titel Seiten -->
     <string name="titel_new">New Activity</string>

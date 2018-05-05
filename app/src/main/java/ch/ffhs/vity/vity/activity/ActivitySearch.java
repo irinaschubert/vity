@@ -53,10 +53,6 @@ public class ActivitySearch extends Activity {
         loadResults();
     }
 
-    public void onClickCancel(View button) {
-        finish();
-    }
-
     // Load mock data
     private void loadResults(){
         mDb = AppDatabase.getDatabase(this.getApplication());

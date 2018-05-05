@@ -36,7 +36,7 @@ public interface VityItemDao {
     public void updateItem(VityItem item);
 
     @Delete
-    public void deleteUser(VityItem item);
+    public void deleteItem(VityItem item);
 
     @Query("DELETE FROM VityItem")
     public void deleteAll();
