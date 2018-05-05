@@ -50,8 +50,7 @@ public class ActivityMap extends FragmentActivity implements OnMapReadyCallback 
         }
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
-        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
-                .findFragmentById(R.id.map);
+        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
     }
 
@@ -119,7 +118,6 @@ public class ActivityMap extends FragmentActivity implements OnMapReadyCallback 
         switch (requestCode){
             case 100: {
                 if(grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
-                    // Toast.makeText(getApplicationContext(), "Permission granted GPS", Toast.LENGTH_LONG).show();
                 } else {
                     Toast.makeText(getApplicationContext(), "Permission denied using GPS", Toast.LENGTH_LONG).show();
                 }

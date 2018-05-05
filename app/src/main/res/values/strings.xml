@@ -70,5 +70,6 @@
 
     <!-- Warnungen -->
     <string name="warning_missing_title">Please fill in a title for your new activity.</string>
+    <string name="title_activity_maps2">Map</string>
 
 </resources>

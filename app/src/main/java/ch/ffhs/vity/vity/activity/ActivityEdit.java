@@ -221,8 +221,8 @@ public class ActivityEdit extends Activity {
 
     public void onClickDelete(View button) {
         mDb.itemModel().deleteItem(item);
-        Intent activity = new Intent(this, ActivitySearch.class);
-        startActivity(activity);
+        Intent goBackToSearch = new Intent(this, ActivitySearch.class);
+        startActivity(goBackToSearch);
     }
 
     @Override
