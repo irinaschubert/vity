@@ -48,7 +48,6 @@ public class ActivityNew extends Activity {
     protected void onCreate(Bundle icicle) {
         super.onCreate(icicle);
         setContentView(R.layout.activity_new);
-        ActivityRegistry.register(this);
         newImage = findViewById(R.id.new_detail_image);
         title = findViewById(R.id.new_name);
         description = findViewById(R.id.new_description);
@@ -69,9 +68,6 @@ public class ActivityNew extends Activity {
         switch (item.getItemId()){
             case R.id.opt_settings:
                 startActivity(new Intent(this, ActivitySettings.class));
-                return true;
-            case R.id.opt_exit:
-                ActivityRegistry.finishAll();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

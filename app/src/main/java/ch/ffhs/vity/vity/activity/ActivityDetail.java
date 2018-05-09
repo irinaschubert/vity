@@ -33,7 +33,6 @@ public class ActivityDetail extends Activity {
     protected void onCreate(Bundle icicle) {
         super.onCreate(icicle);
         setContentView(R.layout.activity_detail);
-        ActivityRegistry.register(this);
         title = findViewById(R.id.detail_title);
         category = findViewById(R.id.detail_cateogry);
         link = findViewById(R.id.detail_link);
@@ -70,9 +69,6 @@ public class ActivityDetail extends Activity {
         switch (item.getItemId()){
             case R.id.opt_settings:
                 startActivity(new Intent(this, ActivitySettings.class));
-                return true;
-            case R.id.opt_exit:
-                ActivityRegistry.finishAll();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

@@ -37,7 +37,6 @@ public class ActivityMap extends FragmentActivity implements OnMapReadyCallback 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map);
-        ActivityRegistry.register(this);
 
         // Check if username is set already
         SharedPreferences username = PreferenceManager.getDefaultSharedPreferences(this);
@@ -67,9 +66,6 @@ public class ActivityMap extends FragmentActivity implements OnMapReadyCallback 
         switch (item.getItemId()){
             case R.id.opt_settings:
                 startActivity(new Intent(this, ActivitySettings.class));
-                return true;
-            case R.id.opt_exit:
-                System.exit(0);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -189,7 +185,7 @@ public class ActivityMap extends FragmentActivity implements OnMapReadyCallback 
                 .setNegativeButton("Cancel",new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog,int id) {
                         dialog.cancel();
-                        ActivityRegistry.finishAll();
+                        finish();
                     }
                 });
 

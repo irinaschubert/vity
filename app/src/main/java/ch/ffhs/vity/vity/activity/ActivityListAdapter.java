@@ -37,14 +37,18 @@ public class ActivityListAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        View view = View.inflate(mContext, R.layout.activity_search_list_items, null);
-        TextView viewTitle = view.findViewById(R.id.list_activity_title);
-        TextView viewDistance = view.findViewById(R.id.list_activity_distance);
+        if (convertView == null){
+            convertView = View.inflate(mContext, R.layout.activity_search_list_items, null);
+        }
+
+        TextView viewTitle = convertView.findViewById(R.id.list_activity_title);
+        TextView viewDistance = convertView.findViewById(R.id.list_activity_distance);
 
         // Set data
         viewTitle.setText(listActivities.get(position).getTitle());
-        viewDistance.setText("Distance");
+        //TODO
+        //viewDistance.setText(listActivities.get(position).getDistance());
 
-        return view;
+        return convertView;
     }
 }

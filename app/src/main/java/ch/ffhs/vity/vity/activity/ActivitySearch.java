@@ -23,7 +23,6 @@ public class ActivitySearch extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
-        ActivityRegistry.register(this);
     }
 
     // Menu
@@ -39,9 +38,6 @@ public class ActivitySearch extends Activity {
         switch (item.getItemId()){
             case R.id.opt_settings:
                 startActivity(new Intent(this, ActivitySettings.class));
-                return true;
-            case R.id.opt_exit:
-                ActivityRegistry.finishAll();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

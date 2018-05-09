@@ -4,6 +4,7 @@
     <!-- Platzhaltertexte -->
     <string name="text_search">Search</string>
     <string name="text_settings">Settings</string>
+    <string name="text_distance">Distance</string>
 
     <!-- Allgemein -->
     <string name="titel_bootscreen">Vity</string>
@@ -51,14 +52,12 @@
     <string name="men_settings">Settings</string>
     <string name="men_new">New</string>
     <string name="men_search">Search</string>
-    <string name="men_exit">Exit</string>
 
     <!-- Menüeinträge Ids -->
     <string name="opt_map">opt_map</string>
     <string name="opt_settings">opt_setings</string>
     <string name="opt_new">opt_new</string>
     <string name="opt_search">opt_search</string>
-    <string name="opt_exit">opt_exit</string>
 
     <!-- Detail Seite -->
     <string name="detail_category">Category</string>

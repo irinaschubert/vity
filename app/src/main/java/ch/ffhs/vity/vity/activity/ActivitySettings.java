@@ -14,8 +14,6 @@ public class ActivitySettings extends PreferenceActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getFragmentManager().beginTransaction().replace(android.R.id.content, new preferenceFrament()).commit();
-        //setContentView(R.layout.activity_settings);
-        ActivityRegistry.register(this);
     }
 
     public static class preferenceFrament extends PreferenceFragment{
@@ -39,9 +37,6 @@ public class ActivitySettings extends PreferenceActivity {
         switch (item.getItemId()){
             case R.id.opt_settings:
                 // Already there
-                return true;
-            case R.id.opt_exit:
-                ActivityRegistry.finishAll();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

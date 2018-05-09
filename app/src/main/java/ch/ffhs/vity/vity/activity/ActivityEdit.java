@@ -51,7 +51,6 @@ public class ActivityEdit extends Activity {
     protected void onCreate(Bundle icicle) {
         super.onCreate(icicle);
         setContentView(R.layout.activity_edit);
-        ActivityRegistry.register(this);
         newImage = findViewById(R.id.new_detail_image);
         long id = getIntent().getLongExtra("itemId", 0);
         loadActivity(id);
@@ -70,9 +69,6 @@ public class ActivityEdit extends Activity {
         switch (item.getItemId()){
             case R.id.opt_settings:
                 startActivity(new Intent(this, ActivitySettings.class));
-                return true;
-            case R.id.opt_exit:
-                ActivityRegistry.finishAll();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

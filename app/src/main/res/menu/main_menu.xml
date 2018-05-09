@@ -2,6 +2,4 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:title="@string/men_settings"
         android:id="@+id/opt_settings"/>
-    <item android:title="@string/men_exit"
-        android:id="@+id/opt_exit"/>
 </menu>
