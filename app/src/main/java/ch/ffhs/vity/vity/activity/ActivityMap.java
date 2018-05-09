@@ -79,10 +79,10 @@ public class ActivityMap extends FragmentActivity implements OnMapReadyCallback 
         try {
             boolean success = mMap.setMapStyle(MapStyleOptions.loadRawResourceStyle(this, R.raw.map_style));
             if (!success) {
-                Toast.makeText(getApplicationContext(), "Could not load map style!", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), R.string.warning_not_load_map_style, Toast.LENGTH_LONG).show();
             }
         } catch (Resources.NotFoundException e) {
-            Toast.makeText(getApplicationContext(), "Could not find map style!", Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), R.string.warning_not_find_map_style, Toast.LENGTH_LONG).show();
         }
 
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -115,7 +115,7 @@ public class ActivityMap extends FragmentActivity implements OnMapReadyCallback 
             case 100: {
                 if(grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
                 } else {
-                    Toast.makeText(getApplicationContext(), "Permission denied using GPS", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), R.string.permission_denied_gps, Toast.LENGTH_LONG).show();
                 }
             }
         }
@@ -131,19 +131,19 @@ public class ActivityMap extends FragmentActivity implements OnMapReadyCallback 
                     this);
 
             // Set Title to Alert
-            alertDialogBuilder.setTitle("GPS is disabled!");
+            alertDialogBuilder.setTitle(R.string.gps_disabled);
 
             // set dialog message
             alertDialogBuilder
-                    .setMessage("To use the App with your current Location, you have to turn on gps!")
-                    .setPositiveButton("Yes",new DialogInterface.OnClickListener() {
+                    .setMessage(R.string.enable_gps)
+                    .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog,int id) {
                             dialog.cancel();
                             Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
                             startActivity(intent);
                         }
                     })
-                    .setNegativeButton("No",new DialogInterface.OnClickListener() {
+                    .setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog,int id) {
                             dialog.cancel();
                         }
@@ -164,17 +164,17 @@ public class ActivityMap extends FragmentActivity implements OnMapReadyCallback 
                 this);
 
         // Set Title to Alert
-        alertDialogBuilder.setTitle("Username");
+        alertDialogBuilder.setTitle(R.string.username);
 
         // Build Input Field
         final EditText name = new EditText(this);
-        name.setHint("Username");
+        name.setHint(R.string.username);
         alertDialogBuilder.setView(name);
 
         // set dialog message
         alertDialogBuilder
-                .setMessage("Please enter your Name!")
-                .setPositiveButton("Save",new DialogInterface.OnClickListener() {
+                .setMessage(R.string.enter_name)
+                .setPositiveButton(R.string.btn_save,new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog,int id) {
                         SharedPreferences.Editor editor = username.edit();
                         editor.putString("username", name.getText().toString());
@@ -182,7 +182,7 @@ public class ActivityMap extends FragmentActivity implements OnMapReadyCallback 
                         dialog.cancel();
                     }
                 })
-                .setNegativeButton("Cancel",new DialogInterface.OnClickListener() {
+                .setNegativeButton(R.string.btn_cancel,new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog,int id) {
                         dialog.cancel();
                         finish();

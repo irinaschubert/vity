@@ -8,6 +8,10 @@
 
     <!-- Allgemein -->
     <string name="titel_bootscreen">Vity</string>
+    <string name="yes">yes</string>
+    <string name="no">no</string>
+    <string name="username">username</string>
+    <string name="enter_name">Please enter your name</string>
 
     <!-- Buttons -->
     <string name="btn_image">Image…</string>
@@ -67,8 +71,14 @@
     <string name="detail_description">Description</string>
     <string name="activity_title_image">Activity_Title_Image</string>
 
-    <!-- Warnungen -->
+    <!-- Warnungen, Meldungen -->
     <string name="warning_missing_title">Please fill in a title for your new activity.</string>
     <string name="title_activity_maps2">Map</string>
+    <string name="warning_not_load_map_style">Could not load map style.</string>
+    <string name="warning_not_find_map_style">Could not find map style.</string>
+    <string name="gps_disabled">GPS is disabled.</string>
+    <string name="enable_gps">To use the App with your current Location, you have to turn on gps.</string>
+    <string name="permission_denied_gps">Permission denied using GPS.</string>
+
 
 </resources>
