@@ -30,6 +30,7 @@ import java.util.Date;
 
 import ch.ffhs.vity.vity.R;
 import ch.ffhs.vity.vity.database.AppDatabase;
+import ch.ffhs.vity.vity.database.VityItem;
 
 public class ActivityEdit extends Activity {
     private static final int REQUEST_CODE_STORAGE = 1;

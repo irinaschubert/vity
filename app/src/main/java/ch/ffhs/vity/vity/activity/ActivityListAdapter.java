@@ -9,6 +9,7 @@ import android.widget.TextView;
 import java.util.List;
 
 import ch.ffhs.vity.vity.R;
+import ch.ffhs.vity.vity.database.VityItem;
 
 public class ActivityListAdapter extends BaseAdapter {
 

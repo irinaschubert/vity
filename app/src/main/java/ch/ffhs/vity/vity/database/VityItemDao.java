@@ -9,7 +9,7 @@ import android.arch.persistence.room.Update;
 
 import java.util.List;
 
-import ch.ffhs.vity.vity.activity.VityItem;
+import ch.ffhs.vity.vity.database.VityItem;
 
 import static android.arch.persistence.room.OnConflictStrategy.IGNORE;
 import static android.arch.persistence.room.OnConflictStrategy.REPLACE;

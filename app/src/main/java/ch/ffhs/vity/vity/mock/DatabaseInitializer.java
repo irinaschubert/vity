@@ -6,7 +6,7 @@ import android.support.annotation.NonNull;
 import java.util.Calendar;
 import java.util.Date;
 
-import ch.ffhs.vity.vity.activity.VityItem;
+import ch.ffhs.vity.vity.database.VityItem;
 import ch.ffhs.vity.vity.database.AppDatabase;
 
 public class DatabaseInitializer {

@@ -14,6 +14,7 @@ import android.widget.Spinner;
 import java.util.ArrayList;
 import ch.ffhs.vity.vity.database.AppDatabase;
 import ch.ffhs.vity.vity.R;
+import ch.ffhs.vity.vity.database.VityItem;
 
 
 public class ActivitySearch extends Activity {

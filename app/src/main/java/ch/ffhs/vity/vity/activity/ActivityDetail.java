@@ -16,6 +16,7 @@ import java.util.Date;
 
 import ch.ffhs.vity.vity.database.AppDatabase;
 import ch.ffhs.vity.vity.R;
+import ch.ffhs.vity.vity.database.VityItem;
 
 
 public class ActivityDetail extends Activity {

@@ -27,6 +27,7 @@ import java.text.SimpleDateFormat;
 
 import ch.ffhs.vity.vity.R;
 import ch.ffhs.vity.vity.database.AppDatabase;
+import ch.ffhs.vity.vity.database.VityItem;
 
 public class ActivityNew extends Activity {
     private static final int REQUEST_CODE_STORAGE = 1;
