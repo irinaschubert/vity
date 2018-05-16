@@ -11,12 +11,12 @@ import java.util.List;
 import ch.ffhs.vity.vity.R;
 import ch.ffhs.vity.vity.database.VityItem;
 
-public class ActivityListAdapter extends BaseAdapter {
+public class VityItemListAdapter extends BaseAdapter {
 
     private List<VityItem> listActivities;
     private Context mContext;
 
-    public ActivityListAdapter(List<VityItem> listActivities, Context mContext) {
+    public VityItemListAdapter(List<VityItem> listActivities, Context mContext) {
         this.listActivities = listActivities;
         this.mContext = mContext;
     }

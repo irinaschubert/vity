@@ -7,11 +7,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.Toast;
-
 import java.util.ArrayList;
 import ch.ffhs.vity.vity.database.AppDatabase;
 import ch.ffhs.vity.vity.R;
@@ -65,7 +63,7 @@ public class ActivitySearch extends Activity {
         if(liste.isEmpty()){
             Toast.makeText(getApplicationContext(), R.string.no_results, Toast.LENGTH_LONG).show();
         }
-        final ActivityListAdapter listAdapter = new ActivityListAdapter(liste, getApplicationContext());
+        final VityItemListAdapter listAdapter = new VityItemListAdapter(liste, getApplicationContext());
         listView.setAdapter(listAdapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
