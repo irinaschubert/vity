@@ -2,12 +2,11 @@ package ch.ffhs.vity.vity.activity;
 
 import android.Manifest;
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
 import android.app.Activity;
@@ -20,10 +19,16 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.tasks.OnSuccessListener;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.Locale;
 
 import ch.ffhs.vity.vity.R;
 import ch.ffhs.vity.vity.database.AppDatabase;
@@ -34,16 +39,17 @@ public class ActivityNew extends Activity {
     private static final int REQUEST_CODE_CAMERA = 2;
     private static final int REQUEST_IMAGE_PICK = 3;
     private static final int REQUEST_IMAGE_CAPTURE = 4;
+    private static final int REQUEST_FINE_LOCATION = 5;
 
     private ImageView newImage;
     EditText title;
     EditText description;
     EditText link;
+    TextView location;
     Spinner categorySpinner;
-    private String username;
-    private AppDatabase mDb;
-    private VityItem item;
-    private long currentDate;
+    private Location currentLocation;
+    private FusedLocationProviderClient locationClient;
+
 
     @Override
     protected void onCreate(Bundle icicle) {
@@ -53,7 +59,9 @@ public class ActivityNew extends Activity {
         title = findViewById(R.id.new_name);
         description = findViewById(R.id.new_description);
         link = findViewById(R.id.new_link);
+        location = findViewById(R.id.new_detail_location);
         categorySpinner = findViewById(R.id.new_category);
+        locationClient = LocationServices.getFusedLocationProviderClient(this);
     }
 
     // Menu
@@ -107,7 +115,6 @@ public class ActivityNew extends Activity {
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        //super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         switch(requestCode){
             case REQUEST_CODE_STORAGE:
                 if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
@@ -119,6 +126,10 @@ public class ActivityNew extends Activity {
                     takePicture();
                 }
                 break;
+            case REQUEST_FINE_LOCATION:
+                if(grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    getCurrentLocation();
+                }
             default:
                 // The app will not have this permission
                 finish();
@@ -129,13 +140,13 @@ public class ActivityNew extends Activity {
         Intent getPictureIntent = new Intent();
         getPictureIntent.setType("image/*");
         getPictureIntent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(Intent.createChooser(getPictureIntent, "Select your picture"), REQUEST_IMAGE_PICK);
+        startActivityForResult(Intent.createChooser(getPictureIntent, getResources().getText(R.string.select_picture_using)), REQUEST_IMAGE_PICK);
     }
 
     private void takePicture() {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
-            startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
+            startActivityForResult(Intent.createChooser(takePictureIntent, getResources().getText(R.string.take_picture_using)), REQUEST_IMAGE_CAPTURE);
         }
     }
 
@@ -150,7 +161,7 @@ public class ActivityNew extends Activity {
                         newImage.setImageBitmap(MediaStore.Images.Media.getBitmap(this.getContentResolver(), selectedImage));
                     } catch (IOException e) {
                         e.printStackTrace();
-                        Toast.makeText(getApplicationContext(), "Bad Image Request. Please Try Again!", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), getResources().getText(R.string.bad_image_request), Toast.LENGTH_LONG).show();
                     }
                 }
                 break;
@@ -168,23 +179,46 @@ public class ActivityNew extends Activity {
     }
 
     public void onClickAddLocation(View button) {
-        Toast.makeText(getApplicationContext(), "addLocation", Toast.LENGTH_LONG).show();
-     }
+        getCurrentLocation();
+    }
+
+    private void getCurrentLocation(){
+        if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_FINE_LOCATION);
+        }else {
+            locationClient.getLastLocation().addOnSuccessListener(this, new OnSuccessListener<Location>() {
+                @Override
+                public void onSuccess(Location newLocation) {
+
+                    if (newLocation != null) {
+                        currentLocation = newLocation;
+                        location.setText(currentLocation.toString());
+                    }
+                }
+            });
+        }
+
+    }
 
     public void onClickSaveNewActivity(View button) {
-        mDb = AppDatabase.getDatabase(this.getApplication());
-        currentDate = System.currentTimeMillis();
-        SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
+        AppDatabase mDb = AppDatabase.getDatabase(this.getApplication());
+
+        long currentDate = System.currentTimeMillis();
+        SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault());
         String currentDateString = sdf.format(currentDate);
-        item = new VityItem();
+
+        Location loc = new Location("bla");
+        String locString = currentLocation.toString();
+
+        VityItem item = new VityItem();
         item.setTitle(title.getText().toString());
         item.setDescription(description.getText().toString());
         item.setLink(link.getText().toString());
+        item.setLocation(locString);
         item.setCategory(categorySpinner.getSelectedItem().toString());
-        username = PreferenceManager.getDefaultSharedPreferences(this).getString("username", "");
+        String username = PreferenceManager.getDefaultSharedPreferences(this).getString("username", "");
         item.setOwner(username);
         item.setDate(currentDateString);
-        //item.setLocation();
 
         //new activity should at least have a title
         if(title.getText().toString().equals("")){
@@ -194,10 +228,6 @@ public class ActivityNew extends Activity {
             finish();
         }
      }
-
-    public void onClickCancel(View button) {
-        finish();
-    }
 
     @Override
     protected void onDestroy() {

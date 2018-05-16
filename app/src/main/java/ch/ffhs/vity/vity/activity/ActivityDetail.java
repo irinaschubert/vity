@@ -26,8 +26,6 @@ public class ActivityDetail extends Activity {
     private TextView date;
     private TextView owner;
     private TextView description;
-    private AppDatabase mDb;
-    private VityItem item;
     private long id;
 
     @Override
@@ -47,8 +45,8 @@ public class ActivityDetail extends Activity {
     }
 
     private void loadMessage(long id){
-        mDb = AppDatabase.getDatabase(this.getApplication());
-        item = mDb.itemModel().loadItemById(id);
+        AppDatabase mDb = AppDatabase.getDatabase(this.getApplication());
+        VityItem item = mDb.itemModel().loadItemById(id);
         title.setText(item.getTitle());
         category.setText(item.getCategory());
         link.setText(item.getLink());
@@ -79,10 +77,6 @@ public class ActivityDetail extends Activity {
     // onClickFunctions
     public void onClickShowOnMap(View button) {
         Toast.makeText(getApplicationContext(), "showOnMap", Toast.LENGTH_LONG).show();
-    }
-
-    public void onClickCancel(View button) {
-        finish();
     }
 
     public void onClickEdit(View button){

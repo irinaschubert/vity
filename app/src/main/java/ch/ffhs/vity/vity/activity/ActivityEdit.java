@@ -2,11 +2,11 @@ package ch.ffhs.vity.vity.activity;
 
 import android.Manifest;
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
 import android.app.Activity;
@@ -16,17 +16,19 @@ import android.support.annotation.NonNull;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.tasks.OnSuccessListener;
+
 import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
+import java.util.Locale;
 
 import ch.ffhs.vity.vity.R;
 import ch.ffhs.vity.vity.database.AppDatabase;
@@ -37,22 +39,26 @@ public class ActivityEdit extends Activity {
     private static final int REQUEST_CODE_CAMERA = 2;
     private static final int REQUEST_IMAGE_PICK = 3;
     private static final int REQUEST_IMAGE_CAPTURE = 4;
+    private static final int REQUEST_FINE_LOCATION = 5;
+
     private ImageView newImage;
     EditText title;
     EditText description;
     EditText link;
-    private String category;
+    TextView location;
     Spinner categorySpinner;
-    private String username;
-    private long currentDate;
     private AppDatabase mDb;
     private VityItem item;
+    private Location currentLocation;
+    private FusedLocationProviderClient locationClient;
+
 
     @Override
     protected void onCreate(Bundle icicle) {
         super.onCreate(icicle);
         setContentView(R.layout.activity_edit);
         newImage = findViewById(R.id.new_detail_image);
+        locationClient = LocationServices.getFusedLocationProviderClient(this);
         long id = getIntent().getLongExtra("itemId", 0);
         loadActivity(id);
     }
@@ -89,8 +95,11 @@ public class ActivityEdit extends Activity {
         link = findViewById(R.id.new_link);
         link.setText(item.getLink(), TextView.BufferType.EDITABLE);
 
+        location = findViewById(R.id.new_detail_location);
+        location.setText(item.getLocation(), TextView.BufferType.NORMAL);
+
         // sets category value to category spinner
-        category = item.getCategory();
+        String category = item.getCategory();
         categorySpinner = findViewById(R.id.new_category);
         categorySpinner.setSelection(getIndex(categorySpinner, category));
     }
@@ -111,7 +120,7 @@ public class ActivityEdit extends Activity {
             public void onClick(DialogInterface dialog, int which) {
                 switch(which){
                     case 0:
-                        //checks permission on runtime and asks if not set
+                        //checks permission on runtime and asks if not yet set
                         if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
                             requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, REQUEST_CODE_STORAGE);
                         }else {
@@ -119,7 +128,7 @@ public class ActivityEdit extends Activity {
                         }
                         break;
                     case 1:
-                        //checks permission on runtime and asks if not set
+                        //checks permission on runtime and asks if not yet set
                         if (checkSelfPermission(Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
                             requestPermissions(new String[]{Manifest.permission.CAMERA}, REQUEST_CODE_CAMERA);
                         }else{
@@ -136,7 +145,6 @@ public class ActivityEdit extends Activity {
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        //super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         switch(requestCode){
             case REQUEST_CODE_STORAGE:
                 if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
@@ -148,6 +156,10 @@ public class ActivityEdit extends Activity {
                     takePicture();
                 }
                 break;
+            case REQUEST_FINE_LOCATION:
+                if(grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    getCurrentLocation();
+                }
             default:
                 // The app will not have this permission
                 finish();
@@ -158,13 +170,13 @@ public class ActivityEdit extends Activity {
         Intent getPictureIntent = new Intent();
         getPictureIntent.setType("image/*");
         getPictureIntent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(Intent.createChooser(getPictureIntent, "Select your picture"), REQUEST_IMAGE_PICK);
+        startActivityForResult(Intent.createChooser(getPictureIntent, getResources().getText(R.string.select_picture_using)), REQUEST_IMAGE_PICK);
     }
 
     private void takePicture() {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
-            startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
+            startActivityForResult(Intent.createChooser(takePictureIntent, getResources().getText(R.string.take_picture_using)), REQUEST_IMAGE_CAPTURE);
         }
     }
 
@@ -179,7 +191,7 @@ public class ActivityEdit extends Activity {
                         newImage.setImageBitmap(MediaStore.Images.Media.getBitmap(this.getContentResolver(), selectedImage));
                     } catch (IOException e) {
                         e.printStackTrace();
-                        Toast.makeText(getApplicationContext(), "Bad Image Request. Please Try Again!", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), getResources().getText(R.string.bad_image_request), Toast.LENGTH_LONG).show();
                     }
                 }
                 break;
@@ -198,28 +210,49 @@ public class ActivityEdit extends Activity {
 
     // onClickFunctions
     public void onClickAddLocation(View button) {
-        Toast.makeText(getApplicationContext(), "addLocation", Toast.LENGTH_LONG).show();
+        getCurrentLocation();
+    }
+
+    private void getCurrentLocation(){
+        if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_FINE_LOCATION);
+        }else {
+            locationClient.getLastLocation().addOnSuccessListener(this, new OnSuccessListener<Location>() {
+                @Override
+                public void onSuccess(Location newLocation) {
+
+                    if (newLocation != null) {
+                        currentLocation = newLocation;
+                        location.setText(currentLocation.toString());
+                    }
+                }
+            });
+        }
+
     }
 
     public void onClickUpdateActivity(View button) {
+        Location loc = new Location("bla");
+        String locString = currentLocation.toString();
         item.setTitle(title.getText().toString());
         item.setDescription(description.getText().toString());
         item.setLink(link.getText().toString());
+        item.setLocation(locString);
         item.setCategory(categorySpinner.getSelectedItem().toString());
-        username = PreferenceManager.getDefaultSharedPreferences(this).getString("username", "");
-        currentDate = System.currentTimeMillis();
-        SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
+        String username = PreferenceManager.getDefaultSharedPreferences(this).getString("username", "");
+        long currentDate = System.currentTimeMillis();
+        SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault());
         String currentDateString = sdf.format(currentDate);
         item.setOwner(username);
         item.setDate(currentDateString);
-        mDb.itemModel().updateItem(item);
-        finish();
-    }
 
-    public void onClickDelete(View button) {
-        mDb.itemModel().deleteItem(item);
-        Intent goBackToSearch = new Intent(this, ActivitySearch.class);
-        startActivity(goBackToSearch);
+        //new activity should at least have a title
+        if(title.getText().toString().equals("")){
+            Toast.makeText(this, getString(R.string.warning_missing_title), Toast.LENGTH_SHORT).show();
+        }else{
+            mDb.itemModel().updateItem(item);
+            finish();
+        }
     }
 
     @Override

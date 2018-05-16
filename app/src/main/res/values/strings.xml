@@ -1,19 +1,19 @@
 <resources>
     <string name="app_name">Vity</string>
 
-    <!-- Platzhaltertexte -->
+    <!-- place holder strings -->
     <string name="text_search">Search</string>
     <string name="text_settings">Settings</string>
     <string name="text_distance">Distance</string>
 
-    <!-- Allgemein -->
+    <!-- general -->
     <string name="titel_bootscreen">Vity</string>
     <string name="yes">yes</string>
     <string name="no">no</string>
     <string name="username">username</string>
     <string name="enter_name">Please enter your name</string>
 
-    <!-- Buttons -->
+    <!-- buttons -->
     <string name="btn_image">Image…</string>
     <string name="btn_save">Save</string>
     <string name="btn_update">Update</string>
@@ -21,29 +21,31 @@
     <string name="btn_search">Search</string>
     <string name="btn_show">Show on Map</string>
     <string name="btn_edit">Edit…</string>
-    <string name="btn_location">Location…</string>
+    <string name="btn_location">Add current location</string>
     <string name="btn_delete">Delete</string>
 
-    <!-- Titel Seiten -->
+    <!-- titles -->
     <string name="titel_new">New Activity</string>
     <string name="titel_edit">Edit Activity</string>
     <string name="titel_search">Search Activity</string>
     <string name="titel_settings">Settings</string>
 
-    <!-- Neue Atkivität -->
+    <!-- new activity, edit activity -->
     <string name="form_titel">Title</string>
     <string name="form_description">Description</string>
     <string name="form_category">Category</string>
     <string name="form_link">Link</string>
     <string name="img_from_gallery">Open existing image</string>
     <string name="img_from_camera">Take a new photo</string>
+    <string name="select_picture_using">Select your picture using:</string>
+    <string name="take_picture_using">Take your picture using:</string>
 
-    <!-- Atkivität finden -->
+    <!-- find activity -->
     <string name="form_search">Search</string>
     <string name="form_category2">Category</string>
     <string name="form_perimeter">Perimeter</string>
 
-    <!-- Kategorien für Aktivitäten -->
+    <!-- activity categories -->
     <string name="cat_food">Food and drinks</string>
     <string name="cat_shop">Shopping</string>
     <string name="cat_stay">Place to stay</string>
@@ -51,19 +53,19 @@
     <string name="cat_walk">Walk</string>
     <string name="cat_other">Other</string>
 
-    <!-- Menüeinträge -->
+    <!-- menu -->
     <string name="men_map">Map</string>
     <string name="men_settings">Settings</string>
     <string name="men_new">New</string>
     <string name="men_search">Search</string>
 
-    <!-- Menüeinträge Ids -->
+    <!-- menu ids -->
     <string name="opt_map">opt_map</string>
     <string name="opt_settings">opt_setings</string>
     <string name="opt_new">opt_new</string>
     <string name="opt_search">opt_search</string>
 
-    <!-- Detail Seite -->
+    <!-- detail view of activity -->
     <string name="detail_category">Category</string>
     <string name="detail_link">Link</string>
     <string name="detail_date">Creation/modification date</string>
@@ -71,7 +73,7 @@
     <string name="detail_description">Description</string>
     <string name="activity_title_image">Activity_Title_Image</string>
 
-    <!-- Warnungen, Meldungen -->
+    <!-- warnings, messages -->
     <string name="warning_missing_title">Please fill in a title for your new activity.</string>
     <string name="title_activity_maps2">Map</string>
     <string name="warning_not_load_map_style">Could not load map style.</string>
@@ -80,6 +82,8 @@
     <string name="enable_gps">To use the App with your current Location, you have to turn on gps.</string>
     <string name="permission_denied_gps">Permission denied using GPS.</string>
     <string name="no_results">No results for this category and/or distance.</string>
+    <string name="bad_image_request">Bad Image Request. Please Try Again!</string>
+
 
 
 </resources>

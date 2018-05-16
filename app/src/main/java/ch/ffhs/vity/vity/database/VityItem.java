@@ -17,8 +17,7 @@ public class VityItem {
     private String description;
     private String category;
     private String link;
-    private String link_image;
-    //private Location location;
+    private String location;
 
     public VityItem(){
     }
@@ -56,14 +55,6 @@ public class VityItem {
         this.link = link;
     }
 
-    public String getLink_image() {
-        return link_image;
-    }
-
-    public void setLink_image(String link_image) {
-        this.link_image = link_image;
-    }
-
     public long getId() {
         return id;
     }
@@ -86,5 +77,13 @@ public class VityItem {
 
     public void setDate(String date){
         this.date = date;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
     }
 }

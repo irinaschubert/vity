@@ -67,6 +67,13 @@
             android:contentDescription="@string/activity_title_image"
             android:scaleType="fitCenter" />
 
+        <TextView
+            android:id="@+id/new_detail_location"
+            style="@style/text_normal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20sp"/>
+
         <Button
             android:id="@+id/new_btn_image"
             style="@style/btn_standard"

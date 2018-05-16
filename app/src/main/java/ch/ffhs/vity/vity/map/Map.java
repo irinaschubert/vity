@@ -1,4 +1,4 @@
-package ch.ffhs.vity.vity.activity;
+package ch.ffhs.vity.vity.map;
 
 import android.Manifest;
 import android.app.AlertDialog;
@@ -30,8 +30,11 @@ import com.google.android.gms.maps.model.MapStyleOptions;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import ch.ffhs.vity.vity.R;
+import ch.ffhs.vity.vity.activity.ActivityNew;
+import ch.ffhs.vity.vity.activity.ActivitySearch;
+import ch.ffhs.vity.vity.activity.ActivitySettings;
 
-public class ActivityMap extends FragmentActivity implements OnMapReadyCallback {
+public class Map extends FragmentActivity implements OnMapReadyCallback {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
