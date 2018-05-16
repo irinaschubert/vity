@@ -10,6 +10,7 @@ import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import ch.ffhs.vity.vity.database.AppDatabase;
@@ -50,7 +51,6 @@ public class ActivitySearch extends Activity {
         loadResults();
     }
 
-    // Load mock data
     private void loadResults(){
         mDb = AppDatabase.getDatabase(this.getApplication());
         fetchData();
@@ -62,6 +62,9 @@ public class ActivitySearch extends Activity {
         String category = categorySpinner.getSelectedItem().toString();
         ArrayList liste = new ArrayList<VityItem>();
         liste.addAll(mDb.itemModel().findItemByCategory(category));
+        if(liste.isEmpty()){
+            Toast.makeText(getApplicationContext(), R.string.no_results, Toast.LENGTH_LONG).show();
+        }
         final ActivityListAdapter listAdapter = new ActivityListAdapter(liste, getApplicationContext());
         listView.setAdapter(listAdapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -76,7 +79,7 @@ public class ActivitySearch extends Activity {
         });
     }
 
-    //to get actual selection of spinner
+    //get actual selection of spinner
     private int getIndex(Spinner spinner, String string){
         int index = 0;
         for (int i=0;i<spinner.getCount();i++){
@@ -96,8 +99,6 @@ public class ActivitySearch extends Activity {
     @Override
     protected void onResume(){
         super.onResume();
-        loadResults();
     }
-
 
 }

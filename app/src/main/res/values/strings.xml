@@ -79,6 +79,7 @@
     <string name="gps_disabled">GPS is disabled.</string>
     <string name="enable_gps">To use the App with your current Location, you have to turn on gps.</string>
     <string name="permission_denied_gps">Permission denied using GPS.</string>
+    <string name="no_results">No results for this category and/or distance.</string>
 
 
 </resources>
