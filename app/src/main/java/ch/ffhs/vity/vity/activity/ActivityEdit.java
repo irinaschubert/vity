@@ -33,6 +33,9 @@ import java.util.Locale;
 import ch.ffhs.vity.vity.R;
 import ch.ffhs.vity.vity.database.AppDatabase;
 import ch.ffhs.vity.vity.database.VityItem;
+import ch.ffhs.vity.vity.database.LocationTypeConverter;
+
+import static ch.ffhs.vity.vity.database.LocationTypeConverter.locationToString;
 
 public class ActivityEdit extends Activity {
     private static final int REQUEST_CODE_STORAGE = 1;
@@ -223,7 +226,7 @@ public class ActivityEdit extends Activity {
 
                     if (newLocation != null) {
                         currentLocation = newLocation;
-                        location.setText(currentLocation.toString());
+                        location.setText(locationToString(currentLocation));
                     }
                 }
             });
@@ -232,12 +235,10 @@ public class ActivityEdit extends Activity {
     }
 
     public void onClickUpdateActivity(View button) {
-        Location loc = new Location("bla");
-        String locString = currentLocation.toString();
         item.setTitle(title.getText().toString());
         item.setDescription(description.getText().toString());
         item.setLink(link.getText().toString());
-        item.setLocation(locString);
+        item.setLocation(locationToString(currentLocation));
         item.setCategory(categorySpinner.getSelectedItem().toString());
         String username = PreferenceManager.getDefaultSharedPreferences(this).getString("username", "");
         long currentDate = System.currentTimeMillis();

@@ -9,6 +9,7 @@ import android.arch.persistence.room.RoomDatabase;
 import ch.ffhs.vity.vity.database.VityItem;
 
 @Database(entities = {VityItem.class}, version = 1, exportSchema = false)
+@TypeConverters({LocationTypeConverter.class})
 public abstract class AppDatabase extends RoomDatabase {
 
     private static AppDatabase INSTANCE;
