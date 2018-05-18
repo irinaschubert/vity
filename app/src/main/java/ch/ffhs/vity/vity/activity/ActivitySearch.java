@@ -77,17 +77,6 @@ public class ActivitySearch extends Activity {
         });
     }
 
-    //get actual selection of spinner
-    private int getIndex(Spinner spinner, String string){
-        int index = 0;
-        for (int i=0;i<spinner.getCount();i++){
-            if (spinner.getItemAtPosition(i).equals(string)){
-                index = i;
-            }
-        }
-        return index;
-    }
-
     @Override
     protected void onDestroy() {
         AppDatabase.destroyInstance();

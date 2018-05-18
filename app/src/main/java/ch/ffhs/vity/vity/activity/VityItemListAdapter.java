@@ -47,8 +47,7 @@ public class VityItemListAdapter extends BaseAdapter {
 
         // Set data
         viewTitle.setText(listActivities.get(position).getTitle());
-        //TODO
-        //viewDistance.setText(listActivities.get(position).getDistance());
+        viewDistance.setText(listActivities.get(position).getLocation());
 
         return convertView;
     }

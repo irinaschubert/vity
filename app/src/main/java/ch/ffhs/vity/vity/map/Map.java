@@ -1,7 +1,6 @@
 package ch.ffhs.vity.vity.map;
 
 import android.Manifest;
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -17,21 +16,18 @@ import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
-import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MapStyleOptions;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -44,11 +40,10 @@ import ch.ffhs.vity.vity.activity.ActivitySettings;
 import static ch.ffhs.vity.vity.database.LocationTypeConverter.locationToString;
 
 public class Map extends FragmentActivity implements OnMapReadyCallback {
-    private CameraPosition mCameraPosition;
     private Location currentLocation;
     private FusedLocationProviderClient mFusedLocationProviderClient;
     private GoogleMap mMap;
-    protected GoogleApiClient mGoogleApiClient;
+    private LatLng itemPosition;
     private static final int REQUEST_FINE_LOCATION = 1;
 
     @Override
@@ -121,6 +116,18 @@ public class Map extends FragmentActivity implements OnMapReadyCallback {
 
         setCurrentLocation();
         setCurrentLocationOnMap();
+
+        Intent i = getIntent();
+        if(i != null){
+            Bundle b = i.getExtras();
+            if  (b != null)
+            {
+                LatLng itemPosition = new LatLng(b.getDouble("lat"), b.getDouble("long"));
+                mMap.addMarker(new MarkerOptions().position(itemPosition));
+                float zoomLevel = 16.0f;
+                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(itemPosition, zoomLevel));
+            }
+        }
     }
 
 
@@ -140,18 +147,30 @@ public class Map extends FragmentActivity implements OnMapReadyCallback {
     }
 
     private void setCurrentLocationOnMap(){
+        float zoomLevel = 16.0f;
         try{
             LatLng myPosition = new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude());
             mMap.addMarker(new MarkerOptions().position(myPosition));
-            float zoomLevel = 16.0f;
             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(myPosition, zoomLevel));
             Toast.makeText(this, "done", Toast.LENGTH_SHORT).show();
         }catch(Exception e){
-            LatLng bern = new LatLng(46.948393, 7.436325);
-            mMap.addMarker(new MarkerOptions().position(bern).title("Welle 7"));
-            float zoomLevel = 16.0f;
-            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(bern, zoomLevel));
-            Toast.makeText(this, R.string.no_location_possible, Toast.LENGTH_SHORT).show();
+            Intent i = getIntent();
+            if(i == null){
+                LatLng bern = new LatLng(46.948393, 7.436325);
+                mMap.addMarker(new MarkerOptions().position(bern).title("Welle 7"));
+                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(bern, zoomLevel));
+                Toast.makeText(this, R.string.no_location_possible, Toast.LENGTH_SHORT).show();
+            }
+            // if call comes from detail view
+            if(i != null){
+                Bundle b = i.getExtras();
+                if  (b != null)
+                {
+                    itemPosition = new LatLng(b.getDouble("lat"), b.getDouble("long"));
+                    mMap.addMarker(new MarkerOptions().position(itemPosition));
+                    mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(itemPosition, zoomLevel));
+                }
+            }
         }
     }
 
@@ -265,6 +284,8 @@ public class Map extends FragmentActivity implements OnMapReadyCallback {
     }
 
     public void goNavigate(View button){
+        float[] results = new float[1];
+        currentLocation.distanceBetween(currentLocation.getLatitude(), currentLocation.getLongitude(), itemPosition.latitude, itemPosition.longitude, results);
         LatLng myPosition = new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude());
         mMap.addMarker(new MarkerOptions().position(myPosition));
         float zoomLevel = 16.0f;

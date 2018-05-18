@@ -2,21 +2,18 @@ package ch.ffhs.vity.vity.activity;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.media.Image;
+import android.location.Location;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import static ch.ffhs.vity.vity.database.LocationTypeConverter.toLocation;
 
 import ch.ffhs.vity.vity.database.AppDatabase;
 import ch.ffhs.vity.vity.R;
 import ch.ffhs.vity.vity.database.VityItem;
+import ch.ffhs.vity.vity.map.Map;
 
 
 public class ActivityDetail extends Activity {
@@ -27,6 +24,8 @@ public class ActivityDetail extends Activity {
     private TextView owner;
     private TextView description;
     private long id;
+    private AppDatabase mDb;
+    private VityItem item;
 
     @Override
     protected void onCreate(Bundle icicle) {
@@ -43,8 +42,8 @@ public class ActivityDetail extends Activity {
     }
 
     private void loadMessage(long id){
-        AppDatabase mDb = AppDatabase.getDatabase(this.getApplication());
-        VityItem item = mDb.itemModel().loadItemById(id);
+        mDb = AppDatabase.getDatabase(this.getApplication());
+        item = mDb.itemModel().loadItemById(id);
         title.setText(item.getTitle());
         category.setText(item.getCategory());
         link.setText(item.getLink());
@@ -74,7 +73,13 @@ public class ActivityDetail extends Activity {
 
     // onClickFunctions
     public void onClickShowOnMap(View button) {
-        Toast.makeText(getApplicationContext(), "showOnMap", Toast.LENGTH_LONG).show();
+        Location vityItemLocation = toLocation(item.getLocation());
+        Intent mapView = new Intent(this, Map.class);
+        Bundle b = new Bundle();
+        b.putDouble("lat", vityItemLocation.getLatitude());
+        b.putDouble("long", vityItemLocation.getLongitude());
+        mapView.putExtras(b);
+        startActivity(mapView);
     }
 
     public void onClickEdit(View button){
