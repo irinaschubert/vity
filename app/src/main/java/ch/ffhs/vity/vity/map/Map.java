@@ -1,6 +1,7 @@
 package ch.ffhs.vity.vity.map;
 
 import android.Manifest;
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -8,6 +9,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
+import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -15,26 +17,39 @@ import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MapStyleOptions;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.tasks.OnSuccessListener;
 
 import ch.ffhs.vity.vity.R;
 import ch.ffhs.vity.vity.activity.ActivityNew;
 import ch.ffhs.vity.vity.activity.ActivitySearch;
 import ch.ffhs.vity.vity.activity.ActivitySettings;
+import static ch.ffhs.vity.vity.database.LocationTypeConverter.locationToString;
 
 public class Map extends FragmentActivity implements OnMapReadyCallback {
+    private CameraPosition mCameraPosition;
+    private Location currentLocation;
+    private FusedLocationProviderClient mFusedLocationProviderClient;
+    private GoogleMap mMap;
+    protected GoogleApiClient mGoogleApiClient;
+    private static final int REQUEST_FINE_LOCATION = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +65,8 @@ public class Map extends FragmentActivity implements OnMapReadyCallback {
                 e.printStackTrace();
             }
         }
+
+        mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
@@ -77,8 +94,7 @@ public class Map extends FragmentActivity implements OnMapReadyCallback {
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
-        GoogleMap mMap = googleMap;
-
+        mMap = googleMap;
         try {
             boolean success = mMap.setMapStyle(MapStyleOptions.loadRawResourceStyle(this, R.raw.map_style));
             if (!success) {
@@ -102,14 +118,44 @@ public class Map extends FragmentActivity implements OnMapReadyCallback {
         }
 
         mMap.setMyLocationEnabled(true);
-        LatLng bern = new LatLng(46.948393, 7.436325);
-        mMap.addMarker(new MarkerOptions().position(bern).title("Welle 7"));
-        float zoomLevel = 16.0f;
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(bern, zoomLevel));
 
+        setCurrentLocation();
+        setCurrentLocationOnMap();
     }
 
-    // Check if GPS permission is granted
+
+    private void setCurrentLocation(){
+        if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_FINE_LOCATION);
+        }
+        mFusedLocationProviderClient.getLastLocation().addOnSuccessListener(this, new OnSuccessListener<Location>() {
+            @Override
+            public void onSuccess(Location newLocation) {
+
+                if (newLocation != null) {
+                    currentLocation = newLocation;
+                }
+            }
+        });
+    }
+
+    private void setCurrentLocationOnMap(){
+        try{
+            LatLng myPosition = new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude());
+            mMap.addMarker(new MarkerOptions().position(myPosition));
+            float zoomLevel = 16.0f;
+            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(myPosition, zoomLevel));
+            Toast.makeText(this, "done", Toast.LENGTH_SHORT).show();
+        }catch(Exception e){
+            LatLng bern = new LatLng(46.948393, 7.436325);
+            mMap.addMarker(new MarkerOptions().position(bern).title("Welle 7"));
+            float zoomLevel = 16.0f;
+            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(bern, zoomLevel));
+            Toast.makeText(this, R.string.no_location_possible, Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    // Check permissions
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
@@ -121,6 +167,15 @@ public class Map extends FragmentActivity implements OnMapReadyCallback {
                     Toast.makeText(getApplicationContext(), R.string.permission_denied_gps, Toast.LENGTH_LONG).show();
                 }
             }
+            case REQUEST_FINE_LOCATION:
+                if(grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    setCurrentLocation();
+                }else {
+                    Toast.makeText(getApplicationContext(), R.string.permission_denied_fine_location, Toast.LENGTH_LONG).show();
+                }
+            default:
+                // The app will not have this permission
+                finish();
         }
     }
 
@@ -200,7 +255,7 @@ public class Map extends FragmentActivity implements OnMapReadyCallback {
 
     }
 
-    // Button Functions
+    // onClick Functions
     public void goToNewActivity(View button){
         startActivity(new Intent(this, ActivityNew.class));
     }
@@ -210,7 +265,9 @@ public class Map extends FragmentActivity implements OnMapReadyCallback {
     }
 
     public void goNavigate(View button){
-        Toast.makeText(getApplicationContext(), "Navigate..", Toast.LENGTH_LONG).show();
+        LatLng myPosition = new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude());
+        mMap.addMarker(new MarkerOptions().position(myPosition));
+        float zoomLevel = 16.0f;
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(myPosition, zoomLevel));
     }
-
 }

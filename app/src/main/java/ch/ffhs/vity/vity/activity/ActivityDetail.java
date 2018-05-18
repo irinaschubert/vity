@@ -38,9 +38,7 @@ public class ActivityDetail extends Activity {
         date = findViewById(R.id.detail_date);
         owner = findViewById(R.id.detail_owner);
         description = findViewById(R.id.detail_description);
-
         id = getIntent().getLongExtra("itemId", 0);
-
         loadMessage(id);
     }
 

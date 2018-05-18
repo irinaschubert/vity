@@ -33,7 +33,6 @@ import java.util.Locale;
 import ch.ffhs.vity.vity.R;
 import ch.ffhs.vity.vity.database.AppDatabase;
 import ch.ffhs.vity.vity.database.VityItem;
-import ch.ffhs.vity.vity.database.LocationTypeConverter;
 
 import static ch.ffhs.vity.vity.database.LocationTypeConverter.locationToString;
 
@@ -231,7 +230,6 @@ public class ActivityEdit extends Activity {
                 }
             });
         }
-
     }
 
     public void onClickUpdateActivity(View button) {

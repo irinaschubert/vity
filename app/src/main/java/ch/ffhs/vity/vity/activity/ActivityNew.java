@@ -34,6 +34,8 @@ import ch.ffhs.vity.vity.R;
 import ch.ffhs.vity.vity.database.AppDatabase;
 import ch.ffhs.vity.vity.database.VityItem;
 
+import static ch.ffhs.vity.vity.database.LocationTypeConverter.locationToString;
+
 public class ActivityNew extends Activity {
     private static final int REQUEST_CODE_STORAGE = 1;
     private static final int REQUEST_CODE_CAMERA = 2;
@@ -90,7 +92,7 @@ public class ActivityNew extends Activity {
             public void onClick(DialogInterface dialog, int which) {
                 switch(which){
                     case 0:
-                        //checks permission on runtime and asks if not set
+                        //checks permission on runtime and asks if not yet set
                         if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
                             requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, REQUEST_CODE_STORAGE);
                         }else {
@@ -98,7 +100,7 @@ public class ActivityNew extends Activity {
                         }
                         break;
                     case 1:
-                        //checks permission on runtime and asks if not set
+                        //checks permission on runtime and asks if not yet set
                         if (checkSelfPermission(Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
                             requestPermissions(new String[]{Manifest.permission.CAMERA}, REQUEST_CODE_CAMERA);
                         }else{
@@ -178,6 +180,7 @@ public class ActivityNew extends Activity {
         }
     }
 
+    // onClickFunctions
     public void onClickAddLocation(View button) {
         getCurrentLocation();
     }
@@ -192,7 +195,7 @@ public class ActivityNew extends Activity {
 
                     if (newLocation != null) {
                         currentLocation = newLocation;
-                        location.setText(currentLocation.toString());
+                        location.setText(locationToString(currentLocation));
                     }
                 }
             });
@@ -202,21 +205,16 @@ public class ActivityNew extends Activity {
 
     public void onClickSaveNewActivity(View button) {
         AppDatabase mDb = AppDatabase.getDatabase(this.getApplication());
-
-        long currentDate = System.currentTimeMillis();
-        SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault());
-        String currentDateString = sdf.format(currentDate);
-
-        Location loc = new Location("bla");
-        String locString = currentLocation.toString();
-
         VityItem item = new VityItem();
         item.setTitle(title.getText().toString());
         item.setDescription(description.getText().toString());
         item.setLink(link.getText().toString());
-        item.setLocation(locString);
+        item.setLocation(locationToString(currentLocation));
         item.setCategory(categorySpinner.getSelectedItem().toString());
         String username = PreferenceManager.getDefaultSharedPreferences(this).getString("username", "");
+        long currentDate = System.currentTimeMillis();
+        SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault());
+        String currentDateString = sdf.format(currentDate);
         item.setOwner(username);
         item.setDate(currentDateString);
 
