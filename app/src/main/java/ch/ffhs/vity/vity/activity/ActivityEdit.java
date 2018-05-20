@@ -43,7 +43,7 @@ public class ActivityEdit extends Activity {
     private static final int REQUEST_IMAGE_CAPTURE = 4;
     private static final int REQUEST_FINE_LOCATION = 5;
 
-    private ImageView newImage;
+    ImageView newImage;
     EditText title;
     EditText description;
     EditText link;
@@ -160,7 +160,7 @@ public class ActivityEdit extends Activity {
                 break;
             case REQUEST_FINE_LOCATION:
                 if(grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    getCurrentLocation();
+                    printCurrentLocation();
                 }
             default:
                 // The app will not have this permission
@@ -210,12 +210,11 @@ public class ActivityEdit extends Activity {
         }
     }
 
-    // onClickFunctions
     public void onClickAddLocation(View button) {
-        getCurrentLocation();
+        printCurrentLocation();
     }
 
-    private void getCurrentLocation(){
+    private void printCurrentLocation(){
         if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_FINE_LOCATION);
         }else {
@@ -232,7 +231,7 @@ public class ActivityEdit extends Activity {
         }
     }
 
-    public void onClickUpdateActivity(View button) {
+    public void onClickUpdate(View button) {
         item.setTitle(title.getText().toString());
         item.setDescription(description.getText().toString());
         item.setLink(link.getText().toString());
@@ -254,9 +253,16 @@ public class ActivityEdit extends Activity {
         }
     }
 
+    public void onClickDelete(View button){
+        mDb.itemModel().deleteItem(item);
+        Intent activity = new Intent(this, ActivitySearch.class);
+        startActivity(activity);
+    }
+
     @Override
     protected void onDestroy() {
         AppDatabase.destroyInstance();
         super.onDestroy();
     }
+
 }

@@ -2,6 +2,7 @@ package ch.ffhs.vity.vity.activity;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.location.Location;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -10,10 +11,18 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.Toast;
+
+import com.google.android.gms.maps.model.LatLng;
+
+import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Iterator;
+
 import ch.ffhs.vity.vity.database.AppDatabase;
 import ch.ffhs.vity.vity.R;
+import ch.ffhs.vity.vity.database.LocationTypeConverter;
 import ch.ffhs.vity.vity.database.VityItem;
+import ch.ffhs.vity.vity.map.Map;
 
 
 public class ActivitySearch extends Activity {
@@ -56,15 +65,32 @@ public class ActivitySearch extends Activity {
 
     private void fetchData() {
         ListView listView = findViewById(R.id.list_activities);
+
         Spinner categorySpinner = findViewById(R.id.new_category);
         String category = categorySpinner.getSelectedItem().toString();
+
+        Spinner radiusSpinner = findViewById(R.id.search_radius);
+        int radius = Integer.parseInt(radiusSpinner.getSelectedItem().toString());
+
         ArrayList liste = new ArrayList<VityItem>();
-        liste.addAll(mDb.itemModel().findItemByCategory(category));
+        ArrayList listeAll = new ArrayList<VityItem>();
+        listeAll.addAll(mDb.itemModel().findItemByCategory(category));
+
+        Iterator<VityItem> i = listeAll.iterator();
+        while(i.hasNext()){
+            VityItem item = i.next();
+            if(Float.parseFloat(getDistance(item)) <= radius){
+                liste.add(item);
+            }
+        }
+
         if(liste.isEmpty()){
             Toast.makeText(getApplicationContext(), R.string.no_results, Toast.LENGTH_LONG).show();
         }
+
         final VityItemListAdapter listAdapter = new VityItemListAdapter(liste, getApplicationContext());
         listView.setAdapter(listAdapter);
+
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -77,15 +103,22 @@ public class ActivitySearch extends Activity {
         });
     }
 
+    private String getDistance(VityItem item){
+        Location itemLocation = LocationTypeConverter.toLocation(item.getLocation());
+        Location currentLocation = Map.getCurrentLocation();
+        LatLng myPosition = new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude());
+        float[] results = new float[1];
+        currentLocation.distanceBetween(currentLocation.getLatitude(), currentLocation.getLongitude(), itemLocation.getLatitude(), itemLocation.getLongitude(), results);
+        // cut decimals from float
+        DecimalFormat df = new DecimalFormat("#0");
+        return df.format(results[0]);
+    }
+
+
     @Override
     protected void onDestroy() {
         AppDatabase.destroyInstance();
         super.onDestroy();
-    }
-
-    @Override
-    protected void onResume(){
-        super.onResume();
     }
 
 }

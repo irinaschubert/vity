@@ -40,7 +40,7 @@ import ch.ffhs.vity.vity.activity.ActivitySettings;
 import static ch.ffhs.vity.vity.database.LocationTypeConverter.locationToString;
 
 public class Map extends FragmentActivity implements OnMapReadyCallback {
-    private Location currentLocation;
+    private static Location currentLocation;
     private FusedLocationProviderClient mFusedLocationProviderClient;
     private GoogleMap mMap;
     private LatLng itemPosition;
@@ -115,7 +115,6 @@ public class Map extends FragmentActivity implements OnMapReadyCallback {
         mMap.setMyLocationEnabled(true);
 
         setCurrentLocation();
-        setCurrentLocationOnMap();
 
         Intent i = getIntent();
         if(i != null){
@@ -123,7 +122,8 @@ public class Map extends FragmentActivity implements OnMapReadyCallback {
             if  (b != null)
             {
                 LatLng itemPosition = new LatLng(b.getDouble("lat"), b.getDouble("long"));
-                mMap.addMarker(new MarkerOptions().position(itemPosition));
+                String itemTitle = b.getString("title");
+                mMap.addMarker(new MarkerOptions().position(itemPosition).title(itemTitle));
                 float zoomLevel = 16.0f;
                 mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(itemPosition, zoomLevel));
             }
@@ -146,32 +146,8 @@ public class Map extends FragmentActivity implements OnMapReadyCallback {
         });
     }
 
-    private void setCurrentLocationOnMap(){
-        float zoomLevel = 16.0f;
-        try{
-            LatLng myPosition = new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude());
-            mMap.addMarker(new MarkerOptions().position(myPosition));
-            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(myPosition, zoomLevel));
-            Toast.makeText(this, "done", Toast.LENGTH_SHORT).show();
-        }catch(Exception e){
-            Intent i = getIntent();
-            if(i == null){
-                LatLng bern = new LatLng(46.948393, 7.436325);
-                mMap.addMarker(new MarkerOptions().position(bern).title("Welle 7"));
-                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(bern, zoomLevel));
-                Toast.makeText(this, R.string.no_location_possible, Toast.LENGTH_SHORT).show();
-            }
-            // if call comes from detail view
-            if(i != null){
-                Bundle b = i.getExtras();
-                if  (b != null)
-                {
-                    itemPosition = new LatLng(b.getDouble("lat"), b.getDouble("long"));
-                    mMap.addMarker(new MarkerOptions().position(itemPosition));
-                    mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(itemPosition, zoomLevel));
-                }
-            }
-        }
+    public static Location getCurrentLocation(){
+        return currentLocation;
     }
 
     // Check permissions
@@ -258,12 +234,6 @@ public class Map extends FragmentActivity implements OnMapReadyCallback {
                         editor.apply();
                         dialog.cancel();
                     }
-                })
-                .setNegativeButton(R.string.btn_cancel,new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog,int id) {
-                        dialog.cancel();
-                        finish();
-                    }
                 });
 
         // create alert dialog
@@ -284,11 +254,16 @@ public class Map extends FragmentActivity implements OnMapReadyCallback {
     }
 
     public void goNavigate(View button){
-        float[] results = new float[1];
-        currentLocation.distanceBetween(currentLocation.getLatitude(), currentLocation.getLongitude(), itemPosition.latitude, itemPosition.longitude, results);
-        LatLng myPosition = new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude());
-        mMap.addMarker(new MarkerOptions().position(myPosition));
-        float zoomLevel = 16.0f;
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(myPosition, zoomLevel));
+        if(itemPosition != null){
+            float[] results = new float[1];
+            currentLocation.distanceBetween(currentLocation.getLatitude(), currentLocation.getLongitude(), itemPosition.latitude, itemPosition.longitude, results);
+            LatLng myPosition = new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude());
+            mMap.addMarker(new MarkerOptions().position(myPosition).title(getString(R.string.my_position)));
+            float zoomLevel = 16.0f;
+            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(myPosition, zoomLevel));
+        }else{
+            Toast.makeText(getApplicationContext(), R.string.warning_no_item_selected, Toast.LENGTH_LONG).show();
+        }
+
     }
 }

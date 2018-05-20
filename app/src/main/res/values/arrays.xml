@@ -25,11 +25,11 @@
 
     <!-- Arrays für Umkreis-Eingabe -->
     <string-array name="radius">
-        <item>100 m</item>
-        <item>500 m</item>
-        <item>1 km</item>
-        <item>5 km</item>
-        <item>10 km</item>
+        <item>100</item>
+        <item>500</item>
+        <item>1000</item>
+        <item>5000</item>
+        <item>10000</item>
     </string-array>
 
     <integer-array name="radius_values">

@@ -17,12 +17,12 @@ import ch.ffhs.vity.vity.map.Map;
 
 
 public class ActivityDetail extends Activity {
-    private TextView title;
-    private TextView category;
-    private TextView link;
-    private TextView date;
-    private TextView owner;
-    private TextView description;
+    TextView title;
+    TextView category;
+    TextView link;
+    TextView date;
+    TextView owner;
+    TextView description;
     private long id;
     private AppDatabase mDb;
     private VityItem item;
@@ -78,6 +78,7 @@ public class ActivityDetail extends Activity {
         Bundle b = new Bundle();
         b.putDouble("lat", vityItemLocation.getLatitude());
         b.putDouble("long", vityItemLocation.getLongitude());
+        b.putString("title", item.getTitle());
         mapView.putExtras(b);
         startActivity(mapView);
     }

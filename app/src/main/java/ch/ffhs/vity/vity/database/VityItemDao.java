@@ -25,7 +25,6 @@ public interface VityItemDao {
     @Query("SELECT * FROM VityItem WHERE category = :category")
     List<VityItem> findItemByCategory(String category);
 
-    // TODO: 25.04.2018
 /*    @Query("SELECT * FROM VityItem WHERE distance = :distance")
     List<VityItem> findByDistance(int distance);*/
 

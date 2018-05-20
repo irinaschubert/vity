@@ -20,7 +20,6 @@
         android:layout_height="40sp"
         android:paddingRight="10sp"
         android:layout_alignParentEnd="true"
-        android:gravity="center_vertical"
-        android:text="Distance" />
+        android:gravity="center_vertical" />
 
 </RelativeLayout>
