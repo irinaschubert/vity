@@ -64,6 +64,7 @@ public class ActivityNew extends Activity {
         location = findViewById(R.id.new_detail_location);
         categorySpinner = findViewById(R.id.new_category);
         locationClient = LocationServices.getFusedLocationProviderClient(this);
+        printCurrentLocation();
     }
 
     // Menu
@@ -130,7 +131,7 @@ public class ActivityNew extends Activity {
                 break;
             case REQUEST_FINE_LOCATION:
                 if(grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    getCurrentLocation();
+                    printCurrentLocation();
                 }
             default:
                 // The app will not have this permission
@@ -182,10 +183,10 @@ public class ActivityNew extends Activity {
 
     // onClickFunctions
     public void onClickAddLocation(View button) {
-        getCurrentLocation();
+        printCurrentLocation();
     }
 
-    private void getCurrentLocation(){
+    private void printCurrentLocation(){
         if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_FINE_LOCATION);
         }else {

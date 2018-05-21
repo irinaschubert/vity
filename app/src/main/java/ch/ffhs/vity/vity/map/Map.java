@@ -37,7 +37,6 @@ import ch.ffhs.vity.vity.R;
 import ch.ffhs.vity.vity.activity.ActivityNew;
 import ch.ffhs.vity.vity.activity.ActivitySearch;
 import ch.ffhs.vity.vity.activity.ActivitySettings;
-import static ch.ffhs.vity.vity.database.LocationTypeConverter.locationToString;
 
 public class Map extends FragmentActivity implements OnMapReadyCallback {
     private static Location currentLocation;

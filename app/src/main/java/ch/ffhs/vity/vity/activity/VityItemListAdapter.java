@@ -17,6 +17,8 @@ import ch.ffhs.vity.vity.database.LocationTypeConverter;
 import ch.ffhs.vity.vity.database.VityItem;
 import ch.ffhs.vity.vity.map.Map;
 
+import static android.location.Location.distanceBetween;
+
 public class VityItemListAdapter extends BaseAdapter {
 
     private List<VityItem> listActivities;
@@ -61,9 +63,8 @@ public class VityItemListAdapter extends BaseAdapter {
     private String getDistance(VityItem item){
         Location itemLocation = LocationTypeConverter.toLocation(item.getLocation());
         Location currentLocation = Map.getCurrentLocation();
-        LatLng myPosition = new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude());
         float[] results = new float[1];
-        currentLocation.distanceBetween(currentLocation.getLatitude(), currentLocation.getLongitude(), itemLocation.getLatitude(), itemLocation.getLongitude(), results);
+        distanceBetween(currentLocation.getLatitude(), currentLocation.getLongitude(), itemLocation.getLatitude(), itemLocation.getLongitude(), results);
         // cut decimals from float
         DecimalFormat df = new DecimalFormat("#0");
         return df.format(results[0]);

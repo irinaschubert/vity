@@ -18,6 +18,7 @@ public class VityItem {
     private String category;
     private String link;
     private String location;
+    private String imageUri;
 
     public VityItem(){
     }
@@ -86,4 +87,13 @@ public class VityItem {
     public void setLocation(String location) {
         this.location = location;
     }
+
+    public String getImageUri() {
+        return imageUri;
+    }
+
+    public void setImageUri(String imageUri) {
+        this.imageUri = imageUri;
+    }
+
 }

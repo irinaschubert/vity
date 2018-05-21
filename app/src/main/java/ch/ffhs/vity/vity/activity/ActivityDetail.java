@@ -3,10 +3,12 @@ package ch.ffhs.vity.vity.activity;
 import android.app.Activity;
 import android.content.Intent;
 import android.location.Location;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 import static ch.ffhs.vity.vity.database.LocationTypeConverter.toLocation;
 
@@ -17,6 +19,7 @@ import ch.ffhs.vity.vity.map.Map;
 
 
 public class ActivityDetail extends Activity {
+    ImageView image;
     TextView title;
     TextView category;
     TextView link;
@@ -31,6 +34,7 @@ public class ActivityDetail extends Activity {
     protected void onCreate(Bundle icicle) {
         super.onCreate(icicle);
         setContentView(R.layout.activity_detail);
+        image = findViewById(R.id.detail_image);
         title = findViewById(R.id.detail_title);
         category = findViewById(R.id.detail_cateogry);
         link = findViewById(R.id.detail_link);
@@ -38,18 +42,31 @@ public class ActivityDetail extends Activity {
         owner = findViewById(R.id.detail_owner);
         description = findViewById(R.id.detail_description);
         id = getIntent().getLongExtra("itemId", 0);
-        loadMessage(id);
+        loadActivity(id);
     }
 
-    private void loadMessage(long id){
+    private void loadActivity(long id){
         mDb = AppDatabase.getDatabase(this.getApplication());
         item = mDb.itemModel().loadItemById(id);
         title.setText(item.getTitle());
-        category.setText(item.getCategory());
-        link.setText(item.getLink());
-        date.setText(item.getDate());
-        owner.setText(item.getOwner());
-        description.setText(item.getDescription());
+        if(item.getCategory() != null){
+            category.setText(item.getCategory());
+        }
+        if(item.getImageUri() != null){
+            image.setImageURI(Uri.parse(item.getImageUri()));
+        }
+        if(item.getLink() != null){
+            link.setText(item.getLink());
+        }
+        if(item.getDate() != null){
+            date.setText(item.getDate());
+        }
+        if(item.getOwner() != null){
+            owner.setText(item.getOwner());
+        }
+        if(item.getDescription() != null){
+            description.setText(item.getDescription());
+        }
     }
 
     // Menu
@@ -90,9 +107,9 @@ public class ActivityDetail extends Activity {
     }
 
     @Override
-    protected void onResume(){
-        super.onResume();
-        loadMessage(id);
+    protected void onRestart(){
+        super.onRestart();
+        loadActivity(id);
     }
 
 }

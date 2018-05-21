@@ -37,6 +37,7 @@ public interface VityItemDao {
     @Delete
     public void deleteItem(VityItem item);
 
+    // only for mock data initializer
     @Query("DELETE FROM VityItem")
     public void deleteAll();
 }

@@ -21,7 +21,7 @@
     <string name="btn_search">Search</string>
     <string name="btn_show">Show on Map</string>
     <string name="btn_edit">Edit…</string>
-    <string name="btn_location">Add current location</string>
+    <string name="btn_location">Update current location</string>
     <string name="btn_delete">Delete</string>
 
     <!-- titles -->

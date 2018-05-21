@@ -5,14 +5,15 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
 import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
 import android.app.Activity;
+import android.os.Environment;
 import android.preference.PreferenceManager;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
+import android.support.v4.content.FileProvider;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -26,14 +27,17 @@ import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnSuccessListener;
 
+import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Locale;
 
 import ch.ffhs.vity.vity.R;
 import ch.ffhs.vity.vity.database.AppDatabase;
 import ch.ffhs.vity.vity.database.VityItem;
 
+import static android.os.Environment.getExternalStoragePublicDirectory;
 import static ch.ffhs.vity.vity.database.LocationTypeConverter.locationToString;
 
 public class ActivityEdit extends Activity {
@@ -43,7 +47,7 @@ public class ActivityEdit extends Activity {
     private static final int REQUEST_IMAGE_CAPTURE = 4;
     private static final int REQUEST_FINE_LOCATION = 5;
 
-    ImageView newImage;
+    ImageView image;
     EditText title;
     EditText description;
     EditText link;
@@ -53,13 +57,14 @@ public class ActivityEdit extends Activity {
     private VityItem item;
     private Location currentLocation;
     private FusedLocationProviderClient locationClient;
+    private Uri photoURI;
+    private String mCurrentPhotoPath;
 
 
     @Override
     protected void onCreate(Bundle icicle) {
         super.onCreate(icicle);
         setContentView(R.layout.activity_edit);
-        newImage = findViewById(R.id.new_detail_image);
         locationClient = LocationServices.getFusedLocationProviderClient(this);
         long id = getIntent().getLongExtra("itemId", 0);
         loadActivity(id);
@@ -100,7 +105,11 @@ public class ActivityEdit extends Activity {
         location = findViewById(R.id.new_detail_location);
         location.setText(item.getLocation(), TextView.BufferType.NORMAL);
 
-        // sets category value to category spinner
+        image = findViewById(R.id.new_detail_image);
+        if(item.getImageUri() != null){
+            image.setImageURI(Uri.parse(item.getImageUri()));
+        }
+
         String category = item.getCategory();
         categorySpinner = findViewById(R.id.new_category);
         categorySpinner.setSelection(getIndex(categorySpinner, category));
@@ -178,7 +187,19 @@ public class ActivityEdit extends Activity {
     private void takePicture() {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
-            startActivityForResult(Intent.createChooser(takePictureIntent, getResources().getText(R.string.take_picture_using)), REQUEST_IMAGE_CAPTURE);
+            File photoFile = null;
+            try {
+                photoFile = createImageFile();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            if (photoFile != null) {
+                photoURI = FileProvider.getUriForFile(this,
+                        "ch.ffhs.vity.vity.fileprovider",
+                        photoFile);
+                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
+                startActivityForResult(Intent.createChooser(takePictureIntent, getResources().getText(R.string.take_picture_using)), REQUEST_IMAGE_CAPTURE);
+            }
         }
     }
 
@@ -189,8 +210,10 @@ public class ActivityEdit extends Activity {
             case REQUEST_IMAGE_PICK:
                 if(resultCode == RESULT_OK) {
                     Uri selectedImage = data.getData();
+                    photoURI = selectedImage;
                     try {
-                        newImage.setImageBitmap(MediaStore.Images.Media.getBitmap(this.getContentResolver(), selectedImage));
+                        image.setImageBitmap(MediaStore.Images.Media.getBitmap(this.getContentResolver() , selectedImage));
+
                     } catch (IOException e) {
                         e.printStackTrace();
                         Toast.makeText(getApplicationContext(), getResources().getText(R.string.bad_image_request), Toast.LENGTH_LONG).show();
@@ -200,14 +223,85 @@ public class ActivityEdit extends Activity {
 
             case REQUEST_IMAGE_CAPTURE:
                 if(resultCode == RESULT_OK){
-                    Bundle extras = data.getExtras();
-                    Bitmap img = (Bitmap) extras.get("data");
-                    newImage.setImageBitmap(img);
+                    Uri photoUri = savePictureToGallery();
+                    if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                        requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, REQUEST_CODE_STORAGE);
+                    }else {
+                        try {
+                            image.setImageBitmap(MediaStore.Images.Media.getBitmap(this.getContentResolver(), photoUri));
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                            Toast.makeText(getApplicationContext(), getResources().getText(R.string.bad_image_request), Toast.LENGTH_LONG).show();
+                        }
+                    }
                 }
                 break;
             default:
                 finish();
         }
+    }
+
+    private Uri savePictureToGallery() {
+        Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
+            File f = new File(mCurrentPhotoPath);
+            Uri contentUri = Uri.fromFile(f);
+            mediaScanIntent.setData(contentUri);
+            this.sendBroadcast(mediaScanIntent);
+            return contentUri;
+//        if(isExternalStorageWritable()){
+//            File f = new File(mCurrentPhotoPath);
+//            Uri contentUri = Uri.fromFile(f);
+//            mediaScanIntent.setData(contentUri);
+//            this.sendBroadcast(mediaScanIntent);
+//            return contentUri;
+//        }
+//        else{
+//            File f = new File(mCurrentPhotoPath);
+//            Uri contentUri = Uri.fromFile(f);
+//            mediaScanIntent.setData(contentUri);
+//            this.sendBroadcast(mediaScanIntent);
+//            return contentUri;
+//        }
+
+    }
+
+    private File createImageFile() throws IOException {
+        // Create an image file name with timestamp
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(new Date());
+        String imageFileName = "JPEG_" + timeStamp + "_";
+        File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+        File image = File.createTempFile(
+                imageFileName,  /* prefix */
+                ".jpg",   /* suffix */
+                storageDir      /* directory */
+        );
+        /*if(isExternalStorageWritable()){
+            File storageDir = getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
+            image = File.createTempFile(
+                    imageFileName,  *//* prefix *//*
+                    ".jpg",   *//* suffix *//*
+                    storageDir      *//* directory *//*
+            );
+
+        }
+        else{
+            File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+            image = File.createTempFile(
+                    imageFileName,  *//* prefix *//*
+                    ".jpg",   *//* suffix *//*
+                    storageDir      *//* directory *//*
+            );
+        }*/
+        mCurrentPhotoPath = image.getAbsolutePath();
+        return image;
+    }
+
+    public boolean isExternalStorageWritable() {
+        String state = Environment.getExternalStorageState();
+        if (Environment.MEDIA_MOUNTED.equals(state)) {
+            return true;
+        }
+        return false;
     }
 
     public void onClickAddLocation(View button) {
@@ -239,11 +333,13 @@ public class ActivityEdit extends Activity {
         item.setCategory(categorySpinner.getSelectedItem().toString());
         String username = PreferenceManager.getDefaultSharedPreferences(this).getString("username", "");
         long currentDate = System.currentTimeMillis();
-        SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault());
+        SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy HH:mm", Locale.getDefault());
         String currentDateString = sdf.format(currentDate);
         item.setOwner(username);
         item.setDate(currentDateString);
-
+        if(photoURI != null){
+            item.setImageUri(photoURI.toString());
+        }
         //new activity should at least have a title
         if(title.getText().toString().equals("")){
             Toast.makeText(this, getString(R.string.warning_missing_title), Toast.LENGTH_SHORT).show();
