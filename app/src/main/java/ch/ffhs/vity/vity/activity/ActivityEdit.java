@@ -2,6 +2,7 @@ package ch.ffhs.vity.vity.activity;
 
 import android.Manifest;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -37,14 +38,16 @@ import ch.ffhs.vity.vity.R;
 import ch.ffhs.vity.vity.database.AppDatabase;
 import ch.ffhs.vity.vity.database.VityItem;
 
+import static android.os.Environment.getExternalStoragePublicDirectory;
 import static ch.ffhs.vity.vity.database.LocationTypeConverter.locationToString;
 
 public class ActivityEdit extends Activity {
     private static final int REQUEST_CODE_STORAGE = 1;
+    private static final int REQUEST_CODE_STORAGE_FOR_TAKEN_PICTURES = 6;
     private static final int REQUEST_CODE_CAMERA = 2;
     private static final int REQUEST_IMAGE_PICK = 3;
     private static final int REQUEST_IMAGE_CAPTURE = 4;
-    private static final int REQUEST_FINE_LOCATION = 5;
+    private static final int REQUEST_CODE_FINE_LOCATION = 5;
 
     ImageView image;
     EditText title;
@@ -56,7 +59,6 @@ public class ActivityEdit extends Activity {
     private VityItem item;
     private Location currentLocation;
     private FusedLocationProviderClient locationClient;
-    private Uri photoURI;
     private String mCurrentPhotoPath;
 
 
@@ -157,17 +159,22 @@ public class ActivityEdit extends Activity {
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         switch(requestCode){
             case REQUEST_CODE_STORAGE:
-                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     getPicture();
                 }
                 break;
             case REQUEST_CODE_CAMERA:
-                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     takePicture();
                 }
                 break;
-            case REQUEST_FINE_LOCATION:
-                if(grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+            case REQUEST_CODE_STORAGE_FOR_TAKEN_PICTURES:
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    takePicture();
+                }
+                break;
+            case REQUEST_CODE_FINE_LOCATION:
+                if(grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     printCurrentLocation();
                 }
                 break;
@@ -180,7 +187,8 @@ public class ActivityEdit extends Activity {
     private void getPicture(){
         Intent getPictureIntent = new Intent();
         getPictureIntent.setType("image/*");
-        getPictureIntent.setAction(Intent.ACTION_GET_CONTENT);
+        //getPictureIntent.setAction(Intent.ACTION_GET_CONTENT);
+        getPictureIntent.setAction(Intent.ACTION_OPEN_DOCUMENT);
         startActivityForResult(Intent.createChooser(getPictureIntent, getResources().getText(R.string.select_picture_using)), REQUEST_IMAGE_PICK);
     }
 
@@ -194,11 +202,15 @@ public class ActivityEdit extends Activity {
                 e.printStackTrace();
             }
             if (photoFile != null) {
-                photoURI = FileProvider.getUriForFile(this,
+                Uri photoURI = FileProvider.getUriForFile(this,
                         "ch.ffhs.vity.vity.fileprovider",
                         photoFile);
                 takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
-                startActivityForResult(Intent.createChooser(takePictureIntent, getResources().getText(R.string.take_picture_using)), REQUEST_IMAGE_CAPTURE);
+                if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                    requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, REQUEST_CODE_STORAGE_FOR_TAKEN_PICTURES);
+                }else {
+                    startActivityForResult(Intent.createChooser(takePictureIntent, getResources().getText(R.string.take_picture_using)), REQUEST_IMAGE_CAPTURE);
+                }
             }
         }
     }
@@ -220,19 +232,14 @@ public class ActivityEdit extends Activity {
                     }
                 }
                 break;
-
             case REQUEST_IMAGE_CAPTURE:
                 if(resultCode == RESULT_OK){
                     Uri photoUri = savePictureToGallery();
-                    if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-                        requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, REQUEST_CODE_STORAGE);
-                    }else {
-                        try {
-                            image.setImageBitmap(MediaStore.Images.Media.getBitmap(this.getContentResolver(), photoUri));
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                            Toast.makeText(getApplicationContext(), getResources().getText(R.string.bad_image_request), Toast.LENGTH_LONG).show();
-                        }
+                    try {
+                        image.setImageBitmap(MediaStore.Images.Media.getBitmap(this.getContentResolver(), photoUri));
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                        Toast.makeText(getApplicationContext(), getResources().getText(R.string.bad_image_request), Toast.LENGTH_LONG).show();
                     }
                 }
                 break;
@@ -244,25 +251,12 @@ public class ActivityEdit extends Activity {
     private Uri savePictureToGallery() {
         Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
         File f = new File(mCurrentPhotoPath);
-        Uri contentUri = Uri.fromFile(f);
+        Uri contentUri = FileProvider.getUriForFile(this, "ch.ffhs.vity.vity.fileprovider", f);
         mediaScanIntent.setData(contentUri);
+        mediaScanIntent.setFlags(Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION);
         this.sendBroadcast(mediaScanIntent);
+        Toast.makeText(this, getResources().getText(R.string.image_saved) + contentUri.toString(), Toast.LENGTH_LONG).show();
         return contentUri;
-//        if(isExternalStorageWritable()){
-//            File f = new File(mCurrentPhotoPath);
-//            Uri contentUri = Uri.fromFile(f);
-//            mediaScanIntent.setData(contentUri);
-//            this.sendBroadcast(mediaScanIntent);
-//            return contentUri;
-//        }
-//        else{
-//            File f = new File(mCurrentPhotoPath);
-//            Uri contentUri = Uri.fromFile(f);
-//            mediaScanIntent.setData(contentUri);
-//            this.sendBroadcast(mediaScanIntent);
-//            return contentUri;
-//        }
-
     }
 
     private File createImageFile() throws IOException {
@@ -275,23 +269,6 @@ public class ActivityEdit extends Activity {
                 ".jpg",   /* suffix */
                 storageDir      /* directory */
         );
-        /*if(isExternalStorageWritable()){
-            File storageDir = getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
-            image = File.createTempFile(
-                    imageFileName,  *//* prefix *//*
-                    ".jpg",   *//* suffix *//*
-                    storageDir      *//* directory *//*
-            );
-
-        }
-        else{
-            File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
-            image = File.createTempFile(
-                    imageFileName,  *//* prefix *//*
-                    ".jpg",   *//* suffix *//*
-                    storageDir      *//* directory *//*
-            );
-        }*/
         mCurrentPhotoPath = image.getAbsolutePath();
         return image;
     }
@@ -310,7 +287,7 @@ public class ActivityEdit extends Activity {
 
     private void printCurrentLocation(){
         if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_FINE_LOCATION);
+            requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_CODE_FINE_LOCATION);
         }else {
             locationClient.getLastLocation().addOnSuccessListener(this, new OnSuccessListener<Location>() {
                 @Override

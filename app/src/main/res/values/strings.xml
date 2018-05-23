@@ -90,6 +90,7 @@
     <string name="my_position">That\'s me!</string>
     <string name="no_location_possible">Could not find your device\s location. Please locate again.</string>
     <string name="warning_no_item_selected">No item selected. Please select item first.</string>
+    <string name="image_saved">The image was saved: </string>
 
 
 
