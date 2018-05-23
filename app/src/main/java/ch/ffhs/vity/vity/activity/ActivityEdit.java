@@ -209,10 +209,10 @@ public class ActivityEdit extends Activity {
         switch(requestCode){
             case REQUEST_IMAGE_PICK:
                 if(resultCode == RESULT_OK) {
-                    Uri selectedImage = data.getData();
-                    photoURI = selectedImage;
+                    Uri photoUri = data.getData();
+                    mCurrentPhotoPath = photoUri.toString();
                     try {
-                        image.setImageBitmap(MediaStore.Images.Media.getBitmap(this.getContentResolver() , selectedImage));
+                        image.setImageBitmap(MediaStore.Images.Media.getBitmap(this.getContentResolver(), photoUri));
 
                     } catch (IOException e) {
                         e.printStackTrace();
@@ -243,11 +243,11 @@ public class ActivityEdit extends Activity {
 
     private Uri savePictureToGallery() {
         Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
-            File f = new File(mCurrentPhotoPath);
-            Uri contentUri = Uri.fromFile(f);
-            mediaScanIntent.setData(contentUri);
-            this.sendBroadcast(mediaScanIntent);
-            return contentUri;
+        File f = new File(mCurrentPhotoPath);
+        Uri contentUri = Uri.fromFile(f);
+        mediaScanIntent.setData(contentUri);
+        this.sendBroadcast(mediaScanIntent);
+        return contentUri;
 //        if(isExternalStorageWritable()){
 //            File f = new File(mCurrentPhotoPath);
 //            Uri contentUri = Uri.fromFile(f);
@@ -329,7 +329,7 @@ public class ActivityEdit extends Activity {
         item.setTitle(title.getText().toString());
         item.setDescription(description.getText().toString());
         item.setLink(link.getText().toString());
-        item.setLocation(locationToString(currentLocation));
+        item.setLocation(location.getText().toString());
         item.setCategory(categorySpinner.getSelectedItem().toString());
         String username = PreferenceManager.getDefaultSharedPreferences(this).getString("username", "");
         long currentDate = System.currentTimeMillis();
@@ -337,8 +337,8 @@ public class ActivityEdit extends Activity {
         String currentDateString = sdf.format(currentDate);
         item.setOwner(username);
         item.setDate(currentDateString);
-        if(photoURI != null){
-            item.setImageUri(photoURI.toString());
+        if(mCurrentPhotoPath != ""){
+            item.setImageUri(mCurrentPhotoPath);
         }
         //new activity should at least have a title
         if(title.getText().toString().equals("")){
