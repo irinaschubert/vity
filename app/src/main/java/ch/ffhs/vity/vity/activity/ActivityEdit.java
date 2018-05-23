@@ -187,7 +187,6 @@ public class ActivityEdit extends Activity {
     private void getPicture(){
         Intent getPictureIntent = new Intent();
         getPictureIntent.setType("image/*");
-        //getPictureIntent.setAction(Intent.ACTION_GET_CONTENT);
         getPictureIntent.setAction(Intent.ACTION_OPEN_DOCUMENT);
         startActivityForResult(Intent.createChooser(getPictureIntent, getResources().getText(R.string.select_picture_using)), REQUEST_IMAGE_PICK);
     }
@@ -273,14 +272,6 @@ public class ActivityEdit extends Activity {
         return image;
     }
 
-    public boolean isExternalStorageWritable() {
-        String state = Environment.getExternalStorageState();
-        if (Environment.MEDIA_MOUNTED.equals(state)) {
-            return true;
-        }
-        return false;
-    }
-
     public void onClickAddLocation(View button) {
         printCurrentLocation();
     }
@@ -314,7 +305,7 @@ public class ActivityEdit extends Activity {
         String currentDateString = sdf.format(currentDate);
         item.setOwner(username);
         item.setDate(currentDateString);
-        if(mCurrentPhotoPath != ""){
+        if(!mCurrentPhotoPath.equals("")){
             item.setImageUri(mCurrentPhotoPath);
         }
         //new activity should at least have a title

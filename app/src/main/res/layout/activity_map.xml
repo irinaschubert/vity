@@ -37,17 +37,6 @@
         android:onClick="goToSearchActivity"
         android:src="@drawable/ic_search_black_24dp" />
 
-    <ImageButton
-        android:id="@+id/btn_map_navigate"
-        style="@style/btn_round"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginBottom="180sp"
-        android:layout_marginEnd="20sp"
-        android:onClick="goNavigate"
-        android:src="@drawable/ic_navigation_black_24dp" />
 </RelativeLayout>
 
 

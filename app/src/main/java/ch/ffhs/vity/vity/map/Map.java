@@ -193,27 +193,12 @@ public class Map extends FragmentActivity implements OnMapReadyCallback {
         }
     }
 
-    // onClick Functions
     public void goToNewActivity(View button){
         startActivity(new Intent(this, ActivityNew.class));
     }
 
     public void goToSearchActivity(View button){
         startActivity(new Intent(this, ActivitySearch.class));
-    }
-
-    public void goNavigate(View button){
-        if(itemPosition != null){
-            float[] results = new float[1];
-            currentLocation.distanceBetween(currentLocation.getLatitude(), currentLocation.getLongitude(), itemPosition.latitude, itemPosition.longitude, results);
-            LatLng myPosition = new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude());
-            mMap.addMarker(new MarkerOptions().position(myPosition).title(getString(R.string.my_position)));
-            float zoomLevel = 16.0f;
-            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(myPosition, zoomLevel));
-        }else{
-            Toast.makeText(getApplicationContext(), R.string.warning_no_item_selected, Toast.LENGTH_LONG).show();
-        }
-
     }
 
     @Override
