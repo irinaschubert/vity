@@ -82,6 +82,9 @@
     <string name="enable_gps">To use the App with your current Location, you have to turn on gps.</string>
     <string name="permission_denied_gps">Permission denied to use GPS.</string>
     <string name="permission_denied_fine_location">Permission denied to use location.</string>
+    <string name="permission_denied_fine_location_1">Permission denied to use location1.</string>
+    <string name="permission_denied_fine_location_2">Permission denied to use location2.</string>
+    <string name="permission_denied_fine_location_3">Permission denied to use location3.</string>
     <string name="no_results">No results for this category and/or distance.</string>
     <string name="bad_image_request">Bad Image Request. Please Try Again!</string>
     <string name="my_position">That\'s me!</string>

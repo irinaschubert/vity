@@ -10,6 +10,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import static ch.ffhs.vity.vity.database.LocationTypeConverter.toLocation;
 
 import ch.ffhs.vity.vity.database.AppDatabase;
@@ -109,6 +111,12 @@ public class ActivityDetail extends Activity {
     @Override
     protected void onRestart(){
         super.onRestart();
+        loadActivity(id);
+    }
+
+    @Override
+    protected void onResume(){
+        super.onResume();
         loadActivity(id);
     }
 

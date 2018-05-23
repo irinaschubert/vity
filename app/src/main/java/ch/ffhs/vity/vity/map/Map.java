@@ -5,27 +5,26 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.content.ContextCompat;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.Toast;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
@@ -44,26 +43,17 @@ public class Map extends FragmentActivity implements OnMapReadyCallback {
     private GoogleMap mMap;
     private LatLng itemPosition;
     private static final int REQUEST_FINE_LOCATION = 1;
+    private static final int REQUEST_FINE_LOCATION_FOR_CURRENTLOCATION = 2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map);
 
-        // Check if username is set already
-        SharedPreferences username = PreferenceManager.getDefaultSharedPreferences(this);
-        if(username.getString("username", "").equals("")){
-            try {
-                editUsername(username);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
-
         mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
-        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
+        MapFragment mapFragment = (MapFragment) getFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
     }
 
@@ -98,22 +88,14 @@ public class Map extends FragmentActivity implements OnMapReadyCallback {
             Toast.makeText(getApplicationContext(), R.string.warning_not_find_map_style, Toast.LENGTH_LONG).show();
         }
 
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+        isGPSenbaled();
 
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION}, 100);
-            return;
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_FINE_LOCATION);
+        }else{
+            mMap.setMyLocationEnabled(true);
+            setCurrentLocation();
         }
-
-        // Check if GPS is enabled
-        try {
-            isGPSenbaled();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
-        mMap.setMyLocationEnabled(true);
-
-        setCurrentLocation();
 
         Intent i = getIntent();
         if(i != null){
@@ -129,20 +111,19 @@ public class Map extends FragmentActivity implements OnMapReadyCallback {
         }
     }
 
-
     private void setCurrentLocation(){
-        if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_FINE_LOCATION);
-        }
-        mFusedLocationProviderClient.getLastLocation().addOnSuccessListener(this, new OnSuccessListener<Location>() {
-            @Override
-            public void onSuccess(Location newLocation) {
-
-                if (newLocation != null) {
-                    currentLocation = newLocation;
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_FINE_LOCATION_FOR_CURRENTLOCATION);
+        }else{
+            mFusedLocationProviderClient.getLastLocation().addOnSuccessListener(this, new OnSuccessListener<Location>() {
+                @Override
+                public void onSuccess(Location newLocation) {
+                    if (newLocation != null) {
+                        currentLocation = newLocation;
+                    }
                 }
-            }
-        });
+            });
+        }
     }
 
     public static Location getCurrentLocation(){
@@ -152,21 +133,24 @@ public class Map extends FragmentActivity implements OnMapReadyCallback {
     // Check permissions
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-
         switch (requestCode){
-            case 100: {
+            case REQUEST_FINE_LOCATION: {
                 if(grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
-                } else {
-                    Toast.makeText(getApplicationContext(), R.string.permission_denied_gps, Toast.LENGTH_LONG).show();
-                }
-            }
-            case REQUEST_FINE_LOCATION:
-                if(grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    mMap.setMyLocationEnabled(true);
                     setCurrentLocation();
-                }else {
+                } else {
                     Toast.makeText(getApplicationContext(), R.string.permission_denied_fine_location, Toast.LENGTH_LONG).show();
                 }
+                return;
+            }
+            case REQUEST_FINE_LOCATION_FOR_CURRENTLOCATION: {
+                if(grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+                    setCurrentLocation();
+                } else {
+                    Toast.makeText(getApplicationContext(), R.string.permission_denied_fine_location_3, Toast.LENGTH_LONG).show();
+                }
+                return;
+            }
             default:
                 // The app will not have this permission
                 finish();
@@ -174,7 +158,7 @@ public class Map extends FragmentActivity implements OnMapReadyCallback {
     }
 
     // Check if GPS is enabled
-    private void isGPSenbaled() throws InterruptedException {
+    private void isGPSenbaled() {
         final LocationManager lManager = (LocationManager) getSystemService( Context.LOCATION_SERVICE );
 
         if ( lManager != null && !lManager.isProviderEnabled( LocationManager.GPS_PROVIDER ) ) {
@@ -209,40 +193,6 @@ public class Map extends FragmentActivity implements OnMapReadyCallback {
         }
     }
 
-    // Edit Username
-    private void editUsername(final SharedPreferences username) throws InterruptedException {
-
-        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
-                this);
-
-        // Set Title to Alert
-        alertDialogBuilder.setTitle(R.string.username);
-
-        // Build Input Field
-        final EditText name = new EditText(this);
-        name.setHint(R.string.username);
-        alertDialogBuilder.setView(name);
-
-        // set dialog message
-        alertDialogBuilder
-                .setMessage(R.string.enter_name)
-                .setPositiveButton(R.string.btn_save,new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog,int id) {
-                        SharedPreferences.Editor editor = username.edit();
-                        editor.putString("username", name.getText().toString());
-                        editor.apply();
-                        dialog.cancel();
-                    }
-                });
-
-        // create alert dialog
-        AlertDialog alertDialog = alertDialogBuilder.create();
-
-        // show it
-        alertDialog.show();
-
-    }
-
     // onClick Functions
     public void goToNewActivity(View button){
         startActivity(new Intent(this, ActivityNew.class));
@@ -264,5 +214,11 @@ public class Map extends FragmentActivity implements OnMapReadyCallback {
             Toast.makeText(getApplicationContext(), R.string.warning_no_item_selected, Toast.LENGTH_LONG).show();
         }
 
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        setCurrentLocation();
     }
 }

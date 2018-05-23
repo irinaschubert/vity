@@ -37,7 +37,6 @@ import ch.ffhs.vity.vity.R;
 import ch.ffhs.vity.vity.database.AppDatabase;
 import ch.ffhs.vity.vity.database.VityItem;
 
-import static android.os.Environment.getExternalStoragePublicDirectory;
 import static ch.ffhs.vity.vity.database.LocationTypeConverter.locationToString;
 
 public class ActivityEdit extends Activity {
@@ -112,10 +111,10 @@ public class ActivityEdit extends Activity {
 
         String category = item.getCategory();
         categorySpinner = findViewById(R.id.new_category);
-        categorySpinner.setSelection(getIndex(categorySpinner, category));
+        categorySpinner.setSelection(getSpinnerIndex(categorySpinner, category));
     }
 
-    private int getIndex(Spinner spinner, String string){
+    private int getSpinnerIndex(Spinner spinner, String string){
         int index = 0;
         for (int i=0;i<spinner.getCount();i++){
             if (spinner.getItemAtPosition(i).equals(string)){
@@ -131,7 +130,7 @@ public class ActivityEdit extends Activity {
             public void onClick(DialogInterface dialog, int which) {
                 switch(which){
                     case 0:
-                        //checks permission on runtime and asks if not yet set
+                        //checks permission for external storage access on runtime and asks if not yet set
                         if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
                             requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, REQUEST_CODE_STORAGE);
                         }else {
@@ -139,7 +138,7 @@ public class ActivityEdit extends Activity {
                         }
                         break;
                     case 1:
-                        //checks permission on runtime and asks if not yet set
+                        //checks permission for camera usage on runtime and asks if not yet set
                         if (checkSelfPermission(Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
                             requestPermissions(new String[]{Manifest.permission.CAMERA}, REQUEST_CODE_CAMERA);
                         }else{
@@ -171,6 +170,7 @@ public class ActivityEdit extends Activity {
                 if(grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     printCurrentLocation();
                 }
+                break;
             default:
                 // The app will not have this permission
                 finish();
@@ -353,12 +353,6 @@ public class ActivityEdit extends Activity {
         mDb.itemModel().deleteItem(item);
         Intent activity = new Intent(this, ActivitySearch.class);
         startActivity(activity);
-    }
-
-    @Override
-    protected void onDestroy() {
-        AppDatabase.destroyInstance();
-        super.onDestroy();
     }
 
 }

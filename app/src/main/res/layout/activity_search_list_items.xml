@@ -10,7 +10,8 @@
         style="@style/style_list_item"
         android:layout_width="match_parent"
         android:layout_height="40sp"
-        android:paddingLeft="10sp"
+        android:paddingStart="10sp"
+        android:paddingEnd="10sp"
         android:gravity="center_vertical" />
 
     <TextView
@@ -18,7 +19,8 @@
         style="@style/style_list_item"
         android:layout_width="wrap_content"
         android:layout_height="40sp"
-        android:paddingRight="10sp"
+        android:paddingStart="10sp"
+        android:paddingEnd="10sp"
         android:layout_alignParentEnd="true"
         android:gravity="center_vertical" />
 

@@ -227,10 +227,4 @@ public class ActivityNew extends Activity {
             finish();
         }
      }
-
-    @Override
-    protected void onDestroy() {
-        AppDatabase.destroyInstance();
-        super.onDestroy();
-    }
 }
