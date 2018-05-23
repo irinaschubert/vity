@@ -7,11 +7,12 @@
     <string name="text_distance">Distance</string>
 
     <!-- general -->
-    <string name="titel_bootscreen">Vity</string>
     <string name="yes">yes</string>
     <string name="no">no</string>
     <string name="username">username</string>
     <string name="enter_name">Please enter your name</string>
+    <string name="general">General</string>
+    <string name="provide_username">Change username here</string>
 
     <!-- buttons -->
     <string name="btn_image">Image…</string>

@@ -1,29 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--suppress AndroidDomInspection -->
 <PreferenceScreen
     xmlns:android="http://schemas.android.com/apk/res/android">
     <PreferenceCategory
-        android:title="General">
+        android:title="@string/general">
         <EditTextPreference
             android:key="username"
-            android:title="Username"
+            android:title="@string/username"
+            android:summary="@string/provide_username"
             android:defaultValue=""/>
-    </PreferenceCategory>
-    <PreferenceCategory
-        android:title="Group">
-        <EditTextPreference
-            android:key="group_id"
-            android:title="ID"
-            android:defaultValue=" "/>
-        <EditTextPreference
-            android:key="group_key"
-            android:title="KEY"
-            android:defaultValue=" "/>
-    </PreferenceCategory>
-    <PreferenceCategory
-        android:title="Design Map">
-        <CheckBoxPreference
-            android:key="show_group_only"
-            android:title="Show only Group Activities"/>
     </PreferenceCategory>
 </PreferenceScreen>
