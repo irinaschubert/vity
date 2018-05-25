@@ -25,9 +25,6 @@ public interface VityItemDao {
     @Query("SELECT * FROM VityItem WHERE category = :category")
     List<VityItem> findItemByCategory(String category);
 
-/*    @Query("SELECT * FROM VityItem WHERE distance = :distance")
-    List<VityItem> findByDistance(int distance);*/
-
     @Insert(onConflict = IGNORE)
     void insertNewItem(VityItem item);
 
