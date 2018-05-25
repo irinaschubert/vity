@@ -273,7 +273,7 @@ public class ActivityNew extends Activity {
         String currentDateString = sdf.format(currentDate);
         item.setOwner(username);
         item.setDate(currentDateString);
-        if(!mCurrentPhotoPath.equals("")){
+        if(mCurrentPhotoPath != ""){
             item.setImageUri(mCurrentPhotoPath);
         }
         //new activity should at least have a title

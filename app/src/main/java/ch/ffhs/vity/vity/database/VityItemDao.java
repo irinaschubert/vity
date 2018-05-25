@@ -29,15 +29,15 @@ public interface VityItemDao {
     List<VityItem> findByDistance(int distance);*/
 
     @Insert(onConflict = IGNORE)
-    public void insertNewItem(VityItem item);
+    void insertNewItem(VityItem item);
 
     @Update(onConflict = REPLACE)
-    public void updateItem(VityItem item);
+    void updateItem(VityItem item);
 
     @Delete
-    public void deleteItem(VityItem item);
+    void deleteItem(VityItem item);
 
     // only for mock data initializer
     @Query("DELETE FROM VityItem")
-    public void deleteAll();
+    void deleteAll();
 }
