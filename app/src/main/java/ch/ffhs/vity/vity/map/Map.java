@@ -26,7 +26,6 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MapStyleOptions;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -41,7 +40,6 @@ public class Map extends FragmentActivity implements OnMapReadyCallback {
     private static Location currentLocation;
     private FusedLocationProviderClient mFusedLocationProviderClient;
     private GoogleMap mMap;
-    private LatLng itemPosition;
     private static final int REQUEST_FINE_LOCATION = 1;
     private static final int REQUEST_FINE_LOCATION_FOR_CURRENTLOCATION = 2;
 
@@ -136,8 +134,12 @@ public class Map extends FragmentActivity implements OnMapReadyCallback {
         switch (requestCode){
             case REQUEST_FINE_LOCATION: {
                 if(grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
-                    mMap.setMyLocationEnabled(true);
-                    setCurrentLocation();
+                    if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_FINE_LOCATION);
+                    }else {
+                        mMap.setMyLocationEnabled(true);
+                        setCurrentLocation();
+                    }
                 } else {
                     Toast.makeText(getApplicationContext(), R.string.permission_denied_fine_location, Toast.LENGTH_LONG).show();
                 }

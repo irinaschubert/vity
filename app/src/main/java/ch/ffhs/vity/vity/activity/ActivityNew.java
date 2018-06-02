@@ -41,18 +41,18 @@ import static ch.ffhs.vity.vity.database.LocationTypeConverter.locationToString;
 
 public class ActivityNew extends Activity {
     private static final int REQUEST_CODE_STORAGE = 1;
-    private static final int REQUEST_CODE_STORAGE_FOR_TAKEN_PICTURES = 6;
     private static final int REQUEST_CODE_CAMERA = 2;
     private static final int REQUEST_IMAGE_PICK = 3;
     private static final int REQUEST_IMAGE_CAPTURE = 4;
     private static final int REQUEST_CODE_FINE_LOCATION = 5;
+    private static final int REQUEST_CODE_STORAGE_FOR_TAKEN_PICTURES = 6;
 
-    ImageView image;
-    EditText title;
-    EditText description;
-    EditText link;
-    TextView location;
-    Spinner categorySpinner;
+    private ImageView image;
+    private EditText title;
+    private EditText description;
+    private EditText link;
+    private TextView location;
+    private Spinner categorySpinner;
     private Location currentLocation;
     private FusedLocationProviderClient locationClient;
     private String mCurrentPhotoPath;
@@ -187,7 +187,13 @@ public class ActivityNew extends Activity {
             case REQUEST_IMAGE_PICK:
                 if(resultCode == RESULT_OK) {
                     Uri photoUri = data.getData();
-                    mCurrentPhotoPath = photoUri.toString();
+                    try{
+                        mCurrentPhotoPath = photoUri.toString();
+                    }
+                    catch(NullPointerException npe){
+                        npe.printStackTrace();
+                    }
+
                     try {
                         image.setImageBitmap(MediaStore.Images.Media.getBitmap(this.getContentResolver(), photoUri));
 
@@ -273,7 +279,7 @@ public class ActivityNew extends Activity {
         String currentDateString = sdf.format(currentDate);
         item.setOwner(username);
         item.setDate(currentDateString);
-        if(mCurrentPhotoPath != ""){
+        if(!"".equals(mCurrentPhotoPath)){
             item.setImageUri(mCurrentPhotoPath);
         }
         //new activity should at least have a title

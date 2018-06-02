@@ -6,17 +6,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
-
-import com.google.android.gms.maps.model.LatLng;
-
 import java.text.DecimalFormat;
 import java.util.List;
-
 import ch.ffhs.vity.vity.R;
 import ch.ffhs.vity.vity.database.LocationTypeConverter;
 import ch.ffhs.vity.vity.database.VityItem;
 import ch.ffhs.vity.vity.map.Map;
-
 import static android.location.Location.distanceBetween;
 
 public class VityItemListAdapter extends BaseAdapter {
@@ -24,7 +19,7 @@ public class VityItemListAdapter extends BaseAdapter {
     private List<VityItem> listActivities;
     private Context mContext;
 
-    public VityItemListAdapter(List<VityItem> listActivities, Context mContext) {
+    protected VityItemListAdapter(List<VityItem> listActivities, Context mContext) {
         this.listActivities = listActivities;
         this.mContext = mContext;
     }

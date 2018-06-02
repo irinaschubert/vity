@@ -6,8 +6,6 @@ import android.content.Context;
 import android.arch.persistence.room.Room;
 import android.arch.persistence.room.RoomDatabase;
 
-import ch.ffhs.vity.vity.database.VityItem;
-
 @Database(entities = {VityItem.class}, version = 1, exportSchema = false)
 @TypeConverters({LocationTypeConverter.class})
 public abstract class AppDatabase extends RoomDatabase {
@@ -21,9 +19,5 @@ public abstract class AppDatabase extends RoomDatabase {
             INSTANCE = Room.databaseBuilder(context.getApplicationContext(), AppDatabase.class, "mDb").allowMainThreadQueries().build();
         }
         return INSTANCE;
-    }
-
-    public static void destroyInstance() {
-        INSTANCE = null;
     }
 }

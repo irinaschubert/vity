@@ -2,7 +2,6 @@ package ch.ffhs.vity.vity.activity;
 
 import android.Manifest;
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -38,7 +37,6 @@ import ch.ffhs.vity.vity.R;
 import ch.ffhs.vity.vity.database.AppDatabase;
 import ch.ffhs.vity.vity.database.VityItem;
 
-import static android.os.Environment.getExternalStoragePublicDirectory;
 import static ch.ffhs.vity.vity.database.LocationTypeConverter.locationToString;
 
 public class ActivityEdit extends Activity {
@@ -49,12 +47,12 @@ public class ActivityEdit extends Activity {
     private static final int REQUEST_CODE_FINE_LOCATION = 5;
     private static final int REQUEST_CODE_STORAGE_FOR_TAKEN_PICTURES = 6;
 
-    ImageView image;
-    EditText title;
-    EditText description;
-    EditText link;
-    TextView location;
-    Spinner categorySpinner;
+    private ImageView image;
+    private EditText title;
+    private EditText description;
+    private EditText link;
+    private TextView location;
+    private Spinner categorySpinner;
     private AppDatabase mDb;
     private VityItem item;
     private Location currentLocation;
@@ -221,7 +219,13 @@ public class ActivityEdit extends Activity {
             case REQUEST_IMAGE_PICK:
                 if(resultCode == RESULT_OK) {
                     Uri photoUri = data.getData();
-                    mCurrentPhotoPath = photoUri.toString();
+                    try{
+                        mCurrentPhotoPath = photoUri.toString();
+                    }
+                    catch(NullPointerException npe){
+                        npe.printStackTrace();
+                    }
+
                     try {
                         image.setImageBitmap(MediaStore.Images.Media.getBitmap(this.getContentResolver(), photoUri));
 
@@ -305,7 +309,7 @@ public class ActivityEdit extends Activity {
         String currentDateString = sdf.format(currentDate);
         item.setOwner(username);
         item.setDate(currentDateString);
-        if(mCurrentPhotoPath != ""){
+        if(!"".equals(mCurrentPhotoPath)){
             item.setImageUri(mCurrentPhotoPath);
         }
         //new activity should at least have a title

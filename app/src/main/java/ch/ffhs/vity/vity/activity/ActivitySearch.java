@@ -2,15 +2,14 @@ package ch.ffhs.vity.vity.activity;
 
 import android.Manifest;
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.Context;
-import android.content.DialogInterface;
+import android.arch.persistence.db.SupportSQLiteOpenHelper;
+import android.arch.persistence.room.DatabaseConfiguration;
+import android.arch.persistence.room.InvalidationTracker;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
-import android.location.LocationManager;
+import android.os.AsyncTask;
 import android.os.Bundle;
-import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -19,24 +18,21 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.Toast;
-
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.tasks.OnSuccessListener;
 
+import java.lang.reflect.Array;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
-import java.util.Iterator;
-
 import ch.ffhs.vity.vity.database.AppDatabase;
 import ch.ffhs.vity.vity.R;
 import ch.ffhs.vity.vity.database.LocationTypeConverter;
 import ch.ffhs.vity.vity.database.VityItem;
-import ch.ffhs.vity.vity.map.Map;
+import ch.ffhs.vity.vity.database.VityItemDao;
 
 import static android.location.Location.distanceBetween;
+import static android.widget.Toast.makeText;
 
 
 public class ActivitySearch extends Activity {
@@ -45,6 +41,8 @@ public class ActivitySearch extends Activity {
     private static final int REQUEST_FINE_LOCATION = 1;
     private Location currentLocation;
     private ListView listView;
+    private int radius;
+    private ArrayList<VityItem> resultList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,45 +79,14 @@ public class ActivitySearch extends Activity {
 
     private void loadResults(){
         mDb = AppDatabase.getDatabase(this.getApplication());
-        filterAndFetchData();
-    }
-
-    private void filterAndFetchData() {
         Spinner categorySpinner = findViewById(R.id.new_category);
         String category = categorySpinner.getSelectedItem().toString();
 
         Spinner radiusSpinner = findViewById(R.id.search_radius);
-        int radius = Integer.parseInt(radiusSpinner.getSelectedItem().toString());
+        radius = Integer.parseInt(radiusSpinner.getSelectedItem().toString());
 
-        ArrayList resultList = new ArrayList<VityItem>();
-        
-        ArrayList listAllWithChosenCategory = new ArrayList<>(mDb.itemModel().findItemByCategory(category));
-
-        Iterator<VityItem> i = listAllWithChosenCategory.iterator();
-        while(i.hasNext()){
-            VityItem item = i.next();
-            if(Float.parseFloat(getDistance(item)) <= radius){
-                resultList.add(item);
-            }
-        }
-
-        if(resultList.isEmpty()){
-            Toast.makeText(getApplicationContext(), R.string.no_results, Toast.LENGTH_LONG).show();
-        }
-
-        final VityItemListAdapter listAdapter = new VityItemListAdapter(resultList, getApplicationContext());
-        listView.setAdapter(listAdapter);
-
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                VityItem selectedItem = (VityItem)listAdapter.getItem(position);
-                long itemId = selectedItem.getId();
-                Intent activity = new Intent(view.getContext(), ActivityDetail.class);
-                activity.putExtra("itemId", itemId);
-                startActivity(activity);
-            }
-        });
+        searchItems(category);
+        //ArrayList<VityItem> listAllWithChosenCategory = new ArrayList<>(mDb.itemModel().findItemByCategory(category));
     }
 
     private String getDistance(VityItem item){
@@ -159,11 +126,60 @@ public class ActivitySearch extends Activity {
                 if(grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     setCurrentLocation();
                 }else {
-                    Toast.makeText(getApplicationContext(), R.string.permission_denied_fine_location, Toast.LENGTH_LONG).show();
+                    makeText(getApplicationContext(), R.string.permission_denied_fine_location, Toast.LENGTH_LONG).show();
                 }
             default:
                 // The app will not have this permission
                 finish();
+        }
+    }
+
+    private void searchItems(String category) {
+        SearchItemsAsync task = new SearchItemsAsync(category, mDb);
+        task.execute();
+    }
+
+    private class SearchItemsAsync extends AsyncTask<String, Void, ArrayList<VityItem>> {
+        private String category;
+        private AppDatabase mDb;
+        private ArrayList resultList;
+
+        SearchItemsAsync(String category, AppDatabase mDb) {
+            resultList = new ArrayList<VityItem>();
+            this.category = category;
+            this.mDb = mDb;
+        }
+        @Override
+        protected ArrayList<VityItem> doInBackground(String... params) {
+            ArrayList<VityItem> listAllWithChosenCategory = new ArrayList<>(mDb.itemModel().findItemByCategory(category));
+            return listAllWithChosenCategory;
+        }
+
+        @Override
+        protected void onPostExecute(ArrayList<VityItem> listAllWithChosenCategory){
+            for (VityItem item : listAllWithChosenCategory) {
+                if (Float.parseFloat(getDistance(item)) <= radius) {
+                    resultList.add(item);
+                }
+            }
+
+            if(resultList.isEmpty()){
+                makeText(getApplicationContext(), R.string.no_results, Toast.LENGTH_LONG).show();
+            }
+
+            final VityItemListAdapter listAdapter = new VityItemListAdapter(resultList, getApplicationContext());
+            listView.setAdapter(listAdapter);
+
+            listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    VityItem selectedItem = (VityItem)listAdapter.getItem(position);
+                    long itemId = selectedItem.getId();
+                    Intent activity = new Intent(view.getContext(), ActivityDetail.class);
+                    activity.putExtra("itemId", itemId);
+                    startActivity(activity);
+                }
+            });
         }
     }
 

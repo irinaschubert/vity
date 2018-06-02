@@ -17,6 +17,7 @@ import ch.ffhs.vity.vity.mock.DatabaseInitializer;
 public class ActivityMain extends Activity {
 
     private AppDatabase mDb;
+    private String USERNAME = "username";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,7 +31,7 @@ public class ActivityMain extends Activity {
         populateDb();
 
         // Check if username is set already
-        if (username.getString("username", "").equals("")) {
+        if (username.getString(USERNAME, "").equals("")) {
             editUsername(username);
         }
         else{
@@ -46,9 +47,9 @@ public class ActivityMain extends Activity {
     private void editUsername(final SharedPreferences username) {
 
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
-        alertDialogBuilder.setTitle(R.string.username);
+        alertDialogBuilder.setTitle(USERNAME);
         final EditText name = new EditText(this);
-        name.setHint(R.string.username);
+        name.setHint(USERNAME);
         alertDialogBuilder.setView(name);
 
         alertDialogBuilder
