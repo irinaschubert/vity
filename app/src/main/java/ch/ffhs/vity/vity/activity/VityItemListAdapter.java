@@ -19,7 +19,7 @@ public class VityItemListAdapter extends BaseAdapter {
     private List<VityItem> listActivities;
     private Context mContext;
 
-    protected VityItemListAdapter(List<VityItem> listActivities, Context mContext) {
+    VityItemListAdapter(List<VityItem> listActivities, Context mContext) {
         this.listActivities = listActivities;
         this.mContext = mContext;
     }

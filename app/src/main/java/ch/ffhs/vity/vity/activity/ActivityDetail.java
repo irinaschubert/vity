@@ -10,7 +10,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import static ch.ffhs.vity.vity.database.LocationTypeConverter.toLocation;
 
@@ -21,15 +20,14 @@ import ch.ffhs.vity.vity.map.Map;
 
 
 public class ActivityDetail extends Activity {
-    ImageView image;
-    TextView title;
-    TextView category;
-    TextView link;
-    TextView date;
-    TextView owner;
-    TextView description;
+    private ImageView image;
+    private TextView title;
+    private TextView category;
+    private TextView link;
+    private TextView date;
+    private TextView owner;
+    private TextView description;
     private long id;
-    private AppDatabase mDb;
     private VityItem item;
 
     @Override
@@ -48,7 +46,7 @@ public class ActivityDetail extends Activity {
     }
 
     private void loadActivity(long id){
-        mDb = AppDatabase.getDatabase(this.getApplication());
+        AppDatabase mDb = AppDatabase.getDatabase(this.getApplication());
         item = mDb.itemModel().loadItemById(id);
         title.setText(item.getTitle());
         if(item.getCategory() != null){

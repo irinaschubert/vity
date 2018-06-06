@@ -2,9 +2,6 @@ package ch.ffhs.vity.vity.mock;
 
 
 import android.os.AsyncTask;
-import android.support.annotation.NonNull;
-import java.util.Calendar;
-import java.util.Date;
 
 import ch.ffhs.vity.vity.database.VityItem;
 import ch.ffhs.vity.vity.database.AppDatabase;

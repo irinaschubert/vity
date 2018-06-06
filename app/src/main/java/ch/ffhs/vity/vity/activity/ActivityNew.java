@@ -68,6 +68,7 @@ public class ActivityNew extends Activity {
         link = findViewById(R.id.new_link);
         location = findViewById(R.id.new_detail_location);
         categorySpinner = findViewById(R.id.new_category);
+        mCurrentPhotoPath = "";
         locationClient = LocationServices.getFusedLocationProviderClient(this);
         printCurrentLocation();
     }

@@ -1,15 +1,11 @@
 package ch.ffhs.vity.vity.database;
 
 import android.arch.persistence.room.Entity;
-import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
-import android.location.Location;
-import android.support.annotation.NonNull;
 
 @Entity
 public class VityItem {
     @PrimaryKey (autoGenerate = true)
-    @NonNull
     private long id;
     private String owner;
     private String date;

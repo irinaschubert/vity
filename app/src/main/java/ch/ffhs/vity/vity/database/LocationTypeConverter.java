@@ -2,8 +2,6 @@ package ch.ffhs.vity.vity.database;
 
 import android.arch.persistence.room.TypeConverter;
 import android.location.Location;
-
-import java.util.Date;
 import java.util.Locale;
 
 public class LocationTypeConverter {

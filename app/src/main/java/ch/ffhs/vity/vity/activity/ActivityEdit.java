@@ -64,6 +64,7 @@ public class ActivityEdit extends Activity {
     protected void onCreate(Bundle icicle) {
         super.onCreate(icicle);
         setContentView(R.layout.activity_edit);
+        mCurrentPhotoPath = "";
         locationClient = LocationServices.getFusedLocationProviderClient(this);
         long id = getIntent().getLongExtra("itemId", 0);
         loadActivity(id);
