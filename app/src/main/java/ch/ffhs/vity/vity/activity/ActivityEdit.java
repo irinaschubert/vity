@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
 import android.preference.PreferenceManager;
@@ -55,6 +56,7 @@ public class ActivityEdit extends BaseActivity {
     private FusedLocationProviderClient locationClient;
     private String mCurrentPhotoPath;
     private long id;
+    private LoadItemAsync task;
 
     @Override
     protected void onCreate(Bundle icicle) {
@@ -68,28 +70,31 @@ public class ActivityEdit extends BaseActivity {
 
     private void loadActivity(long id) {
         mDb = AppDatabase.getDatabase(this.getApplication());
-        item = mDb.itemModel().loadItemById(id);
-
         title = findViewById(R.id.new_name);
-        title.setText(item.getTitle(), TextView.BufferType.EDITABLE);
-
         description = findViewById(R.id.new_description);
-        description.setText(item.getDescription(), TextView.BufferType.EDITABLE);
-
         link = findViewById(R.id.new_link);
-        link.setText(item.getLink(), TextView.BufferType.EDITABLE);
-
         location = findViewById(R.id.new_detail_location);
-        location.setText(item.getLocation(), TextView.BufferType.NORMAL);
-
         image = findViewById(R.id.new_detail_image);
-        if (item.getImageUri() != null) {
-            image.setImageURI(Uri.parse(item.getImageUri()));
-        }
-
-        String category = item.getCategory();
         categorySpinner = findViewById(R.id.new_category);
-        categorySpinner.setSelection(getSpinnerIndex(categorySpinner, category));
+
+        task = new ActivityEdit.LoadItemAsync(id, mDb);
+        task.setListener(new ActivityEdit.LoadItemAsync.LoadItemAsyncListener() {
+            @Override
+            public void onLoadItemFinished(VityItem vityitem) {
+                item = vityitem;
+
+                title.setText(item.getTitle(), TextView.BufferType.EDITABLE);
+                description.setText(item.getDescription(), TextView.BufferType.EDITABLE);
+                link.setText(item.getLink(), TextView.BufferType.EDITABLE);
+                location.setText(item.getLocation(), TextView.BufferType.NORMAL);
+                if (item.getImageUri() != null) {
+                    image.setImageURI(Uri.parse(item.getImageUri()));
+                }
+                String category = item.getCategory();
+                categorySpinner.setSelection(getSpinnerIndex(categorySpinner, category));
+            }
+        });
+        task.execute();
     }
 
     private int getSpinnerIndex(Spinner spinner, String string) {
@@ -316,4 +321,38 @@ public class ActivityEdit extends BaseActivity {
         loadActivity(id);
     }
 
+    static class LoadItemAsync extends AsyncTask<Long, Void, VityItem> {
+        private long id;
+        private AppDatabase mDb;
+        private LoadItemAsyncListener listener;
+        private VityItem vityitem;
+
+        LoadItemAsync(long id, AppDatabase mDb) {
+            this.id = id;
+            this.mDb = mDb;
+            this.vityitem = new VityItem();
+        }
+
+        @Override
+        protected VityItem doInBackground(Long... params) {
+            this.vityitem = mDb.itemModel().loadItemById(id);
+            return vityitem;
+        }
+
+        @Override
+        protected void onPostExecute(VityItem vityitem) {
+            this.vityitem = vityitem;
+            if (listener != null) {
+                listener.onLoadItemFinished(vityitem);
+            }
+        }
+
+        private void setListener(LoadItemAsyncListener listener) {
+            this.listener = listener;
+        }
+
+        public interface LoadItemAsyncListener {
+            void onLoadItemFinished(VityItem vityitem);
+        }
+    }
 }
