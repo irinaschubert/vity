@@ -118,4 +118,9 @@ public class ActivityDetail extends Activity {
         loadActivity(id);
     }
 
+    @Override
+    protected void onPause(){
+        super.onPause();
+    }
+
 }

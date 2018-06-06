@@ -48,6 +48,7 @@ public class ActivitySearch extends Activity {
         resultList = new ArrayList<VityItem>();
         mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
         setCurrentLocation();
+        currentLocation = getCurrentLocation();
     }
 
     // Menu

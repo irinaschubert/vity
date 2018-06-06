@@ -58,6 +58,7 @@ public class ActivityEdit extends Activity {
     private Location currentLocation;
     private FusedLocationProviderClient locationClient;
     private String mCurrentPhotoPath;
+    private long id;
 
 
     @Override
@@ -66,7 +67,7 @@ public class ActivityEdit extends Activity {
         setContentView(R.layout.activity_edit);
         mCurrentPhotoPath = "";
         locationClient = LocationServices.getFusedLocationProviderClient(this);
-        long id = getIntent().getLongExtra("itemId", 0);
+        id = getIntent().getLongExtra("itemId", 0);
         loadActivity(id);
     }
 
@@ -326,6 +327,16 @@ public class ActivityEdit extends Activity {
         mDb.itemModel().deleteItem(item);
         Intent activity = new Intent(this, ActivitySearch.class);
         startActivity(activity);
+    }
+
+    @Override
+    protected void onPause(){
+        super.onPause();
+    }
+
+    @Override
+    protected void onResume(){
+        super.onResume();
     }
 
 }

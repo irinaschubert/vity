@@ -291,4 +291,14 @@ public class ActivityNew extends Activity {
             finish();
         }
     }
+
+    @Override
+    protected void onPause(){
+        super.onPause();
+    }
+
+    @Override
+    protected void onResume(){
+        super.onResume();
+    }
 }

@@ -68,4 +68,14 @@ public class ActivityMain extends Activity {
         AlertDialog alertDialog = alertDialogBuilder.create();
         alertDialog.show();
     }
+
+    @Override
+    protected void onPause(){
+        super.onPause();
+    }
+
+    @Override
+    protected void onResume(){
+        super.onResume();
+    }
 }

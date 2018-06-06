@@ -43,4 +43,15 @@ public class ActivitySettings extends PreferenceActivity {
         }
     }
 
+
+    @Override
+    protected void onPause(){
+        super.onPause();
+    }
+
+    @Override
+    protected void onResume(){
+        super.onResume();
+    }
+
 }
