@@ -1,4 +1,4 @@
-package ch.ffhs.vity.vity.menu;
+package ch.ffhs.vity.vity.activity;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -6,7 +6,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import ch.ffhs.vity.vity.R;
-import ch.ffhs.vity.vity.activity.ActivitySettings;
 
 public class BaseActivity extends Activity {
     // Menu

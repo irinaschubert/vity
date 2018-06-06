@@ -31,7 +31,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import ch.ffhs.vity.vity.R;
 import ch.ffhs.vity.vity.activity.ActivityNew;
 import ch.ffhs.vity.vity.activity.ActivitySearch;
-import ch.ffhs.vity.vity.menu.BaseActivity;
+import ch.ffhs.vity.vity.activity.BaseActivity;
 
 public class Map extends BaseActivity implements OnMapReadyCallback {
     private static final int REQUEST_FINE_LOCATION = 1;

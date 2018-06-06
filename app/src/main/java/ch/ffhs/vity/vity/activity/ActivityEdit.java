@@ -33,7 +33,6 @@ import java.util.Locale;
 import ch.ffhs.vity.vity.R;
 import ch.ffhs.vity.vity.database.AppDatabase;
 import ch.ffhs.vity.vity.database.VityItem;
-import ch.ffhs.vity.vity.menu.BaseActivity;
 
 import static ch.ffhs.vity.vity.database.LocationTypeConverter.locationToString;
 
@@ -55,6 +54,7 @@ public class ActivityEdit extends BaseActivity {
     private Location currentLocation;
     private FusedLocationProviderClient locationClient;
     private String mCurrentPhotoPath;
+    private long id;
 
     @Override
     protected void onCreate(Bundle icicle) {
@@ -62,7 +62,7 @@ public class ActivityEdit extends BaseActivity {
         setContentView(R.layout.activity_edit);
         mCurrentPhotoPath = "";
         locationClient = LocationServices.getFusedLocationProviderClient(this);
-        long id = getIntent().getLongExtra("itemId", 0);
+        id = getIntent().getLongExtra("itemId", 0);
         loadActivity(id);
     }
 
@@ -313,6 +313,7 @@ public class ActivityEdit extends BaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        loadActivity(id);
     }
 
 }

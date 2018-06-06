@@ -25,7 +25,6 @@ import ch.ffhs.vity.vity.R;
 import ch.ffhs.vity.vity.database.AppDatabase;
 import ch.ffhs.vity.vity.database.LocationTypeConverter;
 import ch.ffhs.vity.vity.database.VityItem;
-import ch.ffhs.vity.vity.menu.BaseActivity;
 
 import static android.location.Location.distanceBetween;
 import static android.widget.Toast.makeText;
