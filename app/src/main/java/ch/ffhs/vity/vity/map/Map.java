@@ -13,10 +13,7 @@ import android.os.Bundle;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.ContextCompat;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
@@ -34,15 +31,18 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import ch.ffhs.vity.vity.R;
 import ch.ffhs.vity.vity.activity.ActivityNew;
 import ch.ffhs.vity.vity.activity.ActivitySearch;
-import ch.ffhs.vity.vity.activity.ActivitySettings;
 import ch.ffhs.vity.vity.menu.BaseActivity;
 
 public class Map extends BaseActivity implements OnMapReadyCallback {
+    private static final int REQUEST_FINE_LOCATION = 1;
+    private static final int REQUEST_FINE_LOCATION_FOR_CURRENTLOCATION = 2;
     private static Location currentLocation;
     private FusedLocationProviderClient mFusedLocationProviderClient;
     private GoogleMap mMap;
-    private static final int REQUEST_FINE_LOCATION = 1;
-    private static final int REQUEST_FINE_LOCATION_FOR_CURRENTLOCATION = 2;
+
+    public static Location getCurrentLocation() {
+        return currentLocation;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,16 +72,15 @@ public class Map extends BaseActivity implements OnMapReadyCallback {
 
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_FINE_LOCATION);
-        }else{
+        } else {
             mMap.setMyLocationEnabled(true);
             setCurrentLocation();
         }
 
         Intent i = getIntent();
-        if(i != null){
+        if (i != null) {
             Bundle b = i.getExtras();
-            if  (b != null)
-            {
+            if (b != null) {
                 LatLng itemPosition = new LatLng(b.getDouble("lat"), b.getDouble("long"));
                 String itemTitle = b.getString("title");
                 mMap.addMarker(new MarkerOptions().position(itemPosition).title(itemTitle));
@@ -91,10 +90,10 @@ public class Map extends BaseActivity implements OnMapReadyCallback {
         }
     }
 
-    private void setCurrentLocation(){
+    private void setCurrentLocation() {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_FINE_LOCATION_FOR_CURRENTLOCATION);
-        }else{
+        } else {
             mFusedLocationProviderClient.getLastLocation().addOnSuccessListener(this, new OnSuccessListener<Location>() {
                 @Override
                 public void onSuccess(Location newLocation) {
@@ -106,19 +105,15 @@ public class Map extends BaseActivity implements OnMapReadyCallback {
         }
     }
 
-    public static Location getCurrentLocation(){
-        return currentLocation;
-    }
-
     // Check permissions
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        switch (requestCode){
+        switch (requestCode) {
             case REQUEST_FINE_LOCATION: {
-                if(grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                         ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_FINE_LOCATION);
-                    }else {
+                    } else {
                         mMap.setMyLocationEnabled(true);
                         setCurrentLocation();
                     }
@@ -128,7 +123,7 @@ public class Map extends BaseActivity implements OnMapReadyCallback {
                 return;
             }
             case REQUEST_FINE_LOCATION_FOR_CURRENTLOCATION: {
-                if(grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     setCurrentLocation();
                 } else {
                     Toast.makeText(getApplicationContext(), R.string.permission_denied_fine_location_3, Toast.LENGTH_LONG).show();
@@ -143,9 +138,9 @@ public class Map extends BaseActivity implements OnMapReadyCallback {
 
     // Check if GPS is enabled
     private void isGPSenbaled() {
-        final LocationManager lManager = (LocationManager) getSystemService( Context.LOCATION_SERVICE );
+        final LocationManager lManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 
-        if ( lManager != null && !lManager.isProviderEnabled( LocationManager.GPS_PROVIDER ) ) {
+        if (lManager != null && !lManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
 
             AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
                     this);
@@ -157,14 +152,14 @@ public class Map extends BaseActivity implements OnMapReadyCallback {
             alertDialogBuilder
                     .setMessage(R.string.enable_gps)
                     .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog,int id) {
+                        public void onClick(DialogInterface dialog, int id) {
                             dialog.cancel();
                             Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
                             startActivity(intent);
                         }
                     })
                     .setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog,int id) {
+                        public void onClick(DialogInterface dialog, int id) {
                             dialog.cancel();
                         }
                     });
@@ -177,11 +172,11 @@ public class Map extends BaseActivity implements OnMapReadyCallback {
         }
     }
 
-    public void goToNewActivity(View button){
+    public void goToNewActivity(View button) {
         startActivity(new Intent(this, ActivityNew.class));
     }
 
-    public void goToSearchActivity(View button){
+    public void goToSearchActivity(View button) {
         startActivity(new Intent(this, ActivitySearch.class));
     }
 

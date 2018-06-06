@@ -1,6 +1,5 @@
 package ch.ffhs.vity.vity.activity;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -34,8 +33,7 @@ public class ActivityMain extends BaseActivity {
         // Check if username is set already
         if (username.getString(USERNAME, "").equals("")) {
             editUsername(username);
-        }
-        else{
+        } else {
             startActivity(mapView);
         }
     }
@@ -55,8 +53,8 @@ public class ActivityMain extends BaseActivity {
 
         alertDialogBuilder
                 .setMessage(R.string.enter_name)
-                .setPositiveButton(R.string.btn_save,new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog,int id) {
+                .setPositiveButton(R.string.btn_save, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
                         SharedPreferences.Editor editor = username.edit();
                         editor.putString("username", name.getText().toString());
                         editor.apply();
@@ -71,12 +69,12 @@ public class ActivityMain extends BaseActivity {
     }
 
     @Override
-    protected void onPause(){
+    protected void onPause() {
         super.onPause();
     }
 
     @Override
-    protected void onResume(){
+    protected void onResume() {
         super.onResume();
     }
 }

@@ -5,7 +5,7 @@ import android.arch.persistence.room.PrimaryKey;
 
 @Entity
 public class VityItem {
-    @PrimaryKey (autoGenerate = true)
+    @PrimaryKey(autoGenerate = true)
     private long id;
     private String owner;
     private String date;
@@ -16,7 +16,7 @@ public class VityItem {
     private String location;
     private String imageUri;
 
-    public VityItem(){
+    public VityItem() {
     }
 
     // Getter Setters
@@ -56,7 +56,7 @@ public class VityItem {
         return id;
     }
 
-    public void setId(long id){
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -68,11 +68,11 @@ public class VityItem {
         this.owner = owner;
     }
 
-    public String getDate(){
+    public String getDate() {
         return date;
     }
 
-    public void setDate(String date){
+    public void setDate(String date) {
         this.date = date;
     }
 

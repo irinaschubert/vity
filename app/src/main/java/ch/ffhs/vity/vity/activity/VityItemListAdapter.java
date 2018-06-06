@@ -6,12 +6,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
+
 import java.text.DecimalFormat;
 import java.util.List;
+
 import ch.ffhs.vity.vity.R;
 import ch.ffhs.vity.vity.database.LocationTypeConverter;
 import ch.ffhs.vity.vity.database.VityItem;
 import ch.ffhs.vity.vity.map.Map;
+
 import static android.location.Location.distanceBetween;
 
 public class VityItemListAdapter extends BaseAdapter {
@@ -41,7 +44,7 @@ public class VityItemListAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        if (convertView == null){
+        if (convertView == null) {
             convertView = View.inflate(mContext, R.layout.activity_search_list_items, null);
         }
 
@@ -55,7 +58,7 @@ public class VityItemListAdapter extends BaseAdapter {
         return convertView;
     }
 
-    private String getDistance(VityItem item){
+    private String getDistance(VityItem item) {
         Location itemLocation = LocationTypeConverter.toLocation(item.getLocation());
         Location currentLocation = Map.getCurrentLocation();
         float[] results = new float[1];

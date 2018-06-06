@@ -1,23 +1,20 @@
 package ch.ffhs.vity.vity.activity;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import static ch.ffhs.vity.vity.database.LocationTypeConverter.toLocation;
-
-import ch.ffhs.vity.vity.database.AppDatabase;
 import ch.ffhs.vity.vity.R;
+import ch.ffhs.vity.vity.database.AppDatabase;
 import ch.ffhs.vity.vity.database.VityItem;
 import ch.ffhs.vity.vity.map.Map;
 import ch.ffhs.vity.vity.menu.BaseActivity;
+
+import static ch.ffhs.vity.vity.database.LocationTypeConverter.toLocation;
 
 
 public class ActivityDetail extends BaseActivity {
@@ -46,30 +43,29 @@ public class ActivityDetail extends BaseActivity {
         loadActivity(id);
     }
 
-    private void loadActivity(long id){
+    private void loadActivity(long id) {
         AppDatabase mDb = AppDatabase.getDatabase(this.getApplication());
         item = mDb.itemModel().loadItemById(id);
         title.setText(item.getTitle());
-        if(item.getCategory() != null){
+        if (item.getCategory() != null) {
             category.setText(item.getCategory());
         }
-        if(item.getImageUri() != null){
+        if (item.getImageUri() != null) {
             image.setImageURI(Uri.parse(item.getImageUri()));
         }
-        if(item.getLink() != null){
+        if (item.getLink() != null) {
             link.setText(item.getLink());
         }
-        if(item.getDate() != null){
+        if (item.getDate() != null) {
             date.setText(item.getDate());
         }
-        if(item.getOwner() != null){
+        if (item.getOwner() != null) {
             owner.setText(item.getOwner());
         }
-        if(item.getDescription() != null){
+        if (item.getDescription() != null) {
             description.setText(item.getDescription());
         }
     }
-
 
 
     // onClickFunctions
@@ -84,26 +80,26 @@ public class ActivityDetail extends BaseActivity {
         startActivity(mapView);
     }
 
-    public void onClickEdit(View button){
+    public void onClickEdit(View button) {
         Intent intentActivityEdit = new Intent(this, ActivityEdit.class);
         intentActivityEdit.putExtra("itemId", id);
         startActivity(intentActivityEdit);
     }
 
     @Override
-    protected void onRestart(){
+    protected void onRestart() {
         super.onRestart();
         loadActivity(id);
     }
 
     @Override
-    protected void onResume(){
+    protected void onResume() {
         super.onResume();
         loadActivity(id);
     }
 
     @Override
-    protected void onPause(){
+    protected void onPause() {
         super.onPause();
     }
 

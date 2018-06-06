@@ -8,14 +8,11 @@ import android.content.pm.PackageManager;
 import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
-import android.app.Activity;
 import android.os.Environment;
 import android.preference.PreferenceManager;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v4.content.FileProvider;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -80,12 +77,12 @@ public class ActivityNew extends BaseActivity {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setItems(R.array.img_choice, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
-                switch(which){
+                switch (which) {
                     case 0:
                         //checks permission for external storage access on runtime and asks if not yet set
                         if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
                             requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, REQUEST_CODE_STORAGE);
-                        }else {
+                        } else {
                             getPicture();
                         }
                         break;
@@ -93,7 +90,7 @@ public class ActivityNew extends BaseActivity {
                         //checks permission for camera usage on runtime and asks if not yet set
                         if (checkSelfPermission(Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
                             requestPermissions(new String[]{Manifest.permission.CAMERA}, REQUEST_CODE_CAMERA);
-                        }else{
+                        } else {
                             takePicture();
                         }
                         break;
@@ -107,7 +104,7 @@ public class ActivityNew extends BaseActivity {
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        switch(requestCode){
+        switch (requestCode) {
             case REQUEST_CODE_STORAGE:
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     getPicture();
@@ -124,7 +121,7 @@ public class ActivityNew extends BaseActivity {
                 }
                 break;
             case REQUEST_CODE_FINE_LOCATION:
-                if(grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     printCurrentLocation();
                 }
                 break;
@@ -134,7 +131,7 @@ public class ActivityNew extends BaseActivity {
         }
     }
 
-    private void getPicture(){
+    private void getPicture() {
         Intent getPictureIntent = new Intent();
         getPictureIntent.setType("image/*");
         getPictureIntent.setAction(Intent.ACTION_OPEN_DOCUMENT);
@@ -157,7 +154,7 @@ public class ActivityNew extends BaseActivity {
                 takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
                 if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
                     requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, REQUEST_CODE_STORAGE_FOR_TAKEN_PICTURES);
-                }else {
+                } else {
                     startActivityForResult(Intent.createChooser(takePictureIntent, getResources().getText(R.string.take_picture_using)), REQUEST_IMAGE_CAPTURE);
                 }
             }
@@ -167,14 +164,13 @@ public class ActivityNew extends BaseActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        switch(requestCode){
+        switch (requestCode) {
             case REQUEST_IMAGE_PICK:
-                if(resultCode == RESULT_OK) {
+                if (resultCode == RESULT_OK) {
                     Uri photoUri = data.getData();
-                    try{
+                    try {
                         mCurrentPhotoPath = photoUri.toString();
-                    }
-                    catch(NullPointerException npe){
+                    } catch (NullPointerException npe) {
                         npe.printStackTrace();
                     }
 
@@ -188,7 +184,7 @@ public class ActivityNew extends BaseActivity {
                 }
                 break;
             case REQUEST_IMAGE_CAPTURE:
-                if(resultCode == RESULT_OK){
+                if (resultCode == RESULT_OK) {
                     Uri photoUri = savePictureToGallery();
                     try {
                         image.setImageBitmap(MediaStore.Images.Media.getBitmap(this.getContentResolver(), photoUri));
@@ -232,10 +228,10 @@ public class ActivityNew extends BaseActivity {
         printCurrentLocation();
     }
 
-    private void printCurrentLocation(){
+    private void printCurrentLocation() {
         if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_CODE_FINE_LOCATION);
-        }else {
+        } else {
             locationClient.getLastLocation().addOnSuccessListener(this, new OnSuccessListener<Location>() {
                 @Override
                 public void onSuccess(Location newLocation) {
@@ -263,25 +259,25 @@ public class ActivityNew extends BaseActivity {
         String currentDateString = sdf.format(currentDate);
         item.setOwner(username);
         item.setDate(currentDateString);
-        if(!"".equals(mCurrentPhotoPath)){
+        if (!"".equals(mCurrentPhotoPath)) {
             item.setImageUri(mCurrentPhotoPath);
         }
         //new activity should at least have a title
-        if(title.getText().toString().equals("")){
+        if (title.getText().toString().equals("")) {
             Toast.makeText(this, getString(R.string.warning_missing_title), Toast.LENGTH_SHORT).show();
-        }else{
+        } else {
             mDb.itemModel().insertNewItem(item);
             finish();
         }
     }
 
     @Override
-    protected void onPause(){
+    protected void onPause() {
         super.onPause();
     }
 
     @Override
-    protected void onResume(){
+    protected void onResume() {
         super.onResume();
     }
 }
