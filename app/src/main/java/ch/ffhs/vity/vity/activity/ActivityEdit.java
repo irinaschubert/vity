@@ -63,13 +63,13 @@ public class ActivityEdit extends BaseActivity {
         super.onCreate(icicle);
         setContentView(R.layout.activity_edit);
         mCurrentPhotoPath = "";
+        mDb = AppDatabase.getDatabase(this.getApplication());
         locationClient = LocationServices.getFusedLocationProviderClient(this);
         id = getIntent().getLongExtra("itemId", 0);
         loadActivity(id);
     }
 
     private void loadActivity(long id) {
-        mDb = AppDatabase.getDatabase(this.getApplication());
         title = findViewById(R.id.new_name);
         description = findViewById(R.id.new_description);
         link = findViewById(R.id.new_link);

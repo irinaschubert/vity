@@ -22,9 +22,6 @@ public interface VityItemDao {
     @Insert(onConflict = IGNORE)
     void insertNewItem(VityItem item);
 
-    @Update(onConflict = REPLACE)
-    void updateItem(VityItem item);
-
     @Delete
     void deleteItem(VityItem item);
 
