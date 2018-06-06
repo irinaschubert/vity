@@ -3,10 +3,13 @@ package ch.ffhs.vity.vity.activity;
 import android.content.Intent;
 import android.location.Location;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import java.lang.ref.WeakReference;
 
 import ch.ffhs.vity.vity.R;
 import ch.ffhs.vity.vity.database.AppDatabase;
@@ -26,6 +29,7 @@ public class ActivityDetail extends BaseActivity {
     private TextView description;
     private long id;
     private VityItem item;
+    private LoadItemAsync task;
 
     @Override
     protected void onCreate(Bundle icicle) {
@@ -44,28 +48,35 @@ public class ActivityDetail extends BaseActivity {
 
     private void loadActivity(long id) {
         AppDatabase mDb = AppDatabase.getDatabase(this.getApplication());
-        item = mDb.itemModel().loadItemById(id);
-        title.setText(item.getTitle());
-        if (item.getCategory() != null) {
-            category.setText(item.getCategory());
-        }
-        if (item.getImageUri() != null) {
-            image.setImageURI(Uri.parse(item.getImageUri()));
-        }
-        if (item.getLink() != null) {
-            link.setText(item.getLink());
-        }
-        if (item.getDate() != null) {
-            date.setText(item.getDate());
-        }
-        if (item.getOwner() != null) {
-            owner.setText(item.getOwner());
-        }
-        if (item.getDescription() != null) {
-            description.setText(item.getDescription());
-        }
-    }
+        task = new LoadItemAsync(id, mDb);
+        task.setListener(new LoadItemAsync.LoadItemAsyncListener() {
+            @Override
+            public void onLoadItemFinished(VityItem vityitem) {
+                item = vityitem;
 
+                title.setText(item.getTitle());
+                if (item.getCategory() != null) {
+                    category.setText(item.getCategory());
+                }
+                if (item.getImageUri() != null) {
+                    image.setImageURI(Uri.parse(item.getImageUri()));
+                }
+                if (item.getLink() != null) {
+                    link.setText(item.getLink());
+                }
+                if (item.getDate() != null) {
+                    date.setText(item.getDate());
+                }
+                if (item.getOwner() != null) {
+                    owner.setText(item.getOwner());
+                }
+                if (item.getDescription() != null) {
+                    description.setText(item.getDescription());
+                }
+            }
+        });
+        task.execute();
+    }
 
     // onClickFunctions
     public void onClickShowOnMap(View button) {
@@ -102,4 +113,38 @@ public class ActivityDetail extends BaseActivity {
         super.onPause();
     }
 
+    static class LoadItemAsync extends AsyncTask<Long, Void, VityItem> {
+        private long id;
+        private AppDatabase mDb;
+        private LoadItemAsyncListener listener;
+        private VityItem vityitem;
+
+        LoadItemAsync(long id, AppDatabase mDb) {
+            this.id = id;
+            this.mDb = mDb;
+            this.vityitem = new VityItem();
+        }
+
+        @Override
+        protected VityItem doInBackground(Long... params) {
+            this.vityitem = mDb.itemModel().loadItemById(id);
+            return vityitem;
+        }
+
+        @Override
+        protected void onPostExecute(VityItem vityitem) {
+            this.vityitem = vityitem;
+            if (listener != null) {
+                listener.onLoadItemFinished(vityitem);
+            }
+        }
+
+        private void setListener(LoadItemAsyncListener listener) {
+            this.listener = listener;
+        }
+
+        public interface LoadItemAsyncListener {
+            void onLoadItemFinished(VityItem vityitem);
+        }
+    }
 }
