@@ -2,9 +2,6 @@ package ch.ffhs.vity.vity.activity;
 
 import android.Manifest;
 import android.app.Activity;
-import android.arch.persistence.db.SupportSQLiteOpenHelper;
-import android.arch.persistence.room.DatabaseConfiguration;
-import android.arch.persistence.room.InvalidationTracker;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
@@ -21,15 +18,13 @@ import android.widget.Toast;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnSuccessListener;
-
-import java.lang.reflect.Array;
+import java.lang.ref.WeakReference;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import ch.ffhs.vity.vity.database.AppDatabase;
 import ch.ffhs.vity.vity.R;
 import ch.ffhs.vity.vity.database.LocationTypeConverter;
 import ch.ffhs.vity.vity.database.VityItem;
-import ch.ffhs.vity.vity.database.VityItemDao;
 
 import static android.location.Location.distanceBetween;
 import static android.widget.Toast.makeText;
@@ -43,12 +38,14 @@ public class ActivitySearch extends Activity {
     private ListView listView;
     private int radius;
     private ArrayList<VityItem> resultList;
+    private SearchItemsAsync task;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
         listView = findViewById(R.id.list_activities);
+        resultList = new ArrayList<VityItem>();
         mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
         setCurrentLocation();
     }
@@ -135,56 +132,80 @@ public class ActivitySearch extends Activity {
     }
 
     private void searchItems(String category) {
-        SearchItemsAsync task = new SearchItemsAsync(category, mDb);
+        task = new SearchItemsAsync(category, mDb, this);
+        task.setListener(new SearchItemsAsync.SearchItemsAsyncListener() {
+            @Override
+            public void onSearchItemsFinished(ArrayList<VityItem> list) {
+                resultList = list;
+                final VityItemListAdapter listAdapter = new VityItemListAdapter(resultList, getApplicationContext());
+
+                listView.setAdapter(listAdapter);
+
+                listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        VityItem selectedItem = (VityItem)listAdapter.getItem(position);
+                        long itemId = selectedItem.getId();
+                        Intent i = new Intent(view.getContext(), ActivityDetail.class);
+                        i.putExtra("itemId", itemId);
+                        startActivity(i);
+                    }
+                });
+            }
+        });
         task.execute();
     }
 
-    private class SearchItemsAsync extends AsyncTask<String, Void, ArrayList<VityItem>> {
+    static class SearchItemsAsync extends AsyncTask<String, Void, ArrayList<VityItem>> {
         private String category;
         private AppDatabase mDb;
-        private ArrayList resultList;
+        private WeakReference<ActivitySearch> activityReference;
+        private SearchItemsAsyncListener listener;
 
-        SearchItemsAsync(String category, AppDatabase mDb) {
-            resultList = new ArrayList<VityItem>();
+        SearchItemsAsync(String category, AppDatabase mDb, ActivitySearch context) {
+
             this.category = category;
             this.mDb = mDb;
+            activityReference = new WeakReference<>(context);
         }
         @Override
         protected ArrayList<VityItem> doInBackground(String... params) {
-            ArrayList<VityItem> listAllWithChosenCategory = new ArrayList<>(mDb.itemModel().findItemByCategory(category));
-            return listAllWithChosenCategory;
+            //ArrayList<VityItem> listAllWithChosenCategory = new ArrayList<>(mDb.itemModel().findItemByCategory(category));
+            return new ArrayList<VityItem>(mDb.itemModel().findItemByCategory(category));
         }
 
         @Override
         protected void onPostExecute(ArrayList<VityItem> listAllWithChosenCategory){
+            ActivitySearch activity = activityReference.get();
+
             for (VityItem item : listAllWithChosenCategory) {
-                if (Float.parseFloat(getDistance(item)) <= radius) {
-                    resultList.add(item);
+                if (Float.parseFloat(activity.getDistance(item)) <= activity.radius) {
+                    activity.resultList.add(item);
                 }
             }
 
-            if(resultList.isEmpty()){
-                makeText(getApplicationContext(), R.string.no_results, Toast.LENGTH_LONG).show();
+            if(activity.resultList.isEmpty()){
+                makeText(activity.getApplicationContext(), R.string.no_results, Toast.LENGTH_LONG).show();
             }
 
-            final VityItemListAdapter listAdapter = new VityItemListAdapter(resultList, getApplicationContext());
-            listView.setAdapter(listAdapter);
+            if (listener != null) {
+                listener.onSearchItemsFinished(activity.resultList);
+            }
 
-            listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    VityItem selectedItem = (VityItem)listAdapter.getItem(position);
-                    long itemId = selectedItem.getId();
-                    Intent activity = new Intent(view.getContext(), ActivityDetail.class);
-                    activity.putExtra("itemId", itemId);
-                    startActivity(activity);
-                }
-            });
+
+        }
+        private void setListener(SearchItemsAsyncListener listener) {
+            this.listener = listener;
+        }
+
+        public interface SearchItemsAsyncListener {
+            void onSearchItemsFinished(ArrayList<VityItem> list);
         }
     }
 
     @Override
     protected void onDestroy() {
+        task.setListener(null);
         super.onDestroy();
     }
 
