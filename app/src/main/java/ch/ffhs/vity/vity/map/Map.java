@@ -35,8 +35,9 @@ import ch.ffhs.vity.vity.R;
 import ch.ffhs.vity.vity.activity.ActivityNew;
 import ch.ffhs.vity.vity.activity.ActivitySearch;
 import ch.ffhs.vity.vity.activity.ActivitySettings;
+import ch.ffhs.vity.vity.menu.BaseActivity;
 
-public class Map extends FragmentActivity implements OnMapReadyCallback {
+public class Map extends BaseActivity implements OnMapReadyCallback {
     private static Location currentLocation;
     private FusedLocationProviderClient mFusedLocationProviderClient;
     private GoogleMap mMap;
@@ -53,25 +54,6 @@ public class Map extends FragmentActivity implements OnMapReadyCallback {
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         MapFragment mapFragment = (MapFragment) getFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
-    }
-
-    // Menu
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.main_menu, menu);
-        return super.onCreateOptionsMenu(menu);
-    }
-
-    // Menu Events
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()){
-            case R.id.opt_settings:
-                startActivity(new Intent(this, ActivitySettings.class));
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
     }
 
     @Override

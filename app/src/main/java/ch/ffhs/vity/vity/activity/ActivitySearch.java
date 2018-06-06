@@ -25,12 +25,13 @@ import ch.ffhs.vity.vity.database.AppDatabase;
 import ch.ffhs.vity.vity.R;
 import ch.ffhs.vity.vity.database.LocationTypeConverter;
 import ch.ffhs.vity.vity.database.VityItem;
+import ch.ffhs.vity.vity.menu.BaseActivity;
 
 import static android.location.Location.distanceBetween;
 import static android.widget.Toast.makeText;
 
 
-public class ActivitySearch extends Activity {
+public class ActivitySearch extends BaseActivity {
     private AppDatabase mDb;
     private FusedLocationProviderClient mFusedLocationProviderClient;
     private static final int REQUEST_FINE_LOCATION = 1;
@@ -51,24 +52,7 @@ public class ActivitySearch extends Activity {
         currentLocation = getCurrentLocation();
     }
 
-    // Menu
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.main_menu, menu);
-        return super.onCreateOptionsMenu(menu);
-    }
 
-    // Menu Events
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()){
-            case R.id.opt_settings:
-                startActivity(new Intent(this, ActivitySettings.class));
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }
 
     // onClickFunctions
     public void onClickSearchActivity(View button) {

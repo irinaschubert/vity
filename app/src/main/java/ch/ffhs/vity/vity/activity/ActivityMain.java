@@ -12,9 +12,10 @@ import android.widget.EditText;
 import ch.ffhs.vity.vity.R;
 import ch.ffhs.vity.vity.database.AppDatabase;
 import ch.ffhs.vity.vity.map.Map;
+import ch.ffhs.vity.vity.menu.BaseActivity;
 import ch.ffhs.vity.vity.mock.DatabaseInitializer;
 
-public class ActivityMain extends Activity {
+public class ActivityMain extends BaseActivity {
 
     private AppDatabase mDb;
     private String USERNAME = "username";

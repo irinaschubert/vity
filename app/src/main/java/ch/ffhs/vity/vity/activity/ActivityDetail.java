@@ -17,9 +17,10 @@ import ch.ffhs.vity.vity.database.AppDatabase;
 import ch.ffhs.vity.vity.R;
 import ch.ffhs.vity.vity.database.VityItem;
 import ch.ffhs.vity.vity.map.Map;
+import ch.ffhs.vity.vity.menu.BaseActivity;
 
 
-public class ActivityDetail extends Activity {
+public class ActivityDetail extends BaseActivity {
     private ImageView image;
     private TextView title;
     private TextView category;
@@ -69,24 +70,7 @@ public class ActivityDetail extends Activity {
         }
     }
 
-    // Menu
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.main_menu, menu);
-        return super.onCreateOptionsMenu(menu);
-    }
 
-    // Menu Events
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()){
-            case R.id.opt_settings:
-                startActivity(new Intent(this, ActivitySettings.class));
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }
 
     // onClickFunctions
     public void onClickShowOnMap(View button) {

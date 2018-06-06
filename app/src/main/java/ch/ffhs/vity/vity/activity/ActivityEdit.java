@@ -8,14 +8,11 @@ import android.content.pm.PackageManager;
 import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
-import android.app.Activity;
 import android.os.Environment;
 import android.preference.PreferenceManager;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v4.content.FileProvider;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -36,17 +33,17 @@ import java.util.Locale;
 import ch.ffhs.vity.vity.R;
 import ch.ffhs.vity.vity.database.AppDatabase;
 import ch.ffhs.vity.vity.database.VityItem;
+import ch.ffhs.vity.vity.menu.BaseActivity;
 
 import static ch.ffhs.vity.vity.database.LocationTypeConverter.locationToString;
 
-public class ActivityEdit extends Activity {
+public class ActivityEdit extends BaseActivity {
     private static final int REQUEST_CODE_STORAGE = 1;
     private static final int REQUEST_CODE_CAMERA = 2;
     private static final int REQUEST_IMAGE_PICK = 3;
     private static final int REQUEST_IMAGE_CAPTURE = 4;
     private static final int REQUEST_CODE_FINE_LOCATION = 5;
     private static final int REQUEST_CODE_STORAGE_FOR_TAKEN_PICTURES = 6;
-
     private ImageView image;
     private EditText title;
     private EditText description;
@@ -58,8 +55,6 @@ public class ActivityEdit extends Activity {
     private Location currentLocation;
     private FusedLocationProviderClient locationClient;
     private String mCurrentPhotoPath;
-    private long id;
-
 
     @Override
     protected void onCreate(Bundle icicle) {
@@ -67,30 +62,11 @@ public class ActivityEdit extends Activity {
         setContentView(R.layout.activity_edit);
         mCurrentPhotoPath = "";
         locationClient = LocationServices.getFusedLocationProviderClient(this);
-        id = getIntent().getLongExtra("itemId", 0);
+        long id = getIntent().getLongExtra("itemId", 0);
         loadActivity(id);
     }
 
-    // Menu
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.main_menu, menu);
-        return super.onCreateOptionsMenu(menu);
-    }
-
-    // Menu Events
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()){
-            case R.id.opt_settings:
-                startActivity(new Intent(this, ActivitySettings.class));
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }
-
-    private void loadActivity(long id){
+    private void loadActivity(long id) {
         mDb = AppDatabase.getDatabase(this.getApplication());
         item = mDb.itemModel().loadItemById(id);
 
@@ -107,7 +83,7 @@ public class ActivityEdit extends Activity {
         location.setText(item.getLocation(), TextView.BufferType.NORMAL);
 
         image = findViewById(R.id.new_detail_image);
-        if(item.getImageUri() != null){
+        if (item.getImageUri() != null) {
             image.setImageURI(Uri.parse(item.getImageUri()));
         }
 
@@ -116,10 +92,10 @@ public class ActivityEdit extends Activity {
         categorySpinner.setSelection(getSpinnerIndex(categorySpinner, category));
     }
 
-    private int getSpinnerIndex(Spinner spinner, String string){
+    private int getSpinnerIndex(Spinner spinner, String string) {
         int index = 0;
-        for (int i=0;i<spinner.getCount();i++){
-            if (spinner.getItemAtPosition(i).equals(string)){
+        for (int i = 0; i < spinner.getCount(); i++) {
+            if (spinner.getItemAtPosition(i).equals(string)) {
                 index = i;
             }
         }
@@ -130,12 +106,12 @@ public class ActivityEdit extends Activity {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setItems(R.array.img_choice, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
-                switch(which){
+                switch (which) {
                     case 0:
                         //checks permission for external storage access on runtime and asks if not yet set
                         if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
                             requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, REQUEST_CODE_STORAGE);
-                        }else {
+                        } else {
                             getPicture();
                         }
                         break;
@@ -143,7 +119,7 @@ public class ActivityEdit extends Activity {
                         //checks permission for camera usage on runtime and asks if not yet set
                         if (checkSelfPermission(Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
                             requestPermissions(new String[]{Manifest.permission.CAMERA}, REQUEST_CODE_CAMERA);
-                        }else{
+                        } else {
                             takePicture();
                         }
                         break;
@@ -157,7 +133,7 @@ public class ActivityEdit extends Activity {
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        switch(requestCode){
+        switch (requestCode) {
             case REQUEST_CODE_STORAGE:
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     getPicture();
@@ -174,7 +150,7 @@ public class ActivityEdit extends Activity {
                 }
                 break;
             case REQUEST_CODE_FINE_LOCATION:
-                if(grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     printCurrentLocation();
                 }
                 break;
@@ -184,7 +160,7 @@ public class ActivityEdit extends Activity {
         }
     }
 
-    private void getPicture(){
+    private void getPicture() {
         Intent getPictureIntent = new Intent();
         getPictureIntent.setType("image/*");
         getPictureIntent.setAction(Intent.ACTION_OPEN_DOCUMENT);
@@ -207,7 +183,7 @@ public class ActivityEdit extends Activity {
                 takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
                 if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
                     requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, REQUEST_CODE_STORAGE_FOR_TAKEN_PICTURES);
-                }else {
+                } else {
                     startActivityForResult(Intent.createChooser(takePictureIntent, getResources().getText(R.string.take_picture_using)), REQUEST_IMAGE_CAPTURE);
                 }
             }
@@ -217,15 +193,15 @@ public class ActivityEdit extends Activity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        switch(requestCode){
+        switch (requestCode) {
             case REQUEST_IMAGE_PICK:
-                if(resultCode == RESULT_OK) {
+                if (resultCode == RESULT_OK) {
                     Uri photoUri = data.getData();
-                    try{
+                    try {
                         mCurrentPhotoPath = photoUri.toString();
-                    }
-                    catch(NullPointerException npe){
+                    } catch (NullPointerException npe) {
                         npe.printStackTrace();
+                        Toast.makeText(getApplicationContext(), getResources().getText(R.string.bad_image_request), Toast.LENGTH_LONG).show();
                     }
 
                     try {
@@ -238,7 +214,7 @@ public class ActivityEdit extends Activity {
                 }
                 break;
             case REQUEST_IMAGE_CAPTURE:
-                if(resultCode == RESULT_OK){
+                if (resultCode == RESULT_OK) {
                     Uri photoUri = savePictureToGallery();
                     try {
                         image.setImageBitmap(MediaStore.Images.Media.getBitmap(this.getContentResolver(), photoUri));
@@ -282,10 +258,10 @@ public class ActivityEdit extends Activity {
         printCurrentLocation();
     }
 
-    private void printCurrentLocation(){
+    private void printCurrentLocation() {
         if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_CODE_FINE_LOCATION);
-        }else {
+        } else {
             locationClient.getLastLocation().addOnSuccessListener(this, new OnSuccessListener<Location>() {
                 @Override
                 public void onSuccess(Location newLocation) {
@@ -311,31 +287,31 @@ public class ActivityEdit extends Activity {
         String currentDateString = sdf.format(currentDate);
         item.setOwner(username);
         item.setDate(currentDateString);
-        if(!"".equals(mCurrentPhotoPath)){
+        if (!"".equals(mCurrentPhotoPath)) {
             item.setImageUri(mCurrentPhotoPath);
         }
         //new activity should at least have a title
-        if(title.getText().toString().equals("")){
+        if (title.getText().toString().equals("")) {
             Toast.makeText(this, getString(R.string.warning_missing_title), Toast.LENGTH_SHORT).show();
-        }else{
+        } else {
             mDb.itemModel().updateItem(item);
             finish();
         }
     }
 
-    public void onClickDelete(View button){
+    public void onClickDelete(View button) {
         mDb.itemModel().deleteItem(item);
         Intent activity = new Intent(this, ActivitySearch.class);
         startActivity(activity);
     }
 
     @Override
-    protected void onPause(){
+    protected void onPause() {
         super.onPause();
     }
 
     @Override
-    protected void onResume(){
+    protected void onResume() {
         super.onResume();
     }
 

@@ -36,10 +36,11 @@ import java.util.Locale;
 import ch.ffhs.vity.vity.R;
 import ch.ffhs.vity.vity.database.AppDatabase;
 import ch.ffhs.vity.vity.database.VityItem;
+import ch.ffhs.vity.vity.menu.BaseActivity;
 
 import static ch.ffhs.vity.vity.database.LocationTypeConverter.locationToString;
 
-public class ActivityNew extends Activity {
+public class ActivityNew extends BaseActivity {
     private static final int REQUEST_CODE_STORAGE = 1;
     private static final int REQUEST_CODE_CAMERA = 2;
     private static final int REQUEST_IMAGE_PICK = 3;
@@ -73,24 +74,6 @@ public class ActivityNew extends Activity {
         printCurrentLocation();
     }
 
-    // Menu
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.main_menu, menu);
-        return super.onCreateOptionsMenu(menu);
-    }
-
-    // Menu Events
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()){
-            case R.id.opt_settings:
-                startActivity(new Intent(this, ActivitySettings.class));
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }
 
     // onClickFunctions
     public void onClickAddPicture(View button) {
