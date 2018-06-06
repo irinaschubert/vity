@@ -42,9 +42,8 @@
     <string name="take_picture_using">Take your picture using:</string>
 
     <!-- find activity -->
-    <string name="form_search">Search</string>
-    <string name="form_category2">Category</string>
-    <string name="form_perimeter">Perimeter</string>
+    <string name="cat_select">Select category</string>
+    <string name="distance_select">Select distance in meters</string>
 
     <!-- activity categories -->
     <string name="cat_food">Food and drinks</string>

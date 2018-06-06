@@ -15,6 +15,12 @@
         android:layout_marginTop="20sp"
         android:text="@string/titel_search" />
 
+    <TextView
+        style="@style/text_normal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/cat_select"/>
+
     <Spinner
         android:id="@+id/new_category"
         style="@style/text_normal"
@@ -26,6 +32,11 @@
         android:entryValues="@array/category_values"
         android:popupBackground="@drawable/spinner_style" />
 
+    <TextView
+        style="@style/text_normal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/distance_select"/>
     <Spinner
         android:id="@+id/search_radius"
         style="@style/text_normal"
