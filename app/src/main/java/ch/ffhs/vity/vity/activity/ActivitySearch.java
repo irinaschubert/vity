@@ -140,6 +140,7 @@ public class ActivitySearch extends BaseActivity {
 
     @Override
     protected void onDestroy() {
+        task.setListener(null);
         super.onDestroy();
     }
 

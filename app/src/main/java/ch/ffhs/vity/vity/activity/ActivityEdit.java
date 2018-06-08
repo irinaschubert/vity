@@ -27,7 +27,6 @@ import com.google.android.gms.tasks.OnSuccessListener;
 
 import java.io.File;
 import java.io.IOException;
-import java.lang.ref.WeakReference;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -57,6 +56,7 @@ public class ActivityEdit extends BaseActivity {
     private FusedLocationProviderClient locationClient;
     private String mCurrentPhotoPath;
     private long id;
+    private LoadItemAsync task;
 
     @Override
     protected void onCreate(Bundle icicle) {
@@ -77,8 +77,8 @@ public class ActivityEdit extends BaseActivity {
         image = findViewById(R.id.new_detail_image);
         categorySpinner = findViewById(R.id.new_category);
 
-        LoadItemAsync loadTask = new ActivityEdit.LoadItemAsync(id, mDb);
-        loadTask.setListener(new ActivityEdit.LoadItemAsync.LoadItemAsyncListener() {
+        task = new ActivityEdit.LoadItemAsync(id, mDb);
+        task.setListener(new ActivityEdit.LoadItemAsync.LoadItemAsyncListener() {
             @Override
             public void onLoadItemFinished(VityItem vityitem) {
                 item = vityitem;
@@ -94,7 +94,7 @@ public class ActivityEdit extends BaseActivity {
                 categorySpinner.setSelection(getSpinnerIndex(categorySpinner, category));
             }
         });
-        loadTask.execute();
+        task.execute();
     }
 
     private int getSpinnerIndex(Spinner spinner, String string) {
@@ -281,32 +281,25 @@ public class ActivityEdit extends BaseActivity {
     }
 
     public void onClickUpdate(View button) {
+        item.setTitle(title.getText().toString());
+        item.setDescription(description.getText().toString());
+        item.setLink(link.getText().toString());
+        item.setLocation(location.getText().toString());
+        item.setCategory(categorySpinner.getSelectedItem().toString());
         String username = PreferenceManager.getDefaultSharedPreferences(this).getString("username", "");
+        long currentDate = System.currentTimeMillis();
+        SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy HH:mm", Locale.getDefault());
+        String currentDateString = sdf.format(currentDate);
+        item.setOwner(username);
+        item.setDate(currentDateString);
+        if (!"".equals(mCurrentPhotoPath)) {
+            item.setImageUri(mCurrentPhotoPath);
+        }
         //new activity should at least have a title
         if (title.getText().toString().equals("")) {
             Toast.makeText(this, getString(R.string.warning_missing_title), Toast.LENGTH_SHORT).show();
         } else {
-            SaveItemAsync saveTask = new ActivityEdit.SaveItemAsync(item, mDb, username);
-            saveTask.setListener(new ActivityEdit.SaveItemAsync.SaveItemAsyncListener() {
-                @Override
-                public void onSaveItemFinished(VityItem vityitem, String username) {
-                    item = vityitem;
-                    item.setTitle(title.getText().toString());
-                    item.setDescription(description.getText().toString());
-                    item.setLink(link.getText().toString());
-                    item.setLocation(location.getText().toString());
-                    item.setCategory(categorySpinner.getSelectedItem().toString());
-                    long currentDate = System.currentTimeMillis();
-                    SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy HH:mm", Locale.getDefault());
-                    String currentDateString = sdf.format(currentDate);
-                    item.setOwner(username);
-                    item.setDate(currentDateString);
-                    if (!"".equals(mCurrentPhotoPath)) {
-                        item.setImageUri(mCurrentPhotoPath);
-                    }
-                }
-            });
-            saveTask.execute();
+            mDb.itemModel().updateItem(item);
             finish();
         }
     }
@@ -360,41 +353,6 @@ public class ActivityEdit extends BaseActivity {
 
         public interface LoadItemAsyncListener {
             void onLoadItemFinished(VityItem vityitem);
-        }
-    }
-
-    static class SaveItemAsync extends AsyncTask<VityItem, Void, VityItem> {
-        private AppDatabase mDb;
-        private SaveItemAsyncListener listener;
-        private VityItem vityitem;
-        private String username;
-
-        SaveItemAsync(VityItem vityitem, AppDatabase mDb, String username) {
-            this.mDb = mDb;
-            this.vityitem = vityitem;
-            this.username = username;
-        }
-
-        @Override
-        protected VityItem doInBackground(VityItem... params) {
-            mDb.itemModel().insertNewItem(vityitem);
-            return vityitem;
-        }
-
-        @Override
-        protected void onPostExecute(VityItem vityitem) {
-            this.vityitem = vityitem;
-            if (listener != null) {
-                listener.onSaveItemFinished(vityitem, username);
-            }
-        }
-
-        private void setListener(SaveItemAsyncListener listener) {
-            this.listener = listener;
-        }
-
-        public interface SaveItemAsyncListener {
-            void onSaveItemFinished(VityItem vityitem, String username);
         }
     }
 }
