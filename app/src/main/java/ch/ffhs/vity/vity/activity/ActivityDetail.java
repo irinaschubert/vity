@@ -8,9 +8,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-
-import java.lang.ref.WeakReference;
-
 import ch.ffhs.vity.vity.R;
 import ch.ffhs.vity.vity.database.AppDatabase;
 import ch.ffhs.vity.vity.database.VityItem;
@@ -29,7 +26,6 @@ public class ActivityDetail extends BaseActivity {
     private TextView description;
     private long id;
     private VityItem item;
-    private LoadItemAsync task;
 
     @Override
     protected void onCreate(Bundle icicle) {
@@ -48,7 +44,7 @@ public class ActivityDetail extends BaseActivity {
 
     private void loadActivity(long id) {
         AppDatabase mDb = AppDatabase.getDatabase(this.getApplication());
-        task = new LoadItemAsync(id, mDb);
+        LoadItemAsync task = new LoadItemAsync(id, mDb);
         task.setListener(new LoadItemAsync.LoadItemAsyncListener() {
             @Override
             public void onLoadItemFinished(VityItem vityitem) {

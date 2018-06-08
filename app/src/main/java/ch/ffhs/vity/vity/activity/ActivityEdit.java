@@ -56,7 +56,6 @@ public class ActivityEdit extends BaseActivity {
     private FusedLocationProviderClient locationClient;
     private String mCurrentPhotoPath;
     private long id;
-    private LoadItemAsync task;
 
     @Override
     protected void onCreate(Bundle icicle) {
@@ -77,7 +76,7 @@ public class ActivityEdit extends BaseActivity {
         image = findViewById(R.id.new_detail_image);
         categorySpinner = findViewById(R.id.new_category);
 
-        task = new ActivityEdit.LoadItemAsync(id, mDb);
+        LoadItemAsync task = new ActivityEdit.LoadItemAsync(id, mDb);
         task.setListener(new ActivityEdit.LoadItemAsync.LoadItemAsyncListener() {
             @Override
             public void onLoadItemFinished(VityItem vityitem) {

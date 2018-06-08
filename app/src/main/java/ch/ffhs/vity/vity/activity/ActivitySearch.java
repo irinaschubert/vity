@@ -38,7 +38,6 @@ public class ActivitySearch extends BaseActivity {
     private ListView listView;
     private int radius;
     private ArrayList<VityItem> resultList;
-    private SearchItemsAsync task;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -114,7 +113,7 @@ public class ActivitySearch extends BaseActivity {
     }
 
     private void searchItems(String category) {
-        task = new SearchItemsAsync(category, mDb, this);
+        SearchItemsAsync task = new SearchItemsAsync(category, mDb, this);
         task.setListener(new SearchItemsAsync.SearchItemsAsyncListener() {
             @Override
             public void onSearchItemsFinished(ArrayList<VityItem> list) {
@@ -140,7 +139,6 @@ public class ActivitySearch extends BaseActivity {
 
     @Override
     protected void onDestroy() {
-        task.setListener(null);
         super.onDestroy();
     }
 
