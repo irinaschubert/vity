@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
 import android.preference.PreferenceManager;
@@ -27,7 +26,6 @@ import com.google.android.gms.tasks.OnSuccessListener;
 
 import java.io.File;
 import java.io.IOException;
-import java.lang.ref.WeakReference;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -52,8 +50,6 @@ public class ActivityNew extends BaseActivity {
     private EditText link;
     private TextView location;
     private Spinner categorySpinner;
-    private AppDatabase mDb;
-    private VityItem item;
     private Location currentLocation;
     private FusedLocationProviderClient locationClient;
     private String mCurrentPhotoPath;
@@ -70,12 +66,12 @@ public class ActivityNew extends BaseActivity {
         location = findViewById(R.id.new_detail_location);
         categorySpinner = findViewById(R.id.new_category);
         mCurrentPhotoPath = "";
-        item = new VityItem();
-        mDb = AppDatabase.getDatabase(this.getApplication());
         locationClient = LocationServices.getFusedLocationProviderClient(this);
         printCurrentLocation();
     }
 
+
+    // onClickFunctions
     public void onClickAddPicture(View button) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setItems(R.array.img_choice, new DialogInterface.OnClickListener() {
@@ -249,13 +245,27 @@ public class ActivityNew extends BaseActivity {
     }
 
     public void onClickSaveNewActivity(View button) {
+        AppDatabase mDb = AppDatabase.getDatabase(this.getApplication());
+        VityItem item = new VityItem();
+        item.setTitle(title.getText().toString());
+        item.setDescription(description.getText().toString());
+        item.setLink(link.getText().toString());
+        item.setLocation(location.getText().toString());
+        item.setCategory(categorySpinner.getSelectedItem().toString());
         String username = PreferenceManager.getDefaultSharedPreferences(this).getString("username", "");
+        long currentDate = System.currentTimeMillis();
+        SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy HH:mm", Locale.getDefault());
+        String currentDateString = sdf.format(currentDate);
+        item.setOwner(username);
+        item.setDate(currentDateString);
+        if (!"".equals(mCurrentPhotoPath)) {
+            item.setImageUri(mCurrentPhotoPath);
+        }
         //new activity should at least have a title
         if (title.getText().toString().equals("")) {
             Toast.makeText(this, getString(R.string.warning_missing_title), Toast.LENGTH_SHORT).show();
         } else {
-            SaveItemAsync saveTask = new ActivityNew.SaveItemAsync(item, mDb, username, this);
-            saveTask.execute();
+            mDb.itemModel().insertNewItem(item);
             finish();
         }
     }
@@ -268,43 +278,5 @@ public class ActivityNew extends BaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
-    }
-
-    static class SaveItemAsync extends AsyncTask<VityItem, Void, VityItem> {
-        private AppDatabase mDb;
-        private VityItem vityitem;
-        private String username;
-        private WeakReference<ActivityNew> activityReference;
-
-        SaveItemAsync(VityItem vityitem, AppDatabase mDb, String username, ActivityNew context) {
-            this.mDb = mDb;
-            this.vityitem = vityitem;
-            this.username = username;
-            activityReference = new WeakReference<>(context);
-        }
-
-        @Override
-        protected VityItem doInBackground(VityItem... params) {
-            ActivityNew activity = activityReference.get();
-            vityitem.setTitle(activity.title.getText().toString());
-            vityitem.setDescription(activity.description.getText().toString());
-            vityitem.setLink(activity.link.getText().toString());
-            vityitem.setLocation(activity.location.getText().toString());
-            vityitem.setCategory(activity.categorySpinner.getSelectedItem().toString());
-            long currentDate = System.currentTimeMillis();
-            SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy HH:mm", Locale.getDefault());
-            String currentDateString = sdf.format(currentDate);
-            vityitem.setOwner(username);
-            vityitem.setDate(currentDateString);
-            if (!"".equals(activity.mCurrentPhotoPath)) {
-                vityitem.setImageUri(activity.mCurrentPhotoPath);
-            }
-            return vityitem;
-        }
-
-        @Override
-        protected void onPostExecute(VityItem vityitem) {
-            mDb.itemModel().insertNewItem(vityitem);
-        }
     }
 }
