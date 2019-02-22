@@ -5,7 +5,7 @@ Die Applikation bietet eine Plattform um bestimmte Orte wie Museen, Restaurants,
 
 ### Handling | Darstellung
 Die App sollte möglichst intuitiv und einfach bedienbar sein.<br/><br/>
-1. Map mit eingetragenen Freizeitaktivitäten<br/>
+1. Map mit eingetragenen Freizeitaktivitäten und eigenem Standort<br/>
 ![alt text][map]<br/>
 2. Menu<br/>
 ![alt text][menu]<br/>
@@ -19,7 +19,7 @@ Die App sollte möglichst intuitiv und einfach bedienbar sein.<br/><br/>
 ![alt text][settings]<br/>
 
 
-[bootscreen]: /res/readme/bootscreen.jpg "Bootscreen"
+[mao]: /res/readme/Eigener Standort und Standort Ort.jpg "Bootscreen"
 [activity_new]: /res/readme/activity_new.jpg "Acitity New"
 [activity_search]: /res/readme/activity_search.jpg "Acitity Search"
 [map]: /res/readme/map.jpg "Map"
