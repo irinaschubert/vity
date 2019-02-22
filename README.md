@@ -1,7 +1,8 @@
 Vity
 -
 ### Beschreibung
-Die Applikation bietet eine Plattform um bestimmte Orte wie Museen, Restaurants, Bars, Spaziergänge,... festzuhalten. Der Nutzer hat die Möglichkeit, Orte zu erstellen, zu suchen und Orte in der Nähe des eigenen Standorts auf einer Karte anzuzeigen. Mittels dieser App können "Geheimtipps" festgehalten und Inspiration für eine abwechslungsreiche Freizeitgestaltung geholt werden. Das Projekt ist während eines Semesters im Rahmen des Kurses "Embedded Systems with Android" (Fernfachhochschule Schweiz) entstanden.</br>
+<br>Mit der Applikation "Vity" kann ein Nutzer verschiedene Orte wie Museen, Restaurants, Bars, Spaziergänge etc. festhalten. Er hat die Möglichkeit, solche Orte mit Beschreibung, Standort und Bild anzulegen, zu durchsuchen, zu bearbeiten und auf einer Karte anzuzeigen. Besonders praktisch ist der Suchfilter nach Distanz: der Nutzer kann Orte in einer Distanz von 100m bis 10km filtern. Ebenso kann er die Orte nach Kategorien filtern. Beim Anlegen oder Bearbeiten eines Eintrags kann der Nutzer direkt aus der App heraus ein Foto schiessen oder ein bereits bestehendes Bild beifügen. Der Nutzer hat zudem die Möglichkeit, einen Nutzernamen festzulegen.
+Mittels dieser App können "Geheimtipps" festgehalten und Inspiration für eine abwechslungsreiche Freizeitgestaltung geholt werden. Das Projekt ist während eines Semesters im Rahmen des Kurses "Embedded Systems with Android" (Fernfachhochschule Schweiz) entstanden.</br>
 
 ### Handling | Darstellung
 Die App sollte möglichst intuitiv und einfach bedienbar sein.<br/><br/>
