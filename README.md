@@ -19,7 +19,7 @@ Die App sollte möglichst intuitiv und einfach bedienbar sein.<br/><br/>
 ![alt text][settings]<br/>
 
 
-[mao]: /res/readme/Eigener Standort und Standort Ort.jpg "Bootscreen"
+[mao]: '/res/readme/Eigener Standort und Standort Ort.jpg' "Bootscreen"
 [activity_new]: /res/readme/activity_new.jpg "Acitity New"
 [activity_search]: /res/readme/activity_search.jpg "Acitity Search"
 [map]: /res/readme/map.jpg "Map"
